@@ -17,7 +17,7 @@ ext {
 
     publishedGroupId = 'io.pixel.android'
     artifact = 'pixel'
-    libraryVersion = '0.0.1'
+    libraryVersion = '0.0.2'
     libraryDescription = 'Image loading and Networking for Android backed by Kotlin Coroutines.'
 
     siteUrl = 'https://github.com/mmobin789/pixel'
@@ -38,7 +38,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
