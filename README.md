@@ -115,9 +115,17 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
  // Disable logging behavior.
    PixelConfiguration.setLoggingEnabled(false)
    ```
+   ## Requirements
+   - Min SDK 14
+   - Compile SDK 29+
+   
+   ## R8 / Proguard
+   Pixel is completely compatible with R8 and doesn't require adding any extra rules.
+
+   If you use Proguard, you may need to add rules for [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro)
  
  ### In-Development
- The library is maintained and under development as new features are being continuosly added.
+ This library is maintained and under development as new features are being continuously added.
 
 
 ### Issues
