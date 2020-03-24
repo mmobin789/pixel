@@ -40,7 +40,7 @@ An image loading and networking library for Android backed by Kotlin Coroutines.
 ```
  
 
-## QuickStart
+## Documentation
  
 For complete usage in Kotlin and Java clone the project in Android Studio and run the sample app included.
 
@@ -123,6 +123,9 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
    Pixel is completely compatible with R8 and doesn't require adding any extra rules.
 
    If you use Proguard, you may need to add rules for [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro)
+   
+   ## Releases
+   See release notes [here](https://github.com/mmobin789/pixel/releases).
  
  ### In-Development
  This library is maintained and under development as new features are being continuously added.
