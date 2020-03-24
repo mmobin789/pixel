@@ -40,7 +40,7 @@ An image loading and networking library for Android backed by Kotlin Coroutines.
 ```
  
 
-## How do I use Pixel ?
+## QuickStart
  
 For complete usage in Kotlin and Java clone the project in Android Studio and run the sample app included.
 
@@ -48,9 +48,7 @@ For complete usage in Kotlin and Java clone the project in Android Studio and ru
  **Load an Image**
  
  ```
- 
  Pixel.load("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80", iv)
- 
  ```
  **Load an Image with options**
  
@@ -76,26 +74,21 @@ Pixel.load("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=r
 **Load JSON Object**
 
 ```
-
  Pixel.loadJsonObject("https://jsonplaceholder.typicode.com/todos/1") {
         // do something with it here
-        }
-        
+        }     
 ```
 **Load JSON Array**
 
 ```
-
 Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
        // do something with it here.
-        }
-        
+        }       
 ```
  
  **Configure and clear memory cache**
  
  ```
- 
  // Set image memory cache to 48000 KBS which is 48MBS
   PixelConfiguration.setImageMemoryCacheSize(48000)
   
@@ -116,15 +109,12 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
  **Logging**
  
    ```
-   
  // Enable logging behavior.
    PixelConfiguration.setLoggingEnabled(true)
    
  // Disable logging behavior.
    PixelConfiguration.setLoggingEnabled(false)
-   
    ```
-   
  
  ### In-Development
  The library is maintained and under development as new features are being continuosly added.
