@@ -48,6 +48,11 @@ class SampleActivity : AppCompatActivity(), SampleViewModel.SampleView {
             PixelOptions.Builder().setPlaceholderResource(R.drawable.ic_loading_android).build()
         )
 
+        SampleJavaLoad.load(
+            "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+            iv2
+        )
+
 
         /*rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -86,9 +91,6 @@ class SampleActivity : AppCompatActivity(), SampleViewModel.SampleView {
         Pixel.load(path[1], iv1).cancel()
 
         SampleJavaLoad.load(path[1], R.drawable.ic_loading_android, iv3)
-
-        SampleJavaLoad.load(path[0], iv2)
-
 
     }
 

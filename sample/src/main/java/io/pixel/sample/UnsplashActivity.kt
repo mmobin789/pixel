@@ -2,8 +2,8 @@ package io.pixel.sample
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kc.unsplash.models.Collection
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_sample.*
 
 class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
 
-    private lateinit var unsplashViewModel: UnsplashViewModel
+    private val unsplashViewModel: UnsplashViewModel by viewModels()
     private lateinit var rvUnsplashAdapter: RVUnsplashAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,6 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
         iv1.visibility = View.GONE
         iv2.visibility = View.GONE
         rvH.visibility = View.GONE
-        unsplashViewModel = ViewModelProvider(this)[UnsplashViewModel::class.java]
         loadImages()
 
 
