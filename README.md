@@ -16,9 +16,19 @@ An image loading and networking library for Android backed by Kotlin Coroutines.
 ## Features
  - Image Loading (For now image loading from network is supported only)
  - Networking (JSON Objects/Arrays can be loaded/cached from GET urls)
- - Fast (Kotlin Co-routines for structured concurrency with minimal thread pool)
+ - Fast (Kotlin Co-routines for structured concurrency and low latency)
  - Reliable (No 3rd party library used.)
  - Supports JAVA.
+ 
+ 
+ ## Why to use ?
+   
+   - It only downloads the image per width and height of image view per **pixel** hence the name and pauses all loads when UI is not          available.
+   - Signature Download (Same image download with same requested width and height will cancel previous such download in progress)
+   - Synchronous load cancellation.
+   - Limited Networking support and more in future.
+   - It allows to publish network response i-e JSON to a background thread as well.
+  
  
  
  ## Download
@@ -133,6 +143,7 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
 
 ### Issues
 Issues can be reported [here](https://github.com/mmobin789/pixel/issues).
+
 
 ## License
 Copyright 2020 Pixel Contributors
