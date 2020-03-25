@@ -4,12 +4,12 @@ import android.widget.ImageView
 import io.pixel.android.config.PixelLog
 import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.download.JsonDownload
+import io.pixel.android.loader.load.ImageLoad
+import io.pixel.android.loader.load.LoadAdapter
+import io.pixel.android.loader.load.LoadRequest
+import io.pixel.android.loader.load.ViewLoad
 import io.pixel.android.utils.createJsonArray
 import io.pixel.android.utils.createJsonObject
-import io.pixel.pixel.loader.load.ImageLoad
-import io.pixel.pixel.loader.load.LoadAdapter
-import io.pixel.pixel.loader.load.LoadRequest
-import io.pixel.pixel.loader.load.ViewLoad
 import org.json.JSONArray
 import org.json.JSONObject
 

@@ -1,4 +1,4 @@
-package io.pixel.pixel.loader.load
+package io.pixel.android.loader.load
 
 import android.graphics.Bitmap
 import android.widget.ImageView

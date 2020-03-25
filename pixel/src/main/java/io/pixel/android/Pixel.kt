@@ -4,8 +4,8 @@ import android.widget.ImageView
 import io.pixel.android.config.PixelLog
 import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.LoaderProxy
+import io.pixel.android.loader.load.LoadRequest
 import io.pixel.android.utils.ValidatorUtils
-import io.pixel.pixel.loader.load.LoadRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

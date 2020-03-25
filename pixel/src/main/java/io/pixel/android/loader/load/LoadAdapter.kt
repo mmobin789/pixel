@@ -1,4 +1,4 @@
-package io.pixel.pixel.loader.load
+package io.pixel.android.loader.load
 
 import io.pixel.android.config.PixelLog
 import io.pixel.android.loader.cache.memory.MemoryCacheImpl

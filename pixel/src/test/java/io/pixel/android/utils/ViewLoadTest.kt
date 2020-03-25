@@ -1,6 +1,6 @@
 package io.pixel.android.utils
 
-import io.pixel.pixel.loader.load.ViewLoad
+import io.pixel.android.loader.load.ViewLoad
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

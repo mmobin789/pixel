@@ -1,10 +1,10 @@
 package io.pixel.android.loader.download
 
 import io.pixel.android.config.PixelLog
+import io.pixel.android.loader.load.LoadAdapter
 import io.pixel.android.utils.createJsonArray
 import io.pixel.android.utils.createJsonObject
 import io.pixel.android.utils.getUniqueIdentifier
-import io.pixel.pixel.loader.load.LoadAdapter
 import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject

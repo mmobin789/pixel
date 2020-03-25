@@ -2,8 +2,8 @@ package io.pixel.android.loader.download
 
 import android.graphics.Bitmap
 import io.pixel.android.config.PixelLog
-import io.pixel.pixel.loader.load.LoadAdapter
-import io.pixel.pixel.loader.load.ViewLoad
+import io.pixel.android.loader.load.LoadAdapter
+import io.pixel.android.loader.load.ViewLoad
 import kotlinx.coroutines.*
 import java.util.concurrent.CancellationException
 
