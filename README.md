@@ -16,9 +16,19 @@ An image loading and networking library for Android backed by Kotlin Coroutines.
 ## Features
  - Image Loading (For now image loading from network is supported only)
  - Networking (JSON Objects/Arrays can be loaded/cached from GET urls)
- - Fast (Kotlin Co-routines for structured concurrency with minimal thread pool)
+ - Fast (Kotlin Co-routines for structured concurrency and low latency)
  - Reliable (No 3rd party library used.)
  - Supports JAVA.
+ 
+ 
+ ## Why to use ?
+   
+   - It only downloads the image per width and height of image view per **pixel** hence the name and pauses all loads when UI is not          available.
+   - Signature Download (Same image download with same requested width and height will cancel previous such download in progress)
+   - Synchronous load cancellation.
+   - Limited Networking support and more in future.
+   - It allows to publish network response i-e JSON to a background thread as well.
+  
  
  
  ## Download
@@ -40,7 +50,7 @@ An image loading and networking library for Android backed by Kotlin Coroutines.
 ```
  
 
-## How do I use Pixel ?
+## Documentation
  
 For complete usage in Kotlin and Java clone the project in Android Studio and run the sample app included.
 
@@ -48,9 +58,7 @@ For complete usage in Kotlin and Java clone the project in Android Studio and ru
  **Load an Image**
  
  ```
- 
  Pixel.load("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80", iv)
- 
  ```
  **Load an Image with options**
  
@@ -76,26 +84,21 @@ Pixel.load("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=r
 **Load JSON Object**
 
 ```
-
  Pixel.loadJsonObject("https://jsonplaceholder.typicode.com/todos/1") {
         // do something with it here
-        }
-        
+        }     
 ```
 **Load JSON Array**
 
 ```
-
 Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
        // do something with it here.
-        }
-        
+        }       
 ```
  
  **Configure and clear memory cache**
  
  ```
- 
  // Set image memory cache to 48000 KBS which is 48MBS
   PixelConfiguration.setImageMemoryCacheSize(48000)
   
@@ -116,19 +119,43 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
  **Logging**
  
    ```
-   
  // Enable logging behavior.
    PixelConfiguration.setLoggingEnabled(true)
    
  // Disable logging behavior.
    PixelConfiguration.setLoggingEnabled(false)
-   
    ```
+   ## Requirements
+   - Min SDK 14
+   - Compile SDK 29+
    
+   ## R8 / Proguard
+   Pixel is completely compatible with R8 and doesn't require adding any extra rules.
+
+   If you use Proguard, you may need to add rules for [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro)
+   
+   ## Releases
+   See release notes [here](https://github.com/mmobin789/pixel/releases).
  
  ### In-Development
- The library is maintained and under development as new features are being continuosly added.
+ This library is maintained and under development as new features are being continuously added.
 
 
 ### Issues
 Issues can be reported [here](https://github.com/mmobin789/pixel/issues).
+
+
+## License
+Copyright 2020 Pixel Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
