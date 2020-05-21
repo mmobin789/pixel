@@ -138,10 +138,10 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
    See release notes [here](https://github.com/mmobin789/pixel/releases).
  
  ### In-Development
- This library is maintained and under development as new features are being continuously added.
+ This library is maintained and under development as new features are periodically added.
 
 
-### Issues
+## Issues
 Issues can be reported [here](https://github.com/mmobin789/pixel/issues).
 
 ## Inspiration
