@@ -144,6 +144,11 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
 ### Issues
 Issues can be reported [here](https://github.com/mmobin789/pixel/issues).
 
+## Inspiration
+The idea of employing Kotlin Coroutines that drive the working of this library partly came from [Coil](https://github.com/coil-kt)
+and thankfully its creator [Colin White](https://github.com/colinrtwhite).
+
+
 
 ## License
 Copyright 2020 Pixel Contributors
