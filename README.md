@@ -120,10 +120,10 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
  **Logging**
  
    ```
- // Enable logging behavior.
+ // Enable logging behavior
    PixelConfiguration.setLoggingEnabled(true)
    
- // Disable logging behavior.
+ // Disable logging behavior (Default)
    PixelConfiguration.setLoggingEnabled(false)
    ```
    ## Requirements
