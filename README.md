@@ -4,7 +4,7 @@
 [![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/master.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/master)
 [![Kotlin Version](https://img.shields.io/badge/kotlin-1.3.70-green.svg)](http://kotlinlang.org/)
 
-An image loading library for Android backed by Kotlin Coroutines.
+A lightweight image loading library for Android backed by Kotlin Coroutines.
 
 **Optimal**: Pixel performs optimizations with memory caching, downsampling the image in memory by image view size (pixel by pixel), re-using Bitmaps, automatically pause/cancel requests (Signature requests), and more.
 
