@@ -27,7 +27,6 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
    - It only downloads the image per width and height of image view per **pixel** hence the name and pauses all loads when UI is not          available.
    - Signature Download (Same image download with same requested width and height will cancel previous such download in progress)
    - Synchronous load cancellation.
-   - Limited Networking support and more in future.
    - It allows to publish network response i-e JSON to a background thread as well.
   
  
@@ -82,14 +81,14 @@ Pixel.load("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=r
 
 ```
 
-**Load JSON Object**
+**Load JSON Object (Till Version 0.0.2)**
 
 ```
  Pixel.loadJsonObject("https://jsonplaceholder.typicode.com/todos/1") {
         // do something with it here
         }     
 ```
-**Load JSON Array**
+**Load JSON Array (Till Version 0.0.2)**
 
 ```
 Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
