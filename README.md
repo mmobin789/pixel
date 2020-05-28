@@ -15,11 +15,11 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
 **Modern**: Pixel is Kotlin-first and interoperable with Java.
 
 ## Features
+ - Signature Loads
  - Image Loading (For now image loading from network is supported only)
- - Networking (JSON Objects/Arrays can be loaded/cached from GET urls)
  - Fast (Kotlin Co-routines for structured concurrency and low latency)
- - Reliable (No 3rd party library used.)
- - Supports JAVA.
+ - Reliable (No 3rd party library used)
+ - Supports JAVA
  
  
  ## Why to use ?
@@ -27,7 +27,7 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
    - It only downloads the image per width and height of image view per **pixel** hence the name and pauses all loads when UI is not          available.
    - Signature Download (Same image download with same requested width and height will cancel previous such download in progress)
    - Synchronous load cancellation.
-   - It allows to publish network response i-e JSON to a background thread as well.
+   - UI Responsive.
   
  
  
