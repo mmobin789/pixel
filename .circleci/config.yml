@@ -4,7 +4,7 @@ jobs:
     branches:
       only:
         - master
-        - release
+        - /release.*/
     working_directory: ~/pixel
     docker:
       - image: circleci/android:api-29 # gcloud is baked into this image
