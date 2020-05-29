@@ -1,6 +1,6 @@
 version: 2.1
-  jobs:
-    build:
+jobs:
+  build:
     working_directory: ~/pixel
     docker:
       - image: circleci/android:api-29 # gcloud is baked into this image
@@ -31,13 +31,11 @@ version: 2.1
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
 
 workflows:
-  build:
     test-pixel:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only:
+      jobs:
+        filters:
+          branches:
+            only:
         - master
         - /release.*/
 
