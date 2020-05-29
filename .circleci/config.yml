@@ -1,10 +1,14 @@
-version: 2.1
-jobs:
+ci-check: # a job to make sure CI runs for master and release branches only.
   build:
+    filters:
     branches:
       only:
         - master
         - /release.*/
+workflows:
+version: 2.1
+jobs:  # run unit tests for pixel library.
+  build:
     working_directory: ~/pixel
     docker:
       - image: circleci/android:api-29 # gcloud is baked into this image
