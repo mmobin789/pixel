@@ -1,6 +1,6 @@
 version: 2.1
 workflows:
-  - pixel:  # a job to run unit tests for pixel library.
+  pixel:  # a job to run unit tests for pixel library on specific branches.
     build:
       branches:
         only:
