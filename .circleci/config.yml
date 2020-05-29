@@ -1,7 +1,5 @@
 version: 2.1
-
-
-  pixel:
+  jobs:
     build:
     working_directory: ~/pixel
     docker:
@@ -34,11 +32,12 @@ version: 2.1
 
 workflows:
   build:
-    workflow1:
+    test-pixel:
     jobs:
-    - pixel:  # a job to run unit tests for pixel library on specific branches.
-    branches:
-      only:
+      - build:
+          filters:
+            branches:
+              only:
         - master
         - /release.*/
 
