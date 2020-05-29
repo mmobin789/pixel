@@ -1,5 +1,6 @@
 version: 2.1
 jobs:
+  pixel: # job name
   build:
     working_directory: ~/pixel
     docker:
@@ -31,10 +32,11 @@ jobs:
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
 
 workflows:
-    test-pixel:
-      jobs:
-        filters:
-          branches:
+  test-pixel: # name of workflow
+    jobs:   # jobs in workflow
+      - pixel:  # job name
+        filters: # filters for above job.
+          branches: # only run the job for below branches below
             only:
               - master
               - /release.*/
