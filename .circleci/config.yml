@@ -1,6 +1,10 @@
 version: 2.1
 jobs:
   build:
+    branches:
+      only:
+        - master
+        - release
     working_directory: ~/pixel
     docker:
       - image: circleci/android:api-29 # gcloud is baked into this image
