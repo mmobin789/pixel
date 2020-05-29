@@ -2,6 +2,7 @@ version: 2.1
 
 
   pixel:
+    build:
     working_directory: ~/pixel
     docker:
       - image: circleci/android:api-29 # gcloud is baked into this image
@@ -33,7 +34,8 @@ version: 2.1
 
 workflows:
   build:
-  jobs:
+    workflow1:
+    jobs:
     - pixel:  # a job to run unit tests for pixel library on specific branches.
     branches:
       only:
