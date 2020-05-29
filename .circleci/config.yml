@@ -1,6 +1,16 @@
 version: 2.1
+
+workflows:
+  test-pixel: # name of workflow
+    jobs:   # jobs in workflow
+      - pixel:  # job name
+        filters: # filters for above job.
+          branches: # only run the job for below branches below
+            only:
+              - master
+              - /release.*/
 jobs:
-  build:
+  pixel: # job name
     working_directory: ~/pixel
     docker:
       - image: circleci/android:api-29 # gcloud is baked into this image
@@ -29,3 +39,6 @@ jobs:
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: pixel/build/test-results
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
+
+
+
