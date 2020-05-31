@@ -3,16 +3,12 @@ package io.pixel.android.loader.load
 import io.pixel.android.config.PixelLog
 import io.pixel.android.loader.cache.memory.MemoryCacheImpl
 import io.pixel.android.loader.download.ImageDownload
-import io.pixel.android.loader.download.JsonDownload
 import io.pixel.android.utils.DownloadUtils.getBitmapFromURL
-import io.pixel.android.utils.DownloadUtils.getJSONStringFromURL
-
 
 internal object LoadAdapter {
     private val bitmapMemoryCache = MemoryCacheImpl.forBitmap()
     private val documentMemoryCache = MemoryCacheImpl.forDocument()
     private val imageLoads = linkedMapOf<Int, ImageDownload>()
-    private val jsonLoads = linkedMapOf<Int, JsonDownload>()
 
     fun addDownload(imageDownload: ImageDownload) {
         imageLoads.put(imageDownload.id, imageDownload)?.also {
@@ -22,9 +18,6 @@ internal object LoadAdapter {
         }
     }
 
-    fun addDownload(jsonDownload: JsonDownload) {
-        jsonLoads[jsonDownload.id] = jsonDownload
-    }
 
     private fun cancelImageDownload(
         id: Int,
@@ -37,8 +30,6 @@ internal object LoadAdapter {
                 this.id,
                 removeFromCache
             )
-
-
         }
 
         return imageLoad == null || imageLoad.isCancelled()
@@ -66,18 +57,10 @@ internal object LoadAdapter {
 
     fun loadStringFromCache(path: String) = documentMemoryCache.get(path)
 
-
-    fun downloadString(url: String) = getJSONStringFromURL(url)?.also {
-        PixelLog.debug(this@LoadAdapter.javaClass.simpleName, "Downloaded JSON schema $it")
-        documentMemoryCache.put(url, it)
-    }
-
     private fun removeImageDownload(id: Int, removeFromCache: Boolean) {
         imageLoads.remove(id)?.also {
             if (removeFromCache)
                 bitmapMemoryCache.clear(id)
         }
     }
-
-
 }

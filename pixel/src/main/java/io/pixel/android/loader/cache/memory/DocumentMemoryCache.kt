@@ -31,15 +31,12 @@ internal class DocumentMemoryCache private constructor() {
 
     }
 
-
     fun setCacheSize(cacheSizeInKiloBytes: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cache.resize(cacheSizeInKiloBytes)
             PixelLog.debug(javaClass.simpleName, "New Cache Size = $cacheSizeInKiloBytes")
         }
-
     }
-
 
     private val cache = object : LruCache<String, String>(maxCacheSize) {
         override fun sizeOf(key: String?, value: String?): Int {
@@ -56,9 +53,7 @@ internal class DocumentMemoryCache private constructor() {
         {
             if (cache[key] == null)
                 return cache.put(key, value)
-
         }
-
         return null
     }
 

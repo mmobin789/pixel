@@ -13,9 +13,7 @@ internal data class ImageDownload(private val viewLoad: ViewLoad) {
 
     val id = viewLoad.hashCode()
 
-
     override fun equals(other: Any?): Boolean {
-
         if (other == null || other !is ImageDownload)
             return false
 
@@ -38,9 +36,6 @@ internal data class ImageDownload(private val viewLoad: ViewLoad) {
 
     fun isCancelled() = downloadJob?.isCancelled == true
 
-    /*fun isActive() = downloadJob?.isActive == true*/
-
-
     fun onReady(callback: (Bitmap) -> Unit) {
         downloadJob = GlobalScope.launch(Dispatchers.IO) {
             viewLoad.run {
@@ -48,7 +43,6 @@ internal data class ImageDownload(private val viewLoad: ViewLoad) {
                     this@ImageDownload.javaClass.simpleName,
                     "Download no = ${hashCode()} started for $path for ${width}x${height}"
                 )
-
 
                 LoadAdapter.downloadImage(
                     path,
@@ -59,11 +53,9 @@ internal data class ImageDownload(private val viewLoad: ViewLoad) {
                 )?.also {
                     withContext(Dispatchers.Main) {
                         callback(it)
-
                     }
                 }
             }
         }
     }
-
 }

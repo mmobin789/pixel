@@ -64,58 +64,6 @@ class Pixel private constructor() {
 
             }
         }
-
-        /**
-         * Primary method to load JSON Object async.
-         * It is also safe to call this method from a background thread.
-         * @param path The url.
-         * @param resultInBackground passing true will invoke the callback in a background thread. (Default is false)
-         * @param callback a callback for JSONObject.
-         */
-        @JvmStatic
-        fun loadJsonObject(
-            path: String?,
-            resultInBackground: Boolean = false,
-            callback: ((JSONObject) -> Unit)
-
-        ) {
-
-            ValidatorUtils.validateURL(path)?.apply {
-
-                LoaderProxy.loadJsonObject(this, resultInBackground) {
-                    PixelLog.debug(TAG, it.toString())
-                    callback(it)
-                }
-
-
-            }
-        }
-
-        /**
-         * Primary method to load JSON Array async.
-         * It is also safe to call this method from a background thread.
-         * @param path The url.
-         * @param resultInBackground passing true will invoke the callback in a background thread. (Default is false)
-         * @param callback a callback for JSONArray.
-         */
-        @JvmStatic
-        fun loadJsonArray(
-            path: String?,
-            resultInBackground: Boolean = false,
-            callback: ((JSONArray) -> Unit)
-        ) {
-
-            ValidatorUtils.validateURL(path)?.apply {
-                LoaderProxy.loadJsonArray(this, resultInBackground) {
-                    PixelLog.debug(TAG, it.toString())
-                    callback(it)
-
-
-                }
-
-
-            }
-        }
     }
 
 
@@ -124,15 +72,11 @@ class Pixel private constructor() {
         pixelOptions: PixelOptions?,
         imageView: ImageView
     ) {
-
-
         LoaderProxy.loadImage(
             imageView,
             path,
             pixelOptions
         )
-
-
     }
 
     /**
@@ -142,6 +86,4 @@ class Pixel private constructor() {
     fun cancel() {
         LoaderProxy.addCancelledLoad(loadRequest)
     }
-
-
 }

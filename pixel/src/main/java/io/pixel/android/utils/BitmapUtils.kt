@@ -23,13 +23,8 @@ internal object BitmapUtils {
                 decoder.setTargetSampleSize(
                     calculateInSampleSize(info.size.width, info.size.height, reqWidth, reqHeight)
                 )
-
-
             }
         }
-
-
-
         return decodeBitmapFromByteArray(byteArray, reqWidth, reqHeight)
     }
 
@@ -60,7 +55,6 @@ internal object BitmapUtils {
         var inSampleSize = 1
 
         if (height > reqHeight || width > reqWidth) {
-
             val halfHeight: Int = height / 2
             val halfWidth: Int = width / 2
 
@@ -80,7 +74,6 @@ internal object BitmapUtils {
     ): Int {
 
         // Raw height and width of image in method params.
-
         var inSampleSize = 1
         if (height > reqHeight || width > reqWidth) {
             val halfHeight = height / 2
