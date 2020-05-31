@@ -18,8 +18,6 @@ internal object ValidatorUtils {
                 PixelLog.error(TAG, "Invalid URL")
             return null
         }
-
         return url
-
     }
 }
