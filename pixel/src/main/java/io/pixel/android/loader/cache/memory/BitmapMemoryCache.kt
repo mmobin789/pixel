@@ -42,7 +42,6 @@ internal class BitmapMemoryCache private constructor() {
         }
     }
 
-
     private val cache = object : LruCache<Int, Bitmap>(maxCacheSize) {
         override fun sizeOf(key: Int?, value: Bitmap?): Int {
             // The cache size will be measured in kilobytes rather than
@@ -63,8 +62,6 @@ internal class BitmapMemoryCache private constructor() {
 
 
         }
-
-
     }
 
     fun clear(key: Int): Bitmap? = cache.remove(key)
@@ -78,6 +75,4 @@ internal class BitmapMemoryCache private constructor() {
     fun clear() = GlobalScope.launch {
         cache.evictAll()
     }
-
-
 }

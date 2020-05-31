@@ -12,18 +12,3 @@ internal fun String.getUniqueIdentifier(): Int {
     }
     return sum
 }
-
-internal fun String.createJsonArray(): JSONArray? = try {
-    JSONArray(this)
-} catch (e: JSONException) {
-    e.printStackTrace()
-    null
-}
-
-
-internal fun String.createJsonObject(): JSONObject? = try {
-    JSONObject(this)
-} catch (e: JSONException) {
-    e.printStackTrace()
-    null
-}

@@ -26,39 +26,4 @@ internal object DownloadUtils {
             null
         }
     }
-
-    fun getJSONStringFromURL(path: String): String? {
-        val url = URL(path)
-        val connection = url.openConnection() as HttpURLConnection
-        return connection.run {
-            var bufferedReader: BufferedReader? = null
-            try {
-                connect()
-                bufferedReader =
-                    BufferedReader(InputStreamReader(inputStream, Charset.defaultCharset()))
-                val stringBuffer = StringBuffer(500)
-                var line: String?
-
-                while (bufferedReader.readText().also { line = it }.isNotEmpty()) {
-                    stringBuffer.append(line).append("\n")
-                }
-
-                if (stringBuffer.isBlank())
-                    return null
-
-
-                stringBuffer.toString()
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-                null
-            } finally {
-                bufferedReader?.close()
-                disconnect()
-            }
-
-
-        }
-
-    }
 }
