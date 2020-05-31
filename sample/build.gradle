@@ -45,7 +45,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     //testing
@@ -63,16 +63,18 @@ dependencies {
     implementation 'com.kc.androidunsplash:androidunsplash:1.0.5'
 
     // ViewModel - ktx
-    implementation "androidx.fragment:fragment-ktx:1.2.3"
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
 
     // LiveData support
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-   // implementation project(path: ':pixel')
     //pixel
-     implementation 'io.pixel.android:pixel:0.0.2'
+    implementation project(path: ':pixel')
+
+    //pixel
+    //   implementation 'io.pixel.android:pixel:0.0.2'
 
     // glide for comparison
     /* implementation("com.github.bumptech.glide:glide:4.11.0") {
