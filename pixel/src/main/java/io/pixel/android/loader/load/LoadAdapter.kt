@@ -9,7 +9,6 @@ internal object LoadAdapter {
     private val bitmapMemoryCache = MemoryCacheImpl.forBitmap()
     private val documentMemoryCache = MemoryCacheImpl.forDocument()
     private val imageLoads = linkedMapOf<Int, ImageDownload>()
-   // private val jsonLoads = linkedMapOf<Int, JsonDownload>()
 
     fun addDownload(imageDownload: ImageDownload) {
         imageLoads.put(imageDownload.id, imageDownload)?.also {
@@ -19,9 +18,6 @@ internal object LoadAdapter {
         }
     }
 
-    /*fun addDownload(jsonDownload: JsonDownload) {
-        jsonLoads[jsonDownload.id] = jsonDownload
-    }*/
 
     private fun cancelImageDownload(
         id: Int,
