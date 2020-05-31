@@ -18,7 +18,7 @@ import kotlin.random.Random
  */
 @RunWith(AndroidJUnit4::class)
 class SampleActivityTest {
-
+/*
     @Rule
     @JvmField
     val mActivityTestRule = ActivityTestRule(SampleActivity::class.java)
@@ -42,5 +42,5 @@ class SampleActivityTest {
                 click()
             )
         )
-    }
+    }*/
 }
