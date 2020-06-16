@@ -134,6 +134,10 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
 
    If you use Proguard, you may need to add rules for [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro)
    
+   ## Details
+   
+   Read more on [medium](https://medium.com/better-programming/introducing-pixel-a-new-kotlin-image-loading-library-for-android-a37a7a192f73).
+   
    ## Releases
    See release notes [here](https://github.com/mmobin789/pixel/releases).
  
