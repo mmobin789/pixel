@@ -2,6 +2,8 @@
 ![pixel](https://scontent.flhe3-1.fna.fbcdn.net/v/t1.15752-9/99293309_295343698156112_6153396621322223616_n.png?_nc_cat=105&_nc_sid=b96e70&_nc_eui2=AeF3NzTNx9KrpvA1NgheAod7z_B803KdsfHP8HzTcp2x8YmOcl8ROyn80k6Ee34fD4DXuqRRYQNo1Ir2o5FOHAn1&_nc_ohc=5FjqN-dgZbQAX9dlsbn&_nc_ht=scontent.flhe3-1.fna&oh=27c73a7595a7d7a5e2f6d3d8f8f1192b&oe=5EF40FB8&dl=1)
 
 [![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/master.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/master)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/863ea5386f204bd4807580d3ae231874)](https://www.codacy.com/manual/mmobin789/pixel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mmobin789/pixel&amp;utm_campaign=Badge_Grade)
+
 [![Kotlin Version](https://img.shields.io/badge/kotlin-1.3.72-green.svg)](http://kotlinlang.org/)
 
 A lightweight image loading library for Android backed by Kotlin Coroutines.
@@ -134,6 +136,10 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
 
    If you use Proguard, you may need to add rules for [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro)
    
+   ## Details
+   
+   Read more on [medium](https://medium.com/better-programming/introducing-pixel-a-new-kotlin-image-loading-library-for-android-a37a7a192f73).
+   
    ## Releases
    See release notes [here](https://github.com/mmobin789/pixel/releases).
  
@@ -145,10 +151,10 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
 Issues can be reported [here](https://github.com/mmobin789/pixel/issues).
 
 ## Inspiration
-The idea of employing Kotlin Coroutines that drive the working of this library partly came from [Coil](https://github.com/coil-kt)
-and thankfully its creator [Colin White](https://github.com/colinrtwhite).
+The idea of employing Kotlin Coroutines that drive the working of this library partly came from [Coil](https://github.com/coil-kt).
 
-
+## Co-Creator
+  [Malik Dawar](https://github.com/malikdawar)
 
 ## License
 Copyright 2020 Pixel Contributors
