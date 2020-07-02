@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 29
 
@@ -21,6 +21,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
     // needed by coil
     /* compileOptions {
@@ -63,7 +67,7 @@ dependencies {
     implementation 'com.kc.androidunsplash:androidunsplash:1.0.5'
 
     // ViewModel - ktx
-    implementation "androidx.fragment:fragment-ktx:1.2.4"
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
 
     // LiveData support
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
@@ -77,11 +81,11 @@ dependencies {
     //   implementation 'io.pixel.android:pixel:0.0.2'
 
     // glide for comparison
-    /* implementation("com.github.bumptech.glide:glide:4.11.0") {
+    implementation("com.github.bumptech.glide:glide:4.11.0") {
          exclude group: "com.android.support"
      }
-     kapt 'com.github.bumptech.glide:compiler:4.11.0'*/
+     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     // coil for comparison
-    //implementation("io.coil-kt:coil:0.9.5")
+    implementation("io.coil-kt:coil:0.9.5")
 }

@@ -7,7 +7,6 @@ import io.pixel.android.utils.DownloadUtils.getBitmapFromURL
 
 internal object LoadAdapter {
     private val bitmapMemoryCache = MemoryCacheImpl.forBitmap()
-    private val documentMemoryCache = MemoryCacheImpl.forDocument()
     private val imageLoads = linkedMapOf<Int, ImageDownload>()
 
     fun addDownload(imageDownload: ImageDownload) {
@@ -53,9 +52,6 @@ internal object LoadAdapter {
                 ).hashCode(), it
             )
         }
-
-
-    fun loadStringFromCache(path: String) = documentMemoryCache.get(path)
 
     private fun removeImageDownload(id: Int, removeFromCache: Boolean) {
         imageLoads.remove(id)?.also {
