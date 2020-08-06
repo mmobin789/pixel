@@ -80,7 +80,7 @@ import java.util.concurrent.TimeUnit
  * Callers should handle other problems by catching `IOException` and
  * responding appropriately.
  */
-class DiskLRUCache private constructor(
+internal class DiskLRUCache private constructor(
     val directory: File,
     private val appVersion: Int,
     private val valueCount: Int,

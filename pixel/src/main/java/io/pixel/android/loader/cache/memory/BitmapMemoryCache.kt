@@ -50,8 +50,6 @@ internal class BitmapMemoryCache private constructor() {
         }
     }
 
-    /* fun isCached(key: Int) = cache[key] != null*/
-
     fun get(key: Int): Bitmap? = cache[key]
 
     fun put(key: Int, bitmap: Bitmap) {
@@ -65,12 +63,6 @@ internal class BitmapMemoryCache private constructor() {
     }
 
     fun clear(key: Int): Bitmap? = cache.remove(key)
-/*
-    fun getMissCount() = cache.missCount()
-
-    fun getHitCount() = cache.hitCount()
-
-    fun getPutCount() = cache.putCount()*/
 
     fun clear() = GlobalScope.launch {
         cache.evictAll()

@@ -1,12 +1,8 @@
 package io.pixel.android.utils
 
 import android.graphics.Bitmap
-import java.io.BufferedReader
 import java.io.IOException
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
 import java.net.URL
-import java.nio.charset.Charset
 
 
 internal object DownloadUtils {
@@ -15,7 +11,9 @@ internal object DownloadUtils {
         return try {
             URL(path).run {
                 val iS = openStream()
-                BitmapUtils.getDecodedBitmapFromByteArray(iS.readBytes(), reqWidth, reqHeight)
+                iS.r
+                val bytes = iS.readBytes()
+                BitmapUtils.getDecodedBitmapFromByteArray(bytes, reqWidth, reqHeight)
                     .also {
                         iS.close()
                     }

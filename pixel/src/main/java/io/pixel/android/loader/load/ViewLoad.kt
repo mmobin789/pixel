@@ -24,5 +24,10 @@ internal data class ViewLoad(var width: Int, var height: Int, val path: String) 
         return width + height + id
     }
 
+    /**
+     * @return returns the string version of id.
+     */
+    override fun toString() = hashCode().toString()
+
 
 }
