@@ -1,7 +1,7 @@
 package io.pixel.android.config
 
 import io.pixel.android.Pixel
-import io.pixel.android.loader.cache.memory.MemoryCacheImpl
+import io.pixel.android.loader.cache.memory.BitmapMemoryCache
 
 /**
  * Allow to set global configuration for pixel library.
@@ -9,6 +9,9 @@ import io.pixel.android.loader.cache.memory.MemoryCacheImpl
  * @author Mobin Munir
  */
 object PixelConfiguration {
+
+    private val bitmapMemoryCache = BitmapMemoryCache.getInstance()
+
     /**
      * Allows to override default memory cache size for Images which is 1/8th of Virtual Machine Memory.
      * @param cacheSizeInKiloBytes new cache size in Kilobytes.
@@ -16,13 +19,13 @@ object PixelConfiguration {
      */
     @JvmStatic
     fun setImageMemoryCacheSize(cacheSizeInKiloBytes: Int) =
-        MemoryCacheImpl.forBitmap().setCacheSize(cacheSizeInKiloBytes)
+        bitmapMemoryCache.setCacheSize(cacheSizeInKiloBytes)
 
     /**
      * clears all images for memory cache.
      */
     @JvmStatic
-    fun clearImageCache() = MemoryCacheImpl.forBitmap().clear()
+    fun clearImageCache() = bitmapMemoryCache.clear()
 
     /**
      * Clears all memory caches used by library.

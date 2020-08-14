@@ -1,12 +1,12 @@
 package io.pixel.android.loader.load
 
 import io.pixel.android.config.PixelLog
-import io.pixel.android.loader.cache.memory.MemoryCacheImpl
+import io.pixel.android.loader.cache.memory.BitmapMemoryCache
 import io.pixel.android.loader.download.ImageDownload
 import io.pixel.android.utils.DownloadUtils.getBitmapFromURL
 
 internal object LoadAdapter {
-    private val bitmapMemoryCache = MemoryCacheImpl.forBitmap()
+    private val bitmapMemoryCache = BitmapMemoryCache.getInstance()
     private val imageLoads = linkedMapOf<Int, ImageDownload>()
 
     fun addDownload(imageDownload: ImageDownload) {

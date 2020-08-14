@@ -11,9 +11,7 @@ internal object DownloadUtils {
         return try {
             URL(path).run {
                 val iS = openStream()
-                iS.r
-                val bytes = iS.readBytes()
-                BitmapUtils.getDecodedBitmapFromByteArray(bytes, reqWidth, reqHeight)
+                BitmapUtils.getDecodedBitmapFromByteArray(iS.readBytes(), reqWidth, reqHeight)
                     .also {
                         iS.close()
                     }

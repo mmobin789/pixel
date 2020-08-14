@@ -7,7 +7,7 @@ import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.download.ImageDownload
 import java.util.*
 
-internal data class ImageLoad(
+internal class ImageLoad(
     private val viewLoad: ViewLoad,
     private val imageView: ImageView,
     private val pixelOptions: PixelOptions?
