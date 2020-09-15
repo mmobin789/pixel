@@ -1,24 +1,22 @@
 package io.pixel.android
 
 import android.widget.ImageView
-import io.pixel.android.config.PixelLog
 import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.LoaderProxy
 import io.pixel.android.loader.load.LoadRequest
 import io.pixel.android.utils.ValidatorUtils
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.json.JSONArray
-import org.json.JSONObject
 
 /**
  * Pixel is a library to load and cache images.
- * Optional features include loading JSON Object and Arrays from open urls.
  * @author Mobin Munir
  */
 class Pixel private constructor() {
+
     private lateinit var loadRequest: LoadRequest
+    private val uiScope = CoroutineScope(Dispatchers.Main.immediate)
 
     companion object {
         const val TAG = "Pixel"
@@ -47,18 +45,16 @@ class Pixel private constructor() {
         ): Pixel {
 
             return init().apply {
-
                 ValidatorUtils.validateURL(path)?.apply path@{
-                    loadRequest = LoadRequest(
-                        GlobalScope.launch(Dispatchers.Main) {
-                            imageView.post {
-                                loadImage(this@path, pixelOptions, imageView)
-                            }
-                        })
 
-                } ?: pixelOptions?.run {
-                    if (getPlaceholderResource() != 0)
-                        imageView.setImageResource(getPlaceholderResource())
+                    loadRequest = LoadRequest(uiScope.launch(Dispatchers.Main.immediate) {
+                        imageView.post {
+                            loadImage(this@path, pixelOptions, imageView)
+                        }
+
+
+                    })
+
                 }
 
 
@@ -72,11 +68,13 @@ class Pixel private constructor() {
         pixelOptions: PixelOptions?,
         imageView: ImageView
     ) {
+
         LoaderProxy.loadImage(
             imageView,
             path,
             pixelOptions
         )
+
     }
 
     /**
@@ -87,3 +85,5 @@ class Pixel private constructor() {
         LoaderProxy.addCancelledLoad(loadRequest)
     }
 }
+
+

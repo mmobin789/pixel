@@ -11,7 +11,7 @@ internal object PixelLog {
     private const val tag = Pixel.TAG
 
     fun enabled(loggingEnabled: Boolean) {
-        PixelLog.loggingEnabled = loggingEnabled
+        this.loggingEnabled = loggingEnabled
     }
 
     fun debug(tag: String, message: String) {
@@ -22,5 +22,10 @@ internal object PixelLog {
     fun error(tag: String, message: String) {
         if (loggingEnabled)
             Log.e("${PixelLog.tag} $tag", message)
+    }
+
+    fun warn(tag: String, message: String) {
+        if (loggingEnabled)
+            Log.w("${PixelLog.tag} $tag", message)
     }
 }

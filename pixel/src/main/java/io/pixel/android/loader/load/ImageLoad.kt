@@ -21,8 +21,7 @@ internal class ImageLoad(
 
 
     companion object {
-        private val imageViewsMap = Collections.synchronizedMap(WeakHashMap<ImageView, Int>())
-
+        private val imageViewsMap = Collections.synchronizedMap(WeakHashMap<ImageView, Int>(1000))
     }
 
     private fun imageViewReused(): Boolean {
@@ -33,7 +32,6 @@ internal class ImageLoad(
     }
 
     fun start() {
-
         pixelOptions?.apply {
             val sampleWidth = getRequestedImageWidth()
             val sampleHeight = getRequestedImageHeight()
@@ -49,25 +47,35 @@ internal class ImageLoad(
                 viewLoad.height = sampleHeight
             }
         }
+        val hashCode = viewLoad.hashCode()
+        val context = imageView.context
 
-        LoadAdapter.loadImageFromCache(viewLoad.hashCode())?.apply {
+        LoadAdapter.loadImageFromMemory(hashCode)?.apply {
             PixelLog.debug(
                 this@ImageLoad.javaClass.simpleName,
-                "Returned Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
+                "Returned Memory Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
             )
             setImage(this)
 
-        } ?: apply {
-            val imageDownload = ImageDownload(viewLoad)
-            LoadAdapter.addDownload(imageDownload)
+        } ?: LoadAdapter.loadImageFromDisk(context, hashCode) { diskBitmap ->
+            diskBitmap?.run {
+                PixelLog.debug(
+                    this@ImageLoad.javaClass.simpleName,
+                    "Returned Disk Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
+                )
+                setImage(this)
+            } ?: apply {
+                val imageDownload = ImageDownload(viewLoad)
+                LoadAdapter.addDownload(imageDownload)
+                imageDownload.start({
+                    setImage(it)
+                }, context)
 
-            imageDownload.onReady {
-                setImage(it)
+                pixelOptions?.also {
+                    imageView.setImageResource(it.getPlaceholderResource())
+                }
             }
 
-            pixelOptions?.also {
-                imageView.setImageResource(it.getPlaceholderResource())
-            }
         }
     }
 

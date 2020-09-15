@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kc.unsplash.models.Collection
+import io.pixel.android.config.PixelConfiguration
 import io.pixel.sample.viewmodel.UnsplashViewModel
 import kotlinx.android.synthetic.main.activity_sample.*
 
@@ -21,6 +22,7 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
         iv1.visibility = View.GONE
         iv2.visibility = View.GONE
         rvH.visibility = View.GONE
+        PixelConfiguration.setLoggingEnabled(true)
         loadImages()
 
 

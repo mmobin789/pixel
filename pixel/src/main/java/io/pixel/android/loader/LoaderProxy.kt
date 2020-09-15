@@ -26,6 +26,7 @@ internal object LoaderProxy {
         )
 
         ImageLoad(viewLoad, imageView, pixelOptions).also { it.start() }
+
     }
 
     fun addCancelledLoad(loadRequest: LoadRequest) {

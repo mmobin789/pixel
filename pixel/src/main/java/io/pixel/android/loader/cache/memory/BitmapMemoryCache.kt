@@ -8,26 +8,18 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-internal class BitmapMemoryCache private constructor() {
+internal object BitmapMemoryCache {
 
-    companion object {
-        /*   Get max available VM memory, exceeding this amount will throw an
-           OutOfMemory exception. Stored in kilobytes as LruCache takes an
-          int in its constructor.*/
 
-        private val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+    /*   Get max available VM memory, exceeding this amount will throw an
+       OutOfMemory exception. Stored in kilobytes as LruCache takes an
+      int in its constructor.*/
 
-        // Use 1/8th of the available memory for this memory cache.
-        private val maxCacheSize = maxMemory / 8
-        private var bitmapMemoryCache: BitmapMemoryCache? = null
+    private val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
 
-        fun getInstance(): BitmapMemoryCache {
-            if (bitmapMemoryCache == null)
-                bitmapMemoryCache = BitmapMemoryCache()
+    // Use 1/8th of the available memory for this memory cache.
+    private val maxCacheSize = maxMemory / 8
 
-            return bitmapMemoryCache!!
-        }
-    }
 
     init {
         PixelLog.debug(javaClass.simpleName, "Max JVM = $maxMemory")

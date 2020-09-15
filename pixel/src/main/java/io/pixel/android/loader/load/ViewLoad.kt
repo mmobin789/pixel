@@ -2,7 +2,7 @@ package io.pixel.android.loader.load
 
 import io.pixel.android.utils.getUniqueIdentifier
 
-internal data class ViewLoad(var width: Int, var height: Int, val path: String) {
+internal class ViewLoad(var width: Int, var height: Int, val path: String) {
 
 
     private val id = path.getUniqueIdentifier()

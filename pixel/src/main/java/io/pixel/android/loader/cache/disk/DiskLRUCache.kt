@@ -133,7 +133,7 @@ internal class DiskLRUCache private constructor(
     private val lruEntries = LinkedHashMap<String, Entry>(0, 0.75f, true)
 
     /** This cache uses a single background thread to evict entries. */
-    internal val executorService =
+    private val executorService =
         ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, LinkedBlockingQueue())
 
     private var journalWriter: BufferedSink? = null

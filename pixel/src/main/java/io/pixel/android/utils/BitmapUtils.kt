@@ -7,85 +7,93 @@ import android.os.Build
 import java.nio.ByteBuffer
 
 
-internal object BitmapUtils {
+internal fun ByteArray.getDecodedBitmapFromByteArray(
+    reqWidth: Int,
+    reqHeight: Int
+): Bitmap? {
 
-    fun getDecodedBitmapFromByteArray(
-        byteArray: ByteArray,
-        reqWidth: Int,
-        reqHeight: Int
-    ): Bitmap? {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-
-            return ImageDecoder.decodeBitmap(
-                ImageDecoder.createSource(ByteBuffer.wrap(byteArray))
-            ) { decoder, info, _ ->
-                decoder.setTargetSampleSize(
-                    calculateInSampleSize(info.size.width, info.size.height, reqWidth, reqHeight)
-                )
-            }
+        return ImageDecoder.decodeBitmap(
+            ImageDecoder.createSource(ByteBuffer.wrap(this))
+        ) { decoder, info, _ ->
+            decoder.setTargetSampleSize(
+                calculateInSampleSize(info.size.width, info.size.height, reqWidth, reqHeight)
+            )
         }
-        return decodeBitmapFromByteArray(byteArray, reqWidth, reqHeight)
+    }
+    return decodeBitmapFromByteArray(this, reqWidth, reqHeight)
+}
+
+private fun decodeBitmapFromByteArray(
+    byteArray: ByteArray,
+    reqWidth: Int,
+    reqHeight: Int
+) =
+    BitmapFactory.Options().run {
+        inJustDecodeBounds = true
+        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
+        // Calculate inSampleSize
+        inSampleSize = calculateInSampleSize(this, reqWidth, reqHeight)
+        // Decode bitmap with inSampleSize set
+        inJustDecodeBounds = false
+
+        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
     }
 
-    private fun decodeBitmapFromByteArray(
-        byteArray: ByteArray,
-        reqWidth: Int,
-        reqHeight: Int
-    ) =
-        BitmapFactory.Options().run {
-            inJustDecodeBounds = true
-            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
-            // Calculate inSampleSize
-            inSampleSize = calculateInSampleSize(this, reqWidth, reqHeight)
-            // Decode bitmap with inSampleSize set
-            inJustDecodeBounds = false
 
-            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
+private fun calculateInSampleSize(
+    options: BitmapFactory.Options,
+    reqWidth: Int,
+    reqHeight: Int
+): Int {
+    // Raw height and width of image
+    val (height: Int, width: Int) = options.run { outHeight to outWidth }
+    var inSampleSize = 1
+
+    if (height > reqHeight || width > reqWidth) {
+        val halfHeight: Int = height / 2
+        val halfWidth: Int = width / 2
+
+        // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+        // height and width larger than the requested height and width.
+        while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+            inSampleSize *= 2
         }
-
-
-    private fun calculateInSampleSize(
-        options: BitmapFactory.Options,
-        reqWidth: Int,
-        reqHeight: Int
-    ): Int {
-        // Raw height and width of image
-        val (height: Int, width: Int) = options.run { outHeight to outWidth }
-        var inSampleSize = 1
-
-        if (height > reqHeight || width > reqWidth) {
-            val halfHeight: Int = height / 2
-            val halfWidth: Int = width / 2
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
-                inSampleSize *= 2
-            }
-        }
-
-        return inSampleSize
     }
 
-    private fun calculateInSampleSize(
-        width: Int, height: Int,
-        reqWidth: Int, reqHeight: Int
-    ): Int {
+    return inSampleSize
+}
 
-        // Raw height and width of image in method params.
-        var inSampleSize = 1
-        if (height > reqHeight || width > reqWidth) {
-            val halfHeight = height / 2
-            val halfWidth = width / 2
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+private fun calculateInSampleSize(
+    width: Int, height: Int,
+    reqWidth: Int, reqHeight: Int
+): Int {
+
+    // Raw height and width of image in method params.
+    var inSampleSize = 1
+    if (height > reqHeight || width > reqWidth) {
+        val halfHeight = height / 2
+        val halfWidth = width / 2
+        // Calculate the largest inSampleSize value that is a power of 2 and keeps both
 // height and width larger than the requested height and width.
-            while (halfHeight / inSampleSize >= reqHeight
-                && halfWidth / inSampleSize >= reqWidth
-            ) {
-                inSampleSize *= 2
-            }
+        while (halfHeight / inSampleSize >= reqHeight
+            && halfWidth / inSampleSize >= reqWidth
+        ) {
+            inSampleSize *= 2
         }
-        return inSampleSize
     }
+    return inSampleSize
+}
+
+/**
+ * A personal algorithm for view load hashing purpose.
+ * It creates a unique ID for each cached image.
+ */
+internal fun String.getUniqueIdentifier(): Int {
+    var sum = 0
+    map {
+        sum += it.toInt()
+    }
+    return sum
 }
