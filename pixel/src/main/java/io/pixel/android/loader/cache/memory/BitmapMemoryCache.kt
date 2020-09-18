@@ -4,8 +4,6 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.util.LruCache
 import io.pixel.android.config.PixelLog
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 internal object BitmapMemoryCache {
@@ -23,14 +21,14 @@ internal object BitmapMemoryCache {
 
     init {
         PixelLog.debug(javaClass.simpleName, "Max JVM = $maxMemory")
-        PixelLog.debug(javaClass.simpleName, "Cache Size = $maxCacheSize")
+        PixelLog.debug(javaClass.simpleName, "Cache Size = ${maxCacheSize / 1024} MegaBytes")
     }
 
 
-    fun setCacheSize(cacheSizeInKiloBytes: Int) {
+    fun setCacheSize(cacheSizeInMegaBytes: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            cache.resize(cacheSizeInKiloBytes)
-            PixelLog.debug(javaClass.simpleName, "New Cache Size = $cacheSizeInKiloBytes")
+            cache.resize(cacheSizeInMegaBytes * 1024)
+            PixelLog.debug(javaClass.simpleName, "New Cache Size = $cacheSizeInMegaBytes MegaBytes")
         }
     }
 
@@ -56,7 +54,6 @@ internal object BitmapMemoryCache {
 
     fun clear(key: Int): Bitmap? = cache.remove(key)
 
-    fun clear() = GlobalScope.launch {
-        cache.evictAll()
-    }
+    fun clear() = cache.evictAll()
+
 }

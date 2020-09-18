@@ -5,8 +5,7 @@ import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.LoaderProxy
 import io.pixel.android.loader.load.LoadRequest
 import io.pixel.android.utils.ValidatorUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 /**
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 class Pixel private constructor() {
 
     private lateinit var loadRequest: LoadRequest
-    private val uiScope = CoroutineScope(Dispatchers.Main.immediate)
+    private val uiScope = MainScope()
 
     companion object {
         const val TAG = "Pixel"
@@ -47,7 +46,7 @@ class Pixel private constructor() {
             return init().apply {
                 ValidatorUtils.validateURL(path)?.apply path@{
 
-                    loadRequest = LoadRequest(uiScope.launch(Dispatchers.Main.immediate) {
+                    loadRequest = LoadRequest(uiScope.launch {
                         imageView.post {
                             loadImage(this@path, pixelOptions, imageView)
                         }
@@ -72,7 +71,8 @@ class Pixel private constructor() {
         LoaderProxy.loadImage(
             imageView,
             path,
-            pixelOptions
+            pixelOptions,
+            uiScope
         )
 
     }

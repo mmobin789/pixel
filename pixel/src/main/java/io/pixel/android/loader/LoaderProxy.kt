@@ -5,6 +5,7 @@ import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.load.ImageLoad
 import io.pixel.android.loader.load.LoadRequest
 import io.pixel.android.loader.load.ViewLoad
+import kotlinx.coroutines.CoroutineScope
 
 /**
  * A proxy class representing a link to load process and it's states.
@@ -12,12 +13,13 @@ import io.pixel.android.loader.load.ViewLoad
 
 internal object LoaderProxy {
 
-    private val cancelledLoadRequests = ArrayList<LoadRequest>(300)
+    private val cancelledLoadRequests = ArrayList<LoadRequest>(100)
 
     fun loadImage(
         imageView: ImageView,
         path: String,
-        pixelOptions: PixelOptions?
+        pixelOptions: PixelOptions?,
+        coroutineScope: CoroutineScope
     ) {
         val viewLoad = ViewLoad(
             imageView.width,
@@ -25,7 +27,7 @@ internal object LoaderProxy {
             path
         )
 
-        ImageLoad(viewLoad, imageView, pixelOptions).also { it.start() }
+        ImageLoad(viewLoad, imageView, pixelOptions, coroutineScope).also { it.start() }
 
     }
 

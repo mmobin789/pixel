@@ -1,7 +1,5 @@
 package io.pixel.android.loader.load
 
-import android.content.Context
-import android.graphics.Bitmap
 import io.pixel.android.config.PixelLog
 import io.pixel.android.loader.cache.disk.BitmapDiskCache
 import io.pixel.android.loader.cache.memory.BitmapMemoryCache
@@ -9,7 +7,8 @@ import io.pixel.android.loader.download.ImageDownload
 import io.pixel.android.utils.DownloadUtils.getBitmapFromURL
 
 internal object LoadAdapter {
-    private val imageLoads = linkedMapOf<Int, ImageDownload>()
+    private val imageLoads = LinkedHashMap<Int, ImageDownload>(100)
+
 
     fun addDownload(imageDownload: ImageDownload) {
         imageLoads.put(imageDownload.id, imageDownload)?.also {
@@ -23,9 +22,9 @@ internal object LoadAdapter {
     private fun cancelImageDownload(
         id: Int,
         removeFromCache: Boolean = false
-    ): Boolean {
+    ) {
 
-        val imageLoad = imageLoads[id]?.apply {
+        imageLoads[id]?.apply {
             cancel()
             removeImageDownload(
                 this.id,
@@ -33,22 +32,19 @@ internal object LoadAdapter {
             )
         }
 
-        return imageLoad == null || imageLoad.isCancelled()
     }
 
 
     fun loadImageFromMemory(viewLoadCode: Int) = BitmapMemoryCache.get(viewLoadCode)
 
-    fun loadImageFromDisk(context: Context, viewLoadCode: Int, callback: (Bitmap?) -> Unit) =
-        BitmapDiskCache.get(context, viewLoadCode, callback)
+    fun loadImageFromDisk(viewLoadCode: Int) = BitmapDiskCache.get(viewLoadCode)
 
 
     fun downloadImage(
         url: String,
         reqWidth: Int,
         reqHeight: Int,
-        viewLoadCode: Int,
-        context: Context
+        viewLoadCode: Int
     ) =
         getBitmapFromURL(url, reqWidth, reqHeight)?.also {
             PixelLog.debug(
@@ -60,7 +56,7 @@ internal object LoadAdapter {
                 BitmapMemoryCache.put(
                     hashCode(), it
                 )
-                BitmapDiskCache.put(context, this, it)
+                BitmapDiskCache.put(this, it)
             }
         }
 

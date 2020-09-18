@@ -1,6 +1,5 @@
 package io.pixel.android.config
 
-import android.content.Context
 import io.pixel.android.Pixel
 import io.pixel.android.loader.cache.disk.BitmapDiskCache
 import io.pixel.android.loader.cache.memory.BitmapMemoryCache
@@ -14,12 +13,12 @@ object PixelConfiguration {
 
     /**
      * Allows to override default memory cache size which is 1/8th of Virtual Machine Memory.
-     * @param cacheSizeInKiloBytes new cache size in Kilobytes.
+     * @param cacheSizeInMegaBytes new cache size in Kilobytes.
      * This call requires minimum Android API Level 21 or Lollipop.
      */
     @JvmStatic
-    fun setMemoryCacheSize(cacheSizeInKiloBytes: Int) =
-        BitmapMemoryCache.setCacheSize(cacheSizeInKiloBytes)
+    fun setMemoryCacheSize(cacheSizeInMegaBytes: Int) =
+        BitmapMemoryCache.setCacheSize(cacheSizeInMegaBytes)
 
     /**
      * Allows to override default memory cache size which is 250MB (MegaBytes)
@@ -27,9 +26,10 @@ object PixelConfiguration {
      * This call requires minimum Android API Level 21 or Lollipop.
      */
     @JvmStatic
-    fun setDiskCacheSize(context: Context, cacheSizeInMegaBytes: Long) =
-        BitmapDiskCache.setCacheSize(context, cacheSizeInMegaBytes)
+    fun setDiskCacheSize(cacheSizeInMegaBytes: Long) =
+        BitmapDiskCache.setCacheSize(cacheSizeInMegaBytes)
 
+    @JvmStatic
     fun setAppVersion(appVersion: Int) = BitmapDiskCache.setAppVersion(appVersion)
 
     /**

@@ -7,10 +7,6 @@ import android.os.Environment
 import android.os.Environment.isExternalStorageRemovable
 import io.pixel.android.config.PixelLog
 import io.pixel.android.loader.load.ViewLoad
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okio.Buffer
 import okio.buffer
 import java.io.BufferedOutputStream
@@ -27,12 +23,13 @@ internal object BitmapDiskCache {
 
     private val TAG = javaClass.simpleName
 
-    private val ioScope = CoroutineScope(Dispatchers.IO)
-
     private var appVersion = 1
 
+    private var cacheSizeInMB = 250L
+
     @Synchronized
-    private fun buildInstance(context: Context) {
+    fun prepare(context: Context) {
+
         if (mDiskLRUCache == null)
             try {
                 mDiskLRUCache = // 50mb
@@ -40,24 +37,31 @@ internal object BitmapDiskCache {
                         getDiskCacheDir(context),
                         appVersion,
                         1,
-                        250 * 1024 * 1024
-                    ) // 50mb
+                        cacheSizeInMB * 1024 * 1024
+                    ) // 250mb
 
                 PixelLog.debug(TAG, "Disk Cache initialized successfully.")
-
+                PixelLog.debug(TAG, "Cache Size = $cacheSizeInMB MegaBytes")
+                PixelLog.debug(TAG, "App Version = $appVersion")
 
             } catch (e: IOException) {
                 e.printStackTrace()
+
+
             }
+
+        /* if (mDiskLRUCache?.getMaxSize() == cacheSizeInMB)  // if cache is full increase its size 2x.
+         {
+             val resized = cacheSizeInMB * 2
+             PixelLog.debug(TAG, "Disk cache resized to ${resized / 1024L * 1024L} MegaBytes")
+             mDiskLRUCache?.setMaxSize(resized)
+         }*/
 
     }
 
-    @Synchronized
-    fun setCacheSize(context: Context, cacheSizeInMB: Long) {
-        ioScope.launch {
-            buildInstance(context)
-            mDiskLRUCache?.setMaxSize(cacheSizeInMB)
-        }
+
+    fun setCacheSize(cacheSizeInMB: Long) {
+        this.cacheSizeInMB = cacheSizeInMB
     }
 
 
@@ -66,8 +70,7 @@ internal object BitmapDiskCache {
     }
 
     @Synchronized
-    fun put(context: Context, viewLoad: ViewLoad, bitmap: Bitmap) {
-        buildInstance(context)
+    fun put(viewLoad: ViewLoad, bitmap: Bitmap) {
         val key = viewLoad.toString()
         val editor = mDiskLRUCache?.edit(key)
         try {
@@ -102,25 +105,22 @@ internal object BitmapDiskCache {
     }
 
     @Synchronized
-    fun get(context: Context, viewLoadCode: Int, callback: (Bitmap?) -> Unit) {
-        ioScope.launch(Dispatchers.IO) {
-            buildInstance(context)
-            val snapshot = mDiskLRUCache?.get(viewLoadCode.toString())
-            val buffer = snapshot?.getSource(0)
-                ?.buffer()
-            val bitmap = BitmapFactory.decodeStream(buffer?.inputStream())
-            buffer?.close()
-            withContext(Dispatchers.Main.immediate)
-            {
-                callback(bitmap)
-            }
-
-        }
+    fun get(viewLoadCode: Int): Bitmap? {
+        val snapshot = mDiskLRUCache?.get(viewLoadCode.toString())
+        val buffer = snapshot?.getSource(0)
+            ?.buffer()
+        val bitmap = BitmapFactory.decodeStream(buffer?.inputStream())
+        buffer?.close()
+        return bitmap
     }
 
 
     fun delete() {
-        mDiskLRUCache?.delete()
+        try {
+            mDiskLRUCache?.delete()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
 
