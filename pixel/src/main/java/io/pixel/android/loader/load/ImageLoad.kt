@@ -27,7 +27,7 @@ internal class ImageLoad(
 
 
     companion object {
-        private val imageViewsMap = Collections.synchronizedMap(WeakHashMap<ImageView, Int>(1000))
+        private val imageViewsMap = Collections.synchronizedMap(WeakHashMap<ImageView, Int>(100))
     }
 
     private fun imageViewReused(): Boolean {
