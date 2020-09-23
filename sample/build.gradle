@@ -81,12 +81,12 @@ dependencies {
     //pixel
     //   implementation 'io.pixel.android:pixel:0.0.2'
 
-    // glide for comparison
-    implementation("com.github.bumptech.glide:glide:4.11.0") {
-         exclude group: "com.android.support"
-     }
-     kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    /* // glide for comparison
+     implementation("com.github.bumptech.glide:glide:4.11.0") {
+          exclude group: "com.android.support"
+      }
+      kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
-    // coil for comparison
-    implementation("io.coil-kt:coil:0.9.5")
+     // coil for comparison
+     implementation("io.coil-kt:coil:0.9.5")*/
 }
