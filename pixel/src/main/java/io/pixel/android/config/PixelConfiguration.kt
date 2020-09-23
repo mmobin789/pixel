@@ -13,7 +13,7 @@ object PixelConfiguration {
 
     /**
      * Allows to override default memory cache size which is 1/8th of Virtual Machine Memory.
-     * @param cacheSizeInMegaBytes new cache size in Kilobytes.
+     * @param cacheSizeInMegaBytes new cache size in MegaBytes.
      * This call requires minimum Android API Level 21 or Lollipop.
      */
     @JvmStatic
@@ -23,7 +23,6 @@ object PixelConfiguration {
     /**
      * Allows to override default memory cache size which is 250MB (MegaBytes)
      * @param cacheSizeInMegaBytes new cache size in Megabytes.
-     * This call requires minimum Android API Level 21 or Lollipop.
      */
     @JvmStatic
     fun setDiskCacheSize(cacheSizeInMegaBytes: Long) =
