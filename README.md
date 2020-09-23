@@ -1,16 +1,16 @@
 # Pixel
-![pixel](https://scontent.flhe7-1.fna.fbcdn.net/v/t1.15752-9/99293309_295343698156112_6153396621322223616_n.png?_nc_cat=105&_nc_sid=b96e70&_nc_ohc=o2ABTaYGJZ0AX-dTMEf&_nc_ht=scontent.flhe7-1.fna&oh=46f1c3e7bd4107b3f5894665c94c3d38&oe=5F277A38)
+![pixel](https://miro.medium.com/max/875/0*iAMn0EvUMF__xp3F)
 
 [![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/master.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/863ea5386f204bd4807580d3ae231874)](https://www.codacy.com/manual/mmobin789/pixel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mmobin789/pixel&amp;utm_campaign=Badge_Grade)
 
-[![Kotlin Version](https://img.shields.io/badge/kotlin-1.3.72-green.svg)](http://kotlinlang.org/)
+[![Kotlin Version](https://img.shields.io/badge/kotlin-1.4.10-green.svg)](http://kotlinlang.org/)
 
 A lightweight image loading library for Android backed by Kotlin Coroutines.
 
-**Optimal**: Pixel performs optimizations with memory caching, downsampling the image in memory by image view size (pixel by pixel), re-using Bitmaps, automatically pause/cancel requests (Signature requests), and more.
+**Optimal**: Pixel performs optimizations with memory & disk caching, downsampling the image in memory by image view size (pixel by pixel), re-using Bitmaps, automatically pause/cancel requests (Signature requests), and more.
 
-**Light**: Pixel adds less than ~250 methods for now to your APK (for apps that already use coroutines), which is considerably less than Glide,Fresco,Picasso and Coil.
+**Light**: Pixel adds less than ~100 methods for now to your APK, which is considerably less than Glide,Fresco,Picasso and Coil.
 
 **Easy to use**: Pixel's API uses Kotlin's language features and classic design for simplicity and minimal boilerplate.
 
@@ -82,39 +82,19 @@ For complete usage in Kotlin and Java clone the project in Android Studio and ru
 Pixel.load("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80", iv1).cancel()
 
 ```
-
-**Load JSON Object (Till Version 0.0.2)**
-
-```
- Pixel.loadJsonObject("https://jsonplaceholder.typicode.com/todos/1") {
-        // do something with it here
-        }     
-```
-**Load JSON Array (Till Version 0.0.2)**
-
-```
-Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
-       // do something with it here.
-        }       
-```
  
- **Configure and clear memory cache**
+ **Configure memory and disk cache**
  
  ```
- // Set image memory cache to 48000 KBS which is 48MBS
-  PixelConfiguration.setImageMemoryCacheSize(48000)
+ // Set image memory cache to 48MBS
+  PixelConfiguration.setImageMemoryCacheSize(48)
   
- // Set JSON memory cache to 16000 KBS which is 16MBS
-  PixelConfiguration.setJSONMemoryCacheSize(16000)
+ // Set Disk cache to 512MBS
+  PixelConfiguration.setDiskCacheSize(512)
   
  // Clear image cache
   PixelConfiguration.clearImageCache()
   
- // Clear JSON cache (Till Version 0.0.2)
-  PixelConfiguration.clearDocumentCache()
-  
- // Clear all caches
-   PixelConfiguration.clearCaches()
    
    ```
    
@@ -129,7 +109,7 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
    ```
    ## Requirements
    - Min SDK 14
-   - Compile SDK 29+
+   - Compile SDK 30+
    
    ## R8 / Proguard
    Pixel is completely compatible with R8 and doesn't require adding any extra rules.
