@@ -1,6 +1,6 @@
 package io.pixel.android.utils
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 
@@ -9,13 +9,13 @@ import org.junit.Test
  * See more in DocumentUtils.kt file.
  */
 
-class DocumentUtilsTest {
+class BitmapUtilsTest {
 
     @Test
     fun validateUniqueIdGenerator() {
         val s = "Tu en fera' no priente de te comer`"
         val id = s.getUniqueIdentifier()
-        assertEquals(true, id > 0)
+        assertTrue(id > 0)
 
     }
 

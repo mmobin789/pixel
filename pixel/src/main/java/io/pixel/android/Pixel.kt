@@ -1,24 +1,21 @@
 package io.pixel.android
 
 import android.widget.ImageView
-import io.pixel.android.config.PixelLog
 import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.LoaderProxy
 import io.pixel.android.loader.load.LoadRequest
 import io.pixel.android.utils.ValidatorUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import org.json.JSONArray
-import org.json.JSONObject
 
 /**
  * Pixel is a library to load and cache images.
- * Optional features include loading JSON Object and Arrays from open urls.
  * @author Mobin Munir
  */
 class Pixel private constructor() {
+
     private lateinit var loadRequest: LoadRequest
+    private val uiScope = MainScope()
 
     companion object {
         const val TAG = "Pixel"
@@ -47,69 +44,15 @@ class Pixel private constructor() {
         ): Pixel {
 
             return init().apply {
-
                 ValidatorUtils.validateURL(path)?.apply path@{
-                    loadRequest = LoadRequest(
-                        GlobalScope.launch(Dispatchers.Main) {
-                            imageView.post {
-                                loadImage(this@path, pixelOptions, imageView)
-                            }
-                        })
 
-                } ?: pixelOptions?.run {
-                    if (getPlaceholderResource() != 0)
-                        imageView.setImageResource(getPlaceholderResource())
-                }
+                    loadRequest = LoadRequest(uiScope.launch {
+                        imageView.post {
+                            loadImage(this@path, pixelOptions, imageView)
+                        }
 
 
-            }
-        }
-
-        /**
-         * Primary method to load JSON Object async.
-         * It is also safe to call this method from a background thread.
-         * @param path The url.
-         * @param resultInBackground passing true will invoke the callback in a background thread. (Default is false)
-         * @param callback a callback for JSONObject.
-         */
-        @JvmStatic
-        fun loadJsonObject(
-            path: String?,
-            resultInBackground: Boolean = false,
-            callback: ((JSONObject) -> Unit)
-
-        ) {
-
-            ValidatorUtils.validateURL(path)?.apply {
-
-                LoaderProxy.loadJsonObject(this, resultInBackground) {
-                    PixelLog.debug(TAG, it.toString())
-                    callback(it)
-                }
-
-
-            }
-        }
-
-        /**
-         * Primary method to load JSON Array async.
-         * It is also safe to call this method from a background thread.
-         * @param path The url.
-         * @param resultInBackground passing true will invoke the callback in a background thread. (Default is false)
-         * @param callback a callback for JSONArray.
-         */
-        @JvmStatic
-        fun loadJsonArray(
-            path: String?,
-            resultInBackground: Boolean = false,
-            callback: ((JSONArray) -> Unit)
-        ) {
-
-            ValidatorUtils.validateURL(path)?.apply {
-                LoaderProxy.loadJsonArray(this, resultInBackground) {
-                    PixelLog.debug(TAG, it.toString())
-                    callback(it)
-
+                    })
 
                 }
 
@@ -125,13 +68,12 @@ class Pixel private constructor() {
         imageView: ImageView
     ) {
 
-
         LoaderProxy.loadImage(
             imageView,
             path,
-            pixelOptions
+            pixelOptions,
+            uiScope
         )
-
 
     }
 
@@ -142,6 +84,6 @@ class Pixel private constructor() {
     fun cancel() {
         LoaderProxy.addCancelledLoad(loadRequest)
     }
-
-
 }
+
+

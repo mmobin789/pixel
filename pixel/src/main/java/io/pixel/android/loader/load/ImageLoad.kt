@@ -4,16 +4,22 @@ import android.graphics.Bitmap
 import android.widget.ImageView
 import io.pixel.android.config.PixelLog
 import io.pixel.android.config.PixelOptions
+import io.pixel.android.loader.cache.disk.BitmapDiskCache
 import io.pixel.android.loader.download.ImageDownload
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
-internal data class ImageLoad(
+internal class ImageLoad(
     private val viewLoad: ViewLoad,
     private val imageView: ImageView,
-    private val pixelOptions: PixelOptions?
+    private val pixelOptions: PixelOptions?,
+    private val coroutineScope: CoroutineScope
 ) {
 
     val id = viewLoad.hashCode()
+
 
     init {
         imageViewsMap[imageView] = id
@@ -21,8 +27,7 @@ internal data class ImageLoad(
 
 
     companion object {
-        private val imageViewsMap = Collections.synchronizedMap(WeakHashMap<ImageView, Int>())
-
+        private val imageViewsMap = Collections.synchronizedMap(WeakHashMap<ImageView, Int>(100))
     }
 
     private fun imageViewReused(): Boolean {
@@ -33,50 +38,61 @@ internal data class ImageLoad(
     }
 
     fun start() {
-
-        pixelOptions?.apply {
-            val sampleWidth = getRequestedImageWidth()
-            val sampleHeight = getRequestedImageHeight()
-
-            if (sampleWidth > 0 && sampleHeight > 0) {
-
-                PixelLog.debug(
-                    this@ImageLoad.javaClass.simpleName,
-                    "Sample Bitmap load from ${viewLoad.width}x${viewLoad.height} to ${sampleWidth}x${sampleHeight}"
-                )
-
-                viewLoad.width = sampleWidth
-                viewLoad.height = sampleHeight
-            }
+        pixelOptions?.run {
+            imageView.setImageResource(getPlaceholderResource())
         }
 
-        LoadAdapter.loadImageFromCache(viewLoad.hashCode())?.apply {
-            PixelLog.debug(
-                this@ImageLoad.javaClass.simpleName,
-                "Returned Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
-            )
-            setImage(this)
+        coroutineScope.launch(Dispatchers.IO) {
+            BitmapDiskCache.prepare(imageView.context)
 
-        } ?: apply {
-            val imageDownload = ImageDownload(viewLoad)
-            LoadAdapter.addDownload(imageDownload)
+            pixelOptions?.apply {
+                val sampleWidth = getRequestedImageWidth()
+                val sampleHeight = getRequestedImageHeight()
 
-            imageDownload.onReady {
-                setImage(it)
+                if (sampleWidth > 0 && sampleHeight > 0) {
+
+                    PixelLog.debug(
+                        this@ImageLoad.javaClass.simpleName,
+                        "Sample Bitmap load from ${viewLoad.width}x${viewLoad.height} to ${sampleWidth}x${sampleHeight}"
+                    )
+
+                    viewLoad.width = sampleWidth
+                    viewLoad.height = sampleHeight
+                }
+            }
+            val hashCode = viewLoad.hashCode()
+
+            LoadAdapter.loadImageFromMemory(hashCode)?.apply {
+                PixelLog.debug(
+                    this@ImageLoad.javaClass.simpleName,
+                    "Returned Memory Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
+                )
+                setImage(this)
+
+            } ?: LoadAdapter.loadImageFromDisk(hashCode)?.run {
+                PixelLog.debug(
+                    this@ImageLoad.javaClass.simpleName,
+                    "Returned Disk Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
+                )
+                setImage(this)
+            } ?: apply {
+                val imageDownload = ImageDownload(viewLoad, coroutineScope)
+                imageDownload.start {
+                    setImage(it)
+                }
+                LoadAdapter.addDownload(imageDownload)
+
             }
 
-            pixelOptions?.also {
-                imageView.setImageResource(it.getPlaceholderResource())
-            }
         }
     }
 
-
     private fun setImage(bitmap: Bitmap) {
+        coroutineScope.launch(Dispatchers.Main.immediate) {
+            if (!imageViewReused()) {
+                imageView.setImageBitmap(bitmap)
+            }
+        }
 
-        if (imageViewReused())
-            return
-
-        imageView.setImageBitmap(bitmap)
     }
 }

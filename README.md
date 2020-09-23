@@ -110,7 +110,7 @@ Pixel.loadJsonArray("https://jsonplaceholder.typicode.com/users") {
  // Clear image cache
   PixelConfiguration.clearImageCache()
   
- // Clear JSON cache
+ // Clear JSON cache (Till Version 0.0.2)
   PixelConfiguration.clearDocumentCache()
   
  // Clear all caches

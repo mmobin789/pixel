@@ -45,12 +45,11 @@ class RVUnsplashAdapter(private val list: MutableList<Collection>) :
             pixelOptions = PixelOptions.Builder()
                 .setPlaceholderResource(R.drawable.ic_loading_android).build()
         )
+
 // coil
         //  holder.iv.load(url)
 
-        /* Glide.with(holder.itemView).applyDefaultRequestOptions(
-                RequestOptions.placeholderOf(R.drawable.ic_loading_android).diskCacheStrategy(
-                    DiskCacheStrategy.NONE)).load(url).into(holder.iv)*/
+        //    Glide.with(holder.itemView).load(url).into(holder.iv)
 
 
     }
@@ -61,6 +60,7 @@ class RVUnsplashAdapter(private val list: MutableList<Collection>) :
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         this.recyclerView = recyclerView
+        this.recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 3)
     }
 

@@ -1,53 +1,45 @@
 package io.pixel.android.config
 
 import io.pixel.android.Pixel
-import io.pixel.android.loader.cache.memory.MemoryCacheImpl
+import io.pixel.android.loader.cache.disk.BitmapDiskCache
+import io.pixel.android.loader.cache.memory.BitmapMemoryCache
 
 /**
- * Allow to set global configuration for pixel library.
+ * Allow to set application-level configuration for pixel library.
  * @see Pixel
  * @author Mobin Munir
  */
 object PixelConfiguration {
-    /**
-     * Allows to override default memory cache size for Images which is 1/8th of Virtual Machine Memory.
-     * @param cacheSizeInKiloBytes new cache size in Kilobytes.
-     * This call requires minimum Android API Level 21 or Lollipop.
-     */
-    @JvmStatic
-    fun setImageMemoryCacheSize(cacheSizeInKiloBytes: Int) =
-        MemoryCacheImpl.forBitmap().setCacheSize(cacheSizeInKiloBytes)
 
     /**
-     * Allows to override default memory cache size for Documents(JSON) which is 1/8th of Virtual Machine Memory.
-     * @param cacheSizeInKiloBytes new cache size in Kilobytes.
+     * Allows to override default memory cache size which is 1/8th of Virtual Machine Memory.
+     * @param cacheSizeInMegaBytes new cache size in Kilobytes.
      * This call requires minimum Android API Level 21 or Lollipop.
      */
     @JvmStatic
-    fun setJSONMemoryCacheSize(cacheSizeInKiloBytes: Int) =
-        MemoryCacheImpl.forDocument().setCacheSize(cacheSizeInKiloBytes)
+    fun setMemoryCacheSize(cacheSizeInMegaBytes: Int) =
+        BitmapMemoryCache.setCacheSize(cacheSizeInMegaBytes)
+
+    /**
+     * Allows to override default memory cache size which is 250MB (MegaBytes)
+     * @param cacheSizeInMegaBytes new cache size in Megabytes.
+     * This call requires minimum Android API Level 21 or Lollipop.
+     */
+    @JvmStatic
+    fun setDiskCacheSize(cacheSizeInMegaBytes: Long) =
+        BitmapDiskCache.setCacheSize(cacheSizeInMegaBytes)
+
+    @JvmStatic
+    fun setAppVersion(appVersion: Int) = BitmapDiskCache.setAppVersion(appVersion)
 
     /**
      * clears all images for memory cache.
      */
     @JvmStatic
-    fun clearImageCache() = MemoryCacheImpl.forBitmap().clear()
+    fun clearMemoryCache() = BitmapMemoryCache.clear()
 
-    /**
-     * clears all documents(JSON) for memory cache.
-     */
     @JvmStatic
-    fun clearDocumentCache() = MemoryCacheImpl.forDocument().clear()
-
-    /**
-     * Clears all memory caches used by library.
-     * @see Pixel
-     */
-    @JvmStatic
-    fun clearCaches() {
-        clearImageCache()
-        clearDocumentCache()
-    }
+    fun clearDiskCache() = BitmapDiskCache.delete()
 
     /**
      * Set logging enabled for pixel.

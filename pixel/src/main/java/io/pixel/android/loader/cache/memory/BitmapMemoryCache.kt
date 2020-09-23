@@ -4,44 +4,33 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.util.LruCache
 import io.pixel.android.config.PixelLog
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
-internal class BitmapMemoryCache private constructor() {
+internal object BitmapMemoryCache {
 
-    companion object {
-        /*   Get max available VM memory, exceeding this amount will throw an
-           OutOfMemory exception. Stored in kilobytes as LruCache takes an
-          int in its constructor.*/
 
-        private val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+    /*   Get max available VM memory, exceeding this amount will throw an
+       OutOfMemory exception. Stored in kilobytes as LruCache takes an
+      int in its constructor.*/
 
-        // Use 1/8th of the available memory for this memory cache.
-        private val maxCacheSize = maxMemory / 8
-        private var bitmapMemoryCache: BitmapMemoryCache? = null
+    private val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
 
-        fun getInstance(): BitmapMemoryCache {
-            if (bitmapMemoryCache == null)
-                bitmapMemoryCache = BitmapMemoryCache()
+    // Use 1/8th of the available memory for this memory cache.
+    private val maxCacheSize = maxMemory / 8
 
-            return bitmapMemoryCache!!
-        }
-    }
 
     init {
         PixelLog.debug(javaClass.simpleName, "Max JVM = $maxMemory")
-        PixelLog.debug(javaClass.simpleName, "Cache Size = $maxCacheSize")
+        PixelLog.debug(javaClass.simpleName, "Cache Size = ${maxCacheSize / 1024} MegaBytes")
     }
 
 
-    fun setCacheSize(cacheSizeInKiloBytes: Int) {
+    fun setCacheSize(cacheSizeInMegaBytes: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            cache.resize(cacheSizeInKiloBytes)
-            PixelLog.debug(javaClass.simpleName, "New Cache Size = $cacheSizeInKiloBytes")
+            cache.resize(cacheSizeInMegaBytes * 1024)
+            PixelLog.debug(javaClass.simpleName, "New Cache Size = $cacheSizeInMegaBytes MegaBytes")
         }
     }
-
 
     private val cache = object : LruCache<Int, Bitmap>(maxCacheSize) {
         override fun sizeOf(key: Int?, value: Bitmap?): Int {
@@ -50,8 +39,6 @@ internal class BitmapMemoryCache private constructor() {
             return value!!.byteCount / 1024
         }
     }
-
-    /* fun isCached(key: Int) = cache[key] != null*/
 
     fun get(key: Int): Bitmap? = cache[key]
 
@@ -63,21 +50,10 @@ internal class BitmapMemoryCache private constructor() {
 
 
         }
-
-
     }
 
     fun clear(key: Int): Bitmap? = cache.remove(key)
-/*
-    fun getMissCount() = cache.missCount()
 
-    fun getHitCount() = cache.hitCount()
-
-    fun getPutCount() = cache.putCount()*/
-
-    fun clear() = GlobalScope.launch {
-        cache.evictAll()
-    }
-
+    fun clear() = cache.evictAll()
 
 }
