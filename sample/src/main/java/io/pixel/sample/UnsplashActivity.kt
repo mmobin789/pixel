@@ -28,6 +28,8 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
         PixelConfiguration.setMemoryCacheSize(25)
         loadImages()
 
+        //   Thread { PixelConfiguration.clearDiskCache(this) }.start()
+
 
     }
 

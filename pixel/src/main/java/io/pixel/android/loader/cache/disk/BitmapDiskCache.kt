@@ -114,10 +114,14 @@ internal object BitmapDiskCache {
         return bitmap
     }
 
+    fun clear(key: String) = mDiskLRUCache?.remove(key)
 
-    fun delete() {
+
+    fun delete(context: Context) {
         try {
+            prepare(context)
             mDiskLRUCache?.delete()
+            PixelLog.debug(TAG, "Disk Cache Deleted Successfully.")
         } catch (e: IOException) {
             e.printStackTrace()
         }

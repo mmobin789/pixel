@@ -1,5 +1,6 @@
 package io.pixel.android.config
 
+import android.content.Context
 import io.pixel.android.Pixel
 import io.pixel.android.loader.cache.disk.BitmapDiskCache
 import io.pixel.android.loader.cache.memory.BitmapMemoryCache
@@ -37,8 +38,13 @@ object PixelConfiguration {
     @JvmStatic
     fun clearMemoryCache() = BitmapMemoryCache.clear()
 
+    /**
+     * clears all images from disk cache.
+     * Note: Since this is a blocking call so invoke this method from an I/O bound thread.
+     */
+
     @JvmStatic
-    fun clearDiskCache() = BitmapDiskCache.delete()
+    fun clearDiskCache(context: Context) = BitmapDiskCache.delete(context)
 
     /**
      * Set logging enabled for pixel.
