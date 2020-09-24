@@ -7,15 +7,14 @@ import io.pixel.android.loader.download.ImageDownload
 import io.pixel.android.utils.DownloadUtils.getBitmapFromURL
 
 internal object LoadAdapter {
-    private val imageLoads = LinkedHashMap<Int, ImageDownload>(100)
+    private val imageDownloads = HashMap<Int, ImageDownload>(100)
 
-
+    @Synchronized
     fun addDownload(imageDownload: ImageDownload) {
-        imageLoads.put(imageDownload.id, imageDownload)?.also {
-            cancelImageDownload(
-                it.id
-            )
-        }
+        val id = imageDownload.id
+        if (!imageDownloads.containsKey(id))
+            imageDownloads[id] = imageDownload
+        else cancelImageDownload(id)
     }
 
 
@@ -24,7 +23,7 @@ internal object LoadAdapter {
         removeFromCache: Boolean = false
     ) {
 
-        imageLoads[id]?.apply {
+        imageDownloads[id]?.apply {
             cancel()
             removeImageDownload(
                 this.id,
@@ -61,9 +60,11 @@ internal object LoadAdapter {
         }
 
     private fun removeImageDownload(id: Int, removeFromCache: Boolean) {
-        imageLoads.remove(id)?.also {
-            if (removeFromCache)
+        imageDownloads.remove(id)?.also {
+            if (removeFromCache) {
                 BitmapMemoryCache.clear(id)
+                BitmapDiskCache.clear(id.toString())
+            }
         }
     }
 }
