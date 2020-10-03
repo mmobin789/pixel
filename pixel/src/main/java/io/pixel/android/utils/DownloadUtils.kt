@@ -1,25 +1,34 @@
 package io.pixel.android.utils
 
 import android.graphics.Bitmap
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.IOException
-import java.net.URL
 
 
 internal object DownloadUtils {
 
-    fun getBitmapFromURL(path: String, reqWidth: Int, reqHeight: Int): Bitmap? {
-        return try {
-            URL(path).run {
-                val iS = openStream()
-                iS.readBytes().getDecodedBitmapFromByteArray(reqWidth, reqHeight)
-                    .also {
-                        iS.close()
-                    }
+    fun getBitmapFromURL(url: String, reqWidth: Int, reqHeight: Int): Bitmap? {
+        try {
+            val response = createHTTPClient().newCall(Request.Builder().url(url).build()).execute()
+            if (response.isSuccessful) {
+                return response.body?.run {
+                    val bytes = byteStream().readBytes()
+                    val bitmap = if (reqWidth > 0 && reqHeight > 0)
+                        bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight)
+                    else bytes.getDecodedBitmapFromByteArray()
+                    close()
+                    bitmap
 
+                }
             }
+
         } catch (e: IOException) {
             e.printStackTrace()
-            null
         }
+
+        return null
     }
+
+    private fun createHTTPClient() = OkHttpClient.Builder().build()
 }

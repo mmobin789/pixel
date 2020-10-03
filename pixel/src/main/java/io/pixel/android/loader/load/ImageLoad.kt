@@ -1,6 +1,8 @@
 package io.pixel.android.loader.load
 
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
 import io.pixel.android.config.PixelLog
 import io.pixel.android.config.PixelOptions
@@ -18,6 +20,7 @@ internal class ImageLoad(
     private val coroutineScope: CoroutineScope
 ) {
 
+
     val id = viewLoad.hashCode()
 
 
@@ -28,6 +31,7 @@ internal class ImageLoad(
 
     companion object {
         private val imageViewsMap = Collections.synchronizedMap(WeakHashMap<ImageView, Int>(100))
+        private val transparentColorDrawable = ColorDrawable(Color.TRANSPARENT)
     }
 
     private fun imageViewReused(): Boolean {
@@ -40,6 +44,8 @@ internal class ImageLoad(
     fun start() {
         pixelOptions?.run {
             imageView.setImageResource(getPlaceholderResource())
+        } ?: run {
+            imageView.setImageDrawable(transparentColorDrawable)
         }
 
         coroutineScope.launch(Dispatchers.IO) {

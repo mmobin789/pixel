@@ -45,15 +45,9 @@ class Pixel private constructor() {
 
             return init().apply {
                 ValidatorUtils.validateURL(path)?.apply path@{
-
                     loadRequest = LoadRequest(uiScope.launch {
-                        imageView.post {
-                            loadImage(this@path, pixelOptions, imageView)
-                        }
-
-
+                        loadImage(this@path, pixelOptions, imageView)
                     })
-
                 }
 
 

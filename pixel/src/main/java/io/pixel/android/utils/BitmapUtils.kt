@@ -25,6 +25,21 @@ internal fun ByteArray.getDecodedBitmapFromByteArray(
     return decodeBitmapFromByteArray(this, reqWidth, reqHeight)
 }
 
+internal fun ByteArray.getDecodedBitmapFromByteArray(
+): Bitmap? {
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+
+        return ImageDecoder.decodeBitmap(ImageDecoder.createSource(ByteBuffer.wrap(this)))
+    }
+    return decodeBitmapFromByteArray(this)
+}
+
+private fun decodeBitmapFromByteArray(
+    byteArray: ByteArray
+) = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+
+
 private fun decodeBitmapFromByteArray(
     byteArray: ByteArray,
     reqWidth: Int,
