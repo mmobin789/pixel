@@ -12,6 +12,10 @@ import io.pixel.android.loader.cache.memory.BitmapMemoryCache
  */
 object PixelConfiguration {
 
+    enum class ImageFormat {
+        JPEG, PNG
+    }
+
     /**
      * Allows to override default memory cache size which is 1/8th of Virtual Machine Memory.
      * @param cacheSizeInMegaBytes new cache size in MegaBytes.
@@ -54,5 +58,14 @@ object PixelConfiguration {
      */
     @JvmStatic
     fun setLoggingEnabled(loggingEnabled: Boolean) = PixelLog.enabled(loggingEnabled)
+
+    /**
+     * Set the downloaded image format to JPEG/PNG
+     * Defaults to PNG.
+     */
+    @JvmStatic
+    fun setImageFormat(imageFormat: ImageFormat) {
+        BitmapDiskCache.imageFormat = imageFormat
+    }
 
 }

@@ -26,6 +26,7 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
         PixelConfiguration.setAppVersion(2)
         PixelConfiguration.setDiskCacheSize(100)
         PixelConfiguration.setMemoryCacheSize(25)
+        PixelConfiguration.setImageFormat(PixelConfiguration.ImageFormat.JPEG)
         loadImages()
 
         //   Thread { PixelConfiguration.clearDiskCache(this) }.start()

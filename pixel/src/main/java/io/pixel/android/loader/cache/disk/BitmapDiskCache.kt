@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
 import android.os.Environment.isExternalStorageRemovable
+import io.pixel.android.config.PixelConfiguration
 import io.pixel.android.config.PixelLog
 import io.pixel.android.loader.load.ViewLoad
 import okio.Buffer
@@ -26,6 +27,8 @@ internal object BitmapDiskCache {
     private var appVersion = 1
 
     private var cacheSizeInMB = 250L
+
+    var imageFormat = PixelConfiguration.ImageFormat.PNG
 
     @Synchronized
     fun prepare(context: Context) {
@@ -79,7 +82,7 @@ internal object BitmapDiskCache {
                 val buffer = Buffer()
                 val bos = BufferedOutputStream(buffer.outputStream())
                 if (bitmap.compress(
-                        Bitmap.CompressFormat.PNG,
+                        if (imageFormat == PixelConfiguration.ImageFormat.PNG) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG,
                         100,
                         bos
                     )
