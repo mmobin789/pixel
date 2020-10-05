@@ -75,6 +75,11 @@ dependencies {
 
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // memory leak detection in debug only.
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+
+
     //pixel
     implementation project(path: ':pixel')
 

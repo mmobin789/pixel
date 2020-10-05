@@ -10,7 +10,6 @@ import io.pixel.android.config.PixelLog
 import io.pixel.android.loader.load.ViewLoad
 import okio.Buffer
 import okio.buffer
-import java.io.BufferedOutputStream
 import java.io.File
 import java.io.IOException
 
@@ -53,13 +52,6 @@ internal object BitmapDiskCache {
 
             }
 
-        /* if (mDiskLRUCache?.getMaxSize() == cacheSizeInMB)  // if cache is full increase its size 2x.
-         {
-             val resized = cacheSizeInMB * 2
-             PixelLog.debug(TAG, "Disk cache resized to ${resized / 1024L * 1024L} MegaBytes")
-             mDiskLRUCache?.setMaxSize(resized)
-         }*/
-
     }
 
 
@@ -72,7 +64,7 @@ internal object BitmapDiskCache {
         this.appVersion = appVersion
     }
 
-    @Synchronized
+
     fun put(viewLoad: ViewLoad, bitmap: Bitmap) {
         val key = viewLoad.toString()
         val editor = mDiskLRUCache?.edit(key)
@@ -80,17 +72,15 @@ internal object BitmapDiskCache {
 
             if (mDiskLRUCache?.get(key) == null) {
                 val buffer = Buffer()
-                val bos = BufferedOutputStream(buffer.outputStream())
                 if (bitmap.compress(
                         if (imageFormat == PixelConfiguration.ImageFormat.PNG) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG,
                         100,
-                        bos
+                        buffer.outputStream()
                     )
                 ) {
                     mDiskLRUCache?.flush()
                     editor?.newSink(0)?.write(buffer, buffer.size)
                     editor?.commit()
-                    bos.close()
                     buffer.close()
                     PixelLog.debug(TAG, "$key disk cached.")
 
@@ -107,7 +97,7 @@ internal object BitmapDiskCache {
 
     }
 
-    @Synchronized
+
     fun get(viewLoadCode: Int): Bitmap? {
         val snapshot = mDiskLRUCache?.get(viewLoadCode.toString())
         val buffer = snapshot?.getSource(0)
@@ -149,7 +139,7 @@ internal object BitmapDiskCache {
                 }
 
             } else context.cacheDir.path
-        return File(cachePath + File.separator + "Bitmap Cache")
+        return File(cachePath + File.separator + "${context.packageName} Image Cache")
     }
 
 

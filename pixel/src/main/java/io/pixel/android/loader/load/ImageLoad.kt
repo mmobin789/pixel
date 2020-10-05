@@ -21,17 +21,17 @@ internal class ImageLoad(
 ) {
 
 
-    val id = viewLoad.hashCode()
-
-
-    init {
-        imageViewsMap[imageView] = id
-    }
+    private val id = viewLoad.hashCode()
 
 
     companion object {
+        /** Weak Ref Map
+         * Key - Image view
+         * Values - id for image.
+         */
         private val imageViewsMap = Collections.synchronizedMap(WeakHashMap<ImageView, Int>(100))
         private val transparentColorDrawable = ColorDrawable(Color.TRANSPARENT)
+
     }
 
     private fun imageViewReused(): Boolean {
@@ -41,13 +41,14 @@ internal class ImageLoad(
         return false
     }
 
-    fun start() {
-        pixelOptions?.run {
-            imageView.setImageResource(getPlaceholderResource())
-        } ?: run {
-            imageView.setImageDrawable(transparentColorDrawable)
-        }
+    private fun setPlaceholder() = pixelOptions?.run {
+        imageView.setImageResource(getPlaceholderResource())
+    } ?: run {
+        imageView.setImageDrawable(transparentColorDrawable)
+    }
 
+    fun start() {
+        setPlaceholder()
         coroutineScope.launch(Dispatchers.IO) {
             BitmapDiskCache.prepare(imageView.context)
 
@@ -66,16 +67,16 @@ internal class ImageLoad(
                     viewLoad.height = sampleHeight
                 }
             }
-            val hashCode = viewLoad.hashCode()
 
-            LoadAdapter.loadImageFromMemory(hashCode)?.apply {
+
+            LoadAdapter.loadImageFromMemory(id)?.apply {
                 PixelLog.debug(
                     this@ImageLoad.javaClass.simpleName,
                     "Returned Memory Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
                 )
                 setImage(this)
 
-            } ?: LoadAdapter.loadImageFromDisk(hashCode)?.run {
+            } ?: LoadAdapter.loadImageFromDisk(id)?.run {
                 PixelLog.debug(
                     this@ImageLoad.javaClass.simpleName,
                     "Returned Disk Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
@@ -85,6 +86,7 @@ internal class ImageLoad(
                 val imageDownload = ImageDownload(viewLoad, coroutineScope)
                 imageDownload.start {
                     setImage(it)
+
                 }
                 LoadAdapter.addDownload(imageDownload)
 
@@ -94,9 +96,13 @@ internal class ImageLoad(
     }
 
     private fun setImage(bitmap: Bitmap) {
+        imageViewsMap[imageView] = id
         coroutineScope.launch(Dispatchers.Main.immediate) {
             if (!imageViewReused()) {
                 imageView.setImageBitmap(bitmap)
+                PixelLog.debug("ImageViewReused", "No")
+            } else {
+                PixelLog.debug("ImageViewReused", "Yes")
             }
         }
 

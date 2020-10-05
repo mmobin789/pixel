@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kc.unsplash.models.Collection
 import io.pixel.android.Pixel
+import io.pixel.android.config.PixelOptions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_center_cropped.*
 
@@ -40,7 +41,9 @@ class RVUnsplashAdapter(private val list: MutableList<Collection>) :
 
         Pixel.load(
             url,
-            imageView = holder.iv
+            imageView = holder.iv,
+            pixelOptions = PixelOptions.Builder()
+                .setPlaceholderResource(R.drawable.ic_loading_android).build()
         )
 
 // coil
