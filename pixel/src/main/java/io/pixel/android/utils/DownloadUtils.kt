@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 
 internal object DownloadUtils {
@@ -30,5 +31,7 @@ internal object DownloadUtils {
         return null
     }
 
-    private fun createHTTPClient() = OkHttpClient.Builder().build()
+    private fun createHTTPClient() =
+        OkHttpClient.Builder().connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(1, TimeUnit.MINUTES).build()
 }
