@@ -17,7 +17,7 @@ ext {
 
     publishedGroupId = 'io.pixel.android'
     artifact = 'pixel'
-    libraryVersion = '0.0.2'
+    libraryVersion = '0.0.2-rc'
     libraryDescription = 'Image loading and Networking for Android backed by Kotlin Coroutines.'
 
     siteUrl = 'https://github.com/mmobin789/pixel'
