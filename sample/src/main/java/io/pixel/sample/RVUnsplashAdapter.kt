@@ -11,7 +11,6 @@ import io.pixel.android.Pixel
 import io.pixel.android.config.PixelOptions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_center_cropped.*
-import okhttp3.Request
 
 class RVUnsplashAdapter(private val list: MutableList<Collection>) :
     RecyclerView.Adapter<RVUnsplashAdapter.VH>() {
@@ -40,16 +39,19 @@ class RVUnsplashAdapter(private val list: MutableList<Collection>) :
 
         Log.d("Url position: $position", url)
 
-        Pixel.load(
+        val load = Pixel.load(
+            url = url,
             imageView = holder.iv,
             pixelOptions = PixelOptions.Builder()
                 .setPlaceholderResource(R.drawable.ic_loading_android)
-                .setRequest(Request.Builder().url(url).tag("Test Image Load at $position").build())
+                // .setRequest(Request.Builder().url(url).tag("Test Image Load at $position").build())
                 .setImageFormat(PixelOptions.ImageFormat.JPEG).build()
         )
 
 // coil
-        //  holder.iv.load(url)
+        /*  val d = holder.iv.load(url)
+          if (position == 1)
+              d.dispose()*/
 
         //    Glide.with(holder.itemView).load(url).into(holder.iv)
 

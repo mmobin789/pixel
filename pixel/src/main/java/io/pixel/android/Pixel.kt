@@ -3,7 +3,6 @@ package io.pixel.android
 import android.widget.ImageView
 import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.LoaderProxy
-import io.pixel.android.loader.load.LoadRequest
 import io.pixel.android.utils.ValidatorUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,8 +13,6 @@ import kotlinx.coroutines.launch
  * @author Mobin Munir
  */
 class Pixel private constructor() {
-
-    private lateinit var loadRequest: LoadRequest
     private val mainThreadScope = CoroutineScope(Dispatchers.Main.immediate)
 
     companion object {
@@ -50,9 +47,9 @@ class Pixel private constructor() {
             return init().apply {
                 ValidatorUtils.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
                     ?.apply path@{
-                        loadRequest = LoadRequest(mainThreadScope.launch {
+                        mainThreadScope.launch {
                             loadImage(this@path, pixelOptions, imageView)
-                        })
+                        }
                     }
 
 
@@ -65,24 +62,21 @@ class Pixel private constructor() {
         path: String,
         pixelOptions: PixelOptions?,
         imageView: ImageView
-    ) {
+    ) = LoaderProxy.loadImage(
+        imageView,
+        path,
+        pixelOptions,
+        mainThreadScope
+    )
 
-        LoaderProxy.loadImage(
-            imageView,
-            path,
-            pixelOptions,
-            mainThreadScope
-        )
-
-    }
 
     /**
      * A method to cancel image load request.
      * Invoking this method immediately cancels the load.
      */
-    fun cancel() {
-        LoaderProxy.addCancelledLoad(loadRequest)
-    }
+    /*fun cancel() {
+        imageLoad.cancel()
+    }*/
 }
 
 
