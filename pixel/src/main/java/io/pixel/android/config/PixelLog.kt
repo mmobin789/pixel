@@ -14,12 +14,12 @@ internal object PixelLog {
         this.loggingEnabled = loggingEnabled
     }
 
-    fun debug(tag: String, message: String) {
+    fun debug(tag: String = "", message: String) {
         if (loggingEnabled)
             Log.d("${PixelLog.tag} $tag", message)
     }
 
-    fun error(tag: String, message: String) {
+    fun error(tag: String = "", message: String) {
         if (loggingEnabled)
             Log.e("${PixelLog.tag} $tag", message)
     }

@@ -4,6 +4,8 @@ import android.content.Context
 import io.pixel.android.Pixel
 import io.pixel.android.loader.cache.disk.BitmapDiskCache
 import io.pixel.android.loader.cache.memory.BitmapMemoryCache
+import io.pixel.android.loader.download.Downloader
+import okhttp3.OkHttpClient
 
 /**
  * Allow to set application-level configuration for pixel library.
@@ -11,10 +13,6 @@ import io.pixel.android.loader.cache.memory.BitmapMemoryCache
  * @author Mobin Munir
  */
 object PixelConfiguration {
-
-    enum class ImageFormat {
-        JPEG, PNG
-    }
 
     /**
      * Allows to override default memory cache size which is 1/8th of Virtual Machine Memory.
@@ -33,8 +31,22 @@ object PixelConfiguration {
     fun setDiskCacheSize(cacheSizeInMegaBytes: Long) =
         BitmapDiskCache.setCacheSize(cacheSizeInMegaBytes)
 
+    /**
+     * Allows to set the app version for disk cache entries.
+     * @param appVersion to use.
+     */
     @JvmStatic
     fun setAppVersion(appVersion: Int) = BitmapDiskCache.setAppVersion(appVersion)
+
+    /**
+     * This allows for full control of OkHttp client responsible for each network request's operations per image load.
+     * A custom configuration client can be supplied to use for each request.
+     * @param okHttpClient to set or null to use default.
+     */
+    @JvmStatic
+    fun setOkHttpClient(okHttpClient: OkHttpClient?) {
+        Downloader.okHttpClient = okHttpClient
+    }
 
     /**
      * clears all images for memory cache.
@@ -58,14 +70,5 @@ object PixelConfiguration {
      */
     @JvmStatic
     fun setLoggingEnabled(loggingEnabled: Boolean) = PixelLog.enabled(loggingEnabled)
-
-    /**
-     * Set the downloaded image format to JPEG/PNG
-     * Defaults to PNG.
-     */
-    @JvmStatic
-    fun setImageFormat(imageFormat: ImageFormat) {
-        BitmapDiskCache.imageFormat = imageFormat
-    }
 
 }

@@ -2,6 +2,7 @@ package io.pixel.android.loader.download
 
 import android.graphics.Bitmap
 import io.pixel.android.config.PixelLog
+import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.load.LoadAdapter
 import io.pixel.android.loader.load.ViewLoad
 import kotlinx.coroutines.CoroutineScope
@@ -11,7 +12,8 @@ import kotlinx.coroutines.launch
 
 internal class ImageDownload(
     private val viewLoad: ViewLoad,
-    private val coroutineScope: CoroutineScope
+    private val coroutineScope: CoroutineScope,
+    private val pixelOptions: PixelOptions?
 ) {
 
     val id = viewLoad.hashCode()
@@ -61,7 +63,8 @@ internal class ImageDownload(
                     path,
                     width,
                     height,
-                    hashCode()
+                    hashCode(),
+                    pixelOptions
                 )?.also {
                     callback(it)
 

@@ -6,7 +6,6 @@ import org.junit.Test
 
 /**
  * Local unit test for Id generator.
- * See more in DocumentUtils.kt file.
  */
 
 class BitmapUtilsTest {

@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * Pixel is a library to load and cache images.
+ * Pixel is a coroutine library to load and cache images.
  * @author Mobin Munir
  */
 class Pixel private constructor() {
@@ -30,26 +30,30 @@ class Pixel private constructor() {
         }
 
         /**
-         * Primary method to load images once the view hierarchy is rendered on the main thread.
+         * Primary method to load images from urls once the view hierarchy is rendered on the main thread.
          * If the UI thread is otherwise engaged the requests are automatically paused.
          * It is also safe to call this method from a background thread.
-         * @param path The image url.
-         * @param imageView The image view to load into.
-         * @param pixelOptions Custom Image load request option.
+         * @param url The image url or null if a custom request is intended to be supplied.
+         * Default is null.
+         * @see PixelOptions class.
+         * @param imageView to load into.
+         * @param pixelOptions Custom image load options.
+         * Default are null.
          */
         @JvmStatic
         fun load(
-            path: String?,
-            imageView: ImageView,
-            pixelOptions: PixelOptions? = null
+            url: String? = null,
+            pixelOptions: PixelOptions? = null,
+            imageView: ImageView
         ): Pixel {
 
             return init().apply {
-                ValidatorUtils.validateURL(path)?.apply path@{
-                    loadRequest = LoadRequest(mainThreadScope.launch {
-                        loadImage(this@path, pixelOptions, imageView)
-                    })
-                }
+                ValidatorUtils.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
+                    ?.apply path@{
+                        loadRequest = LoadRequest(mainThreadScope.launch {
+                            loadImage(this@path, pixelOptions, imageView)
+                        })
+                    }
 
 
             }

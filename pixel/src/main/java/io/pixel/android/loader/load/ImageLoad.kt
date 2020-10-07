@@ -83,10 +83,9 @@ internal class ImageLoad(
                 )
                 setImage(this)
             } ?: apply {
-                val imageDownload = ImageDownload(viewLoad, coroutineScope)
+                val imageDownload = ImageDownload(viewLoad, coroutineScope, pixelOptions)
                 imageDownload.start {
                     setImage(it)
-
                 }
                 LoadAdapter.addDownload(imageDownload)
 

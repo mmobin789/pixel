@@ -10,6 +10,9 @@ import com.kc.unsplash.models.Collection
 import io.pixel.android.config.PixelConfiguration
 import io.pixel.sample.viewmodel.UnsplashViewModel
 import kotlinx.android.synthetic.main.activity_sample.*
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import java.util.concurrent.TimeUnit
 
 class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
 
@@ -26,7 +29,12 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
         PixelConfiguration.setAppVersion(2)
         PixelConfiguration.setDiskCacheSize(100)
         PixelConfiguration.setMemoryCacheSize(25)
-        PixelConfiguration.setImageFormat(PixelConfiguration.ImageFormat.JPEG)
+        PixelConfiguration.setOkHttpClient(
+            OkHttpClient.Builder()
+                .connectTimeout(1, TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES)
+                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .build()
+        )
         loadImages()
 
         //   Thread { PixelConfiguration.clearDiskCache(this) }.start()

@@ -1,10 +1,11 @@
 package io.pixel.android.loader.load
 
 import io.pixel.android.config.PixelLog
+import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.cache.disk.BitmapDiskCache
 import io.pixel.android.loader.cache.memory.BitmapMemoryCache
+import io.pixel.android.loader.download.Downloader.getBitmapFromURL
 import io.pixel.android.loader.download.ImageDownload
-import io.pixel.android.utils.DownloadUtils.getBitmapFromURL
 
 internal object LoadAdapter {
     private val imageDownloads = HashMap<Int, ImageDownload>(100)
@@ -43,9 +44,10 @@ internal object LoadAdapter {
         url: String,
         reqWidth: Int,
         reqHeight: Int,
-        viewLoadCode: Int
+        viewLoadCode: Int,
+        pixelOptions: PixelOptions?
     ) =
-        getBitmapFromURL(url, reqWidth, reqHeight)?.also {
+        getBitmapFromURL(url, reqWidth, reqHeight, pixelOptions)?.also {
             PixelLog.debug(
                 this@LoadAdapter.javaClass.simpleName,
                 "Downloaded no = $viewLoadCode Bitmap for ${it.width}x${it.height} size in Kilobytes: ${it.byteCount / 1024}"
@@ -55,7 +57,11 @@ internal object LoadAdapter {
                 BitmapMemoryCache.put(
                     hashCode(), it
                 )
-                BitmapDiskCache.put(this, it)
+
+                BitmapDiskCache.put(
+                    this, it,
+                    pixelOptions?.getImageFormat() ?: PixelOptions.ImageFormat.PNG
+                )
             }
         }
 

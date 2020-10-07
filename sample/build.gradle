@@ -80,6 +80,12 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
 
 
+    // Standard HTTP client for Android for modern I/O support by Okio.
+    implementation "com.squareup.okhttp3:okhttp:4.8.1"
+
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+
     //pixel
     implementation project(path: ':pixel')
 
