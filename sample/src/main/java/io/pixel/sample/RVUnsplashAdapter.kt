@@ -39,7 +39,7 @@ class RVUnsplashAdapter(private val list: MutableList<Collection>) :
 
         Log.d("Url position: $position", url)
 
-        val load = Pixel.load(
+        Pixel.load(
             url = url,
             imageView = holder.iv,
             pixelOptions = PixelOptions.Builder()
