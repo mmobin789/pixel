@@ -75,13 +75,6 @@ For complete usage in Kotlin and Java clone the project in Android Studio and ru
  .setImageSize(30, 30).build())
 
  ```
- **Cancel an image load**
- 
-```
-// cancels the load 
-Pixel.load("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80", iv1).cancel()
-
-```
  
  **Configure memory and disk cache**
  
