@@ -47,7 +47,7 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
  <dependency>
   <groupId>io.pixel.android</groupId>
   <artifactId>pixel</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3-alpha</version>
   <type>pom</type>
  </dependency>
 ```
