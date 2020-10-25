@@ -1,6 +1,7 @@
 # Pixel
 ![pixel](https://miro.medium.com/max/875/0*iAMn0EvUMF__xp3F)
 
+[ ![Download](https://api.bintray.com/packages/mmobin789/pixel/io.pixel.android/images/download.svg?version=0.0.3-alpha) ](https://bintray.com/mmobin789/pixel/io.pixel.android/0.0.3-alpha/link)
 [![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/master.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/863ea5386f204bd4807580d3ae231874)](https://www.codacy.com/manual/mmobin789/pixel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mmobin789/pixel&amp;utm_campaign=Badge_Grade)
 
@@ -46,7 +47,7 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
  <dependency>
   <groupId>io.pixel.android</groupId>
   <artifactId>pixel</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3-alpha</version>
   <type>pom</type>
  </dependency>
 ```
