@@ -116,7 +116,7 @@ dependencies {
 
     // test libs below
     // testImplementation "com.google.truth:truth:1.0.1"
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     // Optional -- Mockito framework
     //   testImplementation 'org.mockito:mockito-core:2.13.0'
     // Optional -- Robolectric environment
