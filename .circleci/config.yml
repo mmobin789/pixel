@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Download Dependencies for pixel library
           command: ./gradlew androidDependencies
-      -run:
+      - run:
           name: Build AARs
           command: ./gradlew assemble #This will create for both debug and release.
       - save_cache:
