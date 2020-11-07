@@ -29,3 +29,10 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+/**
+ * Comment below block when publishing update to bintray for pixel library.
+ */
+subprojects {
+    tasks.withType(Javadoc).all { enabled = false }
+}
