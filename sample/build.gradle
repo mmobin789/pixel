@@ -65,7 +65,7 @@ dependencies {
     def lifecycle_version = "2.2.0"
 
     //images from unsplash for testing.
-    implementation 'com.kc.androidunsplash:androidunsplash:1.0.5'
+    implementation 'com.kc.androidunsplash:androidunsplash:2.0.2'
 
     // ViewModel - ktx
     implementation "androidx.fragment:fragment-ktx:1.2.5"
