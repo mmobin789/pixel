@@ -110,7 +110,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //  implementation "androidx.appcompat:appcompat:1.1.0"
     // implementation "androidx.core:core-ktx:$core"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1-native-mt"
     // Standard HTTP client for Android for modern I/O support by Okio.
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
 
