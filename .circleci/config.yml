@@ -10,14 +10,15 @@ workflows:
          #     - master
          #     - /release.*/
 jobs:
-  pixel: # job name
+  build: # job name
+    name: Build AAR & Unit Tests
     working_directory: ~/pixel
     docker:
       - image: circleci/android:api-30 # gcloud is baked into this image
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
-      - checkout
+      - uses: actions/checkout@v2
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "pixel/build.gradle" }}
       - run:
@@ -25,10 +26,10 @@ jobs:
           command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies for pixel library
-          command: ./gradlew androidDependencies
+          command: ./gradlew :pixel:androidDependencies
       - run:
           name: Build AARs
-          command: ./gradlew assemble #This will create for both debug and release.
+          command: ./gradlew :pixel:assemble #This will create for both debug and release.
       - save_cache:
           paths:
             - ~/.gradle
@@ -36,9 +37,24 @@ jobs:
       - run:
           name: Run Pixel lib Unit Tests (Debug Only)
           command: ./gradlew :pixel:testDebugUnitTest
-      - run:
-          name: Run Pixel lib UI Tests (Debug Only)
-          command: ./gradlew :pixel:connectedDebugAndroidTest
+
+  ui-tests:
+     name: UI Testing (Espresso) through Reactive Circus
+     runs-on: macOS-latest
+     timeout-minutes: 60
+     strategy:
+         fail-fast: true
+         matrix:
+           api-level: [21, 25, 28, 30]
+     steps:
+        - uses: actions/checkout@v2
+        - name: Run Pixel lib UI Tests (Debug Only)
+          uses: reactivecircus/android-emulator-runner@v2
+          with:
+            api-level: ${{ matrix.api-level }}
+            arch: x86
+            script: ./gradlew connectedDebugAndroidTest
+
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: pixel/build/reports
           destination: reports
