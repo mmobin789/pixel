@@ -34,8 +34,11 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "pixel/build.gradle" }}
       - run:
-          name: Run Pixel lib Unit Tests (Release Only)
-          command: ./gradlew testReleaseUnitTest
+          name: Run Pixel lib Unit Tests (Debug Only)
+          command: ./gradlew :pixel:testDebugUnitTest
+      - run:
+          name: Run Pixel lib UI Tests (Debug Only)
+          command: ./gradlew :pixel:connectedDebugAndroidTest
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: pixel/build/reports
           destination: reports
