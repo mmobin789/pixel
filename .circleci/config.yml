@@ -4,11 +4,11 @@ workflows:
   test-pixel: # name of workflow
     jobs:   # jobs in workflow
       - pixel:  # job name
-#        filters: # filters for above job.
-#          branches: # only run the job for below branches below
-#            only:
-#              - master
-#              - /release.*/
+       # filters: # filters for above job.
+        #  branches: # only run the job for below branches below
+         #   only:
+         #     - master
+         #     - /release.*/
 jobs:
   pixel: # job name
     working_directory: ~/pixel
