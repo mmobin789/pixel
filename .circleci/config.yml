@@ -54,11 +54,10 @@ jobs:
             api-level: ${{ matrix.api-level }}
             arch: x86
             script: ./gradlew connectedDebugAndroidTest
-
-      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+        - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: pixel/build/reports
           destination: reports
-      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+        - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: pixel/build/test-results
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
 
