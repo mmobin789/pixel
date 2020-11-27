@@ -3,7 +3,7 @@ package io.pixel.android
 import android.widget.ImageView
 import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.LoaderProxy
-import io.pixel.android.utils.ValidatorUtils
+import io.pixel.android.utils.UrlValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,7 +45,7 @@ class Pixel private constructor() {
         ): Pixel {
 
             return init().apply {
-                ValidatorUtils.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
+                UrlValidator.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
                     ?.apply path@{
                         mainThreadScope.launch {
                             loadImage(this@path, pixelOptions, imageView)

@@ -2,6 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.4.20'
+    ext.espressoVersion = "3.3.0"
     repositories {
         google()
         jcenter()
