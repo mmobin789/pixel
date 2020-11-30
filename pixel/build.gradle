@@ -99,6 +99,10 @@ android {
         abortOnError false
     }
 
+    packagingOptions {
+        exclude "DebugProbesKt.bin"
+    }
+
 }
 
 
