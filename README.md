@@ -102,7 +102,7 @@ For complete usage in Kotlin and Java clone the project in Android Studio and ru
    PixelConfiguration.setLoggingEnabled(false)
    ```
    ## Requirements
-   - Min SDK 14
+   - Min SDK 23
    - Compile SDK 30+
    
    ## R8 / Proguard
