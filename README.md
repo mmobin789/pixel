@@ -5,7 +5,7 @@
 [![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/master.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/863ea5386f204bd4807580d3ae231874)](https://www.codacy.com/manual/mmobin789/pixel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mmobin789/pixel&amp;utm_campaign=Badge_Grade)
 
-[![Kotlin Version](https://img.shields.io/badge/kotlin-1.4.10-green.svg)](http://kotlinlang.org/)
+[![Kotlin Version](https://img.shields.io/badge/kotlin-1.4.21-orange.svg)](http://kotlinlang.org/)
 
 A lightweight image loading library for Android backed by Kotlin Coroutines.
 
