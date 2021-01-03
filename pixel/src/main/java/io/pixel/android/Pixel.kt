@@ -3,10 +3,12 @@ package io.pixel.android
 import android.widget.ImageView
 import io.pixel.android.config.PixelOptions
 import io.pixel.android.loader.LoaderProxy
-import io.pixel.android.utils.UrlValidator
+import io.pixel.android.utils.validators.FileValidator
+import io.pixel.android.utils.validators.UrlValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 
 /**
  * Pixel is a coroutine library to load and cache images.
@@ -47,6 +49,37 @@ class Pixel private constructor() {
             return init().apply {
                 UrlValidator.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
                     ?.apply path@{
+                        mainThreadScope.launch {
+                            loadImage(this@path, pixelOptions, imageView)
+                        }
+                    }
+
+
+            }
+        }
+
+        /**
+         * Primary method to load images from files once the view hierarchy is rendered on the main thread.
+         * If the UI thread is otherwise engaged the requests are automatically paused.
+         * It is also safe to call this method from a background thread.
+         * @param file The image file to load.
+         * Default is null.
+         * @see PixelOptions class.
+         * @param imageView to load into.
+         * @param pixelOptions Custom image load options.
+         * Default are null.
+         */
+        @JvmStatic
+        fun load(
+            file: File?,
+            pixelOptions: PixelOptions? = null,
+            imageView: ImageView
+        ): Pixel {
+
+            return init().apply {
+                FileValidator.validateFile(file)
+                    ?.apply path@{
+                        //todo working here.
                         mainThreadScope.launch {
                             loadImage(this@path, pixelOptions, imageView)
                         }

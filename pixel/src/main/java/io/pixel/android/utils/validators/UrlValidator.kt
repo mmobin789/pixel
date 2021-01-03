@@ -1,4 +1,4 @@
-package io.pixel.android.utils
+package io.pixel.android.utils.validators
 
 import android.util.Patterns
 import io.pixel.android.config.PixelLog

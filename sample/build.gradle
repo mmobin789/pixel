@@ -86,10 +86,10 @@ dependencies {
 
 
     //pixel
-    //implementation project(path: ':pixel')
+    implementation project(path: ':pixel')
 
     //pixel
-    implementation 'io.pixel.android:pixel:0.0.3-alpha'
+   // implementation 'io.pixel.android:pixel:0.0.3-alpha'
 
     // glide for comparison
     /*  implementation("com.github.bumptech.glide:glide:4.11.0") {
