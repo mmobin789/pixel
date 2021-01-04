@@ -47,26 +47,29 @@ internal class ImageLoad(
         imageView.setImageDrawable(transparentColorDrawable)
     }
 
+    private fun setImageSize() = pixelOptions?.run {
+        val sampleWidth = getRequestedImageWidth()
+        val sampleHeight = getRequestedImageHeight()
+
+        if (sampleWidth > 0 && sampleHeight > 0) {
+
+            PixelLog.debug(
+                this@ImageLoad.javaClass.simpleName,
+                "Sample Bitmap load from ${viewLoad.width}x${viewLoad.height} to ${sampleWidth}x${sampleHeight}"
+            )
+
+            viewLoad.width = sampleWidth
+            viewLoad.height = sampleHeight
+
+        }
+    }
+
     fun start() {
         setPlaceholder()
         coroutineScope.launch(Dispatchers.IO) {
             BitmapDiskCache.prepare(imageView.context)
 
-            pixelOptions?.apply {
-                val sampleWidth = getRequestedImageWidth()
-                val sampleHeight = getRequestedImageHeight()
-
-                if (sampleWidth > 0 && sampleHeight > 0) {
-
-                    PixelLog.debug(
-                        this@ImageLoad.javaClass.simpleName,
-                        "Sample Bitmap load from ${viewLoad.width}x${viewLoad.height} to ${sampleWidth}x${sampleHeight}"
-                    )
-
-                    viewLoad.width = sampleWidth
-                    viewLoad.height = sampleHeight
-                }
-            }
+            setImageSize()
 
 
             LoadAdapter.loadImageFromMemory(id)?.apply {

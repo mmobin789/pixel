@@ -48,9 +48,9 @@ class Pixel private constructor() {
 
             return init().apply {
                 UrlValidator.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
-                    ?.apply path@{
+                    ?.apply url@{
                         mainThreadScope.launch {
-                            loadImage(this@path, pixelOptions, imageView)
+                            LoaderProxy.loadUrl(imageView, this@url, pixelOptions, mainThreadScope)
                         }
                     }
 
@@ -59,7 +59,7 @@ class Pixel private constructor() {
         }
 
         /**
-         * Primary method to load images from files once the view hierarchy is rendered on the main thread.
+         * Primary method to load images from files in device storage once the view hierarchy is rendered on the main thread.
          * If the UI thread is otherwise engaged the requests are automatically paused.
          * It is also safe to call this method from a background thread.
          * @param file The image file to load.
@@ -81,7 +81,12 @@ class Pixel private constructor() {
                     ?.apply path@{
                         //todo working here.
                         mainThreadScope.launch {
-                            loadImage(this@path, pixelOptions, imageView)
+                            LoaderProxy.loadFile(
+                                imageView,
+                                this@path,
+                                pixelOptions,
+                                mainThreadScope
+                            )
                         }
                     }
 
@@ -89,18 +94,6 @@ class Pixel private constructor() {
             }
         }
     }
-
-
-    private fun loadImage(
-        path: String,
-        pixelOptions: PixelOptions?,
-        imageView: ImageView
-    ) = LoaderProxy.loadImage(
-        imageView,
-        path,
-        pixelOptions,
-        mainThreadScope
-    )
 
 
     /**

@@ -12,11 +12,27 @@ import kotlinx.coroutines.CoroutineScope
 
 internal object LoaderProxy {
 
-    fun loadImage(
+    fun loadUrl(
+        imageView: ImageView,
+        url: String,
+        pixelOptions: PixelOptions?,
+        coroutineScope: CoroutineScope
+
+    ) = ImageLoad(
+        ViewLoad(
+            imageView.width,
+            imageView.height,
+            url
+        ), imageView, pixelOptions, coroutineScope
+    ).also { it.start() }
+
+    //todo working here
+    fun loadFile(
         imageView: ImageView,
         path: String,
         pixelOptions: PixelOptions?,
         coroutineScope: CoroutineScope
+
     ) = ImageLoad(
         ViewLoad(
             imageView.width,
@@ -24,6 +40,4 @@ internal object LoaderProxy {
             path
         ), imageView, pixelOptions, coroutineScope
     ).also { it.start() }
-
-
 }

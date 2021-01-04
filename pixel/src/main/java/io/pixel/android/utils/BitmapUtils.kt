@@ -107,7 +107,7 @@ private fun calculateInSampleSize(
  */
 internal fun String.getUniqueIdentifier(): Int {
     var sum = 0
-    map {
+    forEach {
         sum += it.toInt()
     }
     return sum
