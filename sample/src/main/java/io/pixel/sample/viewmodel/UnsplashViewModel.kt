@@ -46,28 +46,25 @@ class UnsplashViewModel : ViewModel() {
 
         loading = true
 
-        unsplash.getCollections(
+        unsplash.collections.get(
             collectionsPageNo,
             perPageItems,
-            object : Unsplash.OnCollectionsLoadedListener {
-                override fun onComplete(collections: MutableList<Collection>?) {
-                    collections?.run {
-                        loading = false
-                        collectionsLiveData.postValue(this)
+            {
+                loading = false
+                collectionsLiveData.postValue(it.toMutableList())
 
-                    }
-                }
 
-                override fun onError(error: String?) {
-                    errorLiveData.postValue(error)
-                }
+            },
+            {
+                errorLiveData.postValue(it)
             })
 
 
-    }
 
-    interface SampleView {
-        fun onPhotoCollectionReady(collection: MutableList<Collection>)
-        fun onPhotoCollectionError(error: String?)
-    }
+}
+
+interface SampleView {
+    fun onPhotoCollectionReady(collection: MutableList<Collection>)
+    fun onPhotoCollectionError(error: String?)
+}
 }
