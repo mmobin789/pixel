@@ -1,7 +1,7 @@
-package io.pixel.android.config
+package io.pixel.config
 
 import android.util.Log
-import io.pixel.android.Pixel
+import io.pixel.Pixel
 
 /**
  * An internal logger for pixel library.
@@ -11,7 +11,7 @@ internal object PixelLog {
     private const val tag = Pixel.TAG
 
     fun enabled(loggingEnabled: Boolean) {
-        this.loggingEnabled = loggingEnabled
+        PixelLog.loggingEnabled = loggingEnabled
     }
 
     fun debug(tag: String = "", message: String) {

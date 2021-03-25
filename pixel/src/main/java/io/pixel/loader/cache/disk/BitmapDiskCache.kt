@@ -1,13 +1,13 @@
-package io.pixel.android.loader.cache.disk
+package io.pixel.loader.cache.disk
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
 import android.os.Environment.isExternalStorageRemovable
-import io.pixel.android.config.PixelLog
-import io.pixel.android.config.PixelOptions
-import io.pixel.android.loader.load.ViewLoad
+import io.pixel.config.PixelLog
+import io.pixel.config.PixelOptions
+import io.pixel.loader.load.ViewLoad
 import okio.Buffer
 import okio.buffer
 import java.io.File
@@ -54,12 +54,12 @@ internal object BitmapDiskCache {
 
 
     fun setCacheSize(cacheSizeInMB: Long) {
-        this.cacheSizeInMB = cacheSizeInMB
+        BitmapDiskCache.cacheSizeInMB = cacheSizeInMB
     }
 
 
     fun setAppVersion(appVersion: Int) {
-        this.appVersion = appVersion
+        BitmapDiskCache.appVersion = appVersion
     }
 
 

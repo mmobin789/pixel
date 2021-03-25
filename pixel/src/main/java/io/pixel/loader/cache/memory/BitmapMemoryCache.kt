@@ -1,9 +1,9 @@
-package io.pixel.android.loader.cache.memory
+package io.pixel.loader.cache.memory
 
 import android.graphics.Bitmap
 import android.os.Build
 import android.util.LruCache
-import io.pixel.android.config.PixelLog
+import io.pixel.config.PixelLog
 
 
 internal object BitmapMemoryCache {

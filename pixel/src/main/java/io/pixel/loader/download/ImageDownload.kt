@@ -1,10 +1,10 @@
-package io.pixel.android.loader.download
+package io.pixel.loader.download
 
 import android.graphics.Bitmap
-import io.pixel.android.config.PixelLog
-import io.pixel.android.config.PixelOptions
-import io.pixel.android.loader.load.LoadAdapter
-import io.pixel.android.loader.load.ViewLoad
+import io.pixel.config.PixelLog
+import io.pixel.config.PixelOptions
+import io.pixel.loader.load.LoadAdapter
+import io.pixel.loader.load.ViewLoad
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

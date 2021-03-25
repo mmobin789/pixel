@@ -1,11 +1,11 @@
-package io.pixel.android.loader.load
+package io.pixel.loader.load
 
-import io.pixel.android.config.PixelLog
-import io.pixel.android.config.PixelOptions
-import io.pixel.android.loader.cache.disk.BitmapDiskCache
-import io.pixel.android.loader.cache.memory.BitmapMemoryCache
-import io.pixel.android.loader.download.Downloader.getBitmapFromURL
-import io.pixel.android.loader.download.ImageDownload
+import io.pixel.config.PixelLog
+import io.pixel.config.PixelOptions
+import io.pixel.loader.cache.disk.BitmapDiskCache
+import io.pixel.loader.cache.memory.BitmapMemoryCache
+import io.pixel.loader.download.Downloader.getBitmapFromURL
+import io.pixel.loader.download.ImageDownload
 
 internal object LoadAdapter {
     private val imageDownloads = HashMap<Int, ImageDownload>(100)

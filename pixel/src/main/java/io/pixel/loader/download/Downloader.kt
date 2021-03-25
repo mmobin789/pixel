@@ -1,9 +1,9 @@
-package io.pixel.android.loader.download
+package io.pixel.loader.download
 
 import android.graphics.Bitmap
-import io.pixel.android.config.PixelLog
-import io.pixel.android.config.PixelOptions
-import io.pixel.android.utils.getDecodedBitmapFromByteArray
+import io.pixel.config.PixelLog
+import io.pixel.config.PixelOptions
+import io.pixel.utils.getDecodedBitmapFromByteArray
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response

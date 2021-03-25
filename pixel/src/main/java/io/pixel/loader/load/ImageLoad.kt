@@ -1,13 +1,13 @@
-package io.pixel.android.loader.load
+package io.pixel.loader.load
 
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
-import io.pixel.android.config.PixelLog
-import io.pixel.android.config.PixelOptions
-import io.pixel.android.loader.cache.disk.BitmapDiskCache
-import io.pixel.android.loader.download.ImageDownload
+import io.pixel.config.PixelLog
+import io.pixel.config.PixelOptions
+import io.pixel.loader.cache.disk.BitmapDiskCache
+import io.pixel.loader.download.ImageDownload
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,26 +47,29 @@ internal class ImageLoad(
         imageView.setImageDrawable(transparentColorDrawable)
     }
 
+    private fun setImageSize() = pixelOptions?.run {
+        val sampleWidth = getRequestedImageWidth()
+        val sampleHeight = getRequestedImageHeight()
+
+        if (sampleWidth > 0 && sampleHeight > 0) {
+
+            PixelLog.debug(
+                this@ImageLoad.javaClass.simpleName,
+                "Sample Bitmap load from ${viewLoad.width}x${viewLoad.height} to ${sampleWidth}x${sampleHeight}"
+            )
+
+            viewLoad.width = sampleWidth
+            viewLoad.height = sampleHeight
+
+        }
+    }
+
     fun start() {
         setPlaceholder()
         coroutineScope.launch(Dispatchers.IO) {
             BitmapDiskCache.prepare(imageView.context)
 
-            pixelOptions?.apply {
-                val sampleWidth = getRequestedImageWidth()
-                val sampleHeight = getRequestedImageHeight()
-
-                if (sampleWidth > 0 && sampleHeight > 0) {
-
-                    PixelLog.debug(
-                        this@ImageLoad.javaClass.simpleName,
-                        "Sample Bitmap load from ${viewLoad.width}x${viewLoad.height} to ${sampleWidth}x${sampleHeight}"
-                    )
-
-                    viewLoad.width = sampleWidth
-                    viewLoad.height = sampleHeight
-                }
-            }
+            setImageSize()
 
 
             LoadAdapter.loadImageFromMemory(id)?.apply {

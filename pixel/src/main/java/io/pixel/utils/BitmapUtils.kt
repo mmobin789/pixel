@@ -1,4 +1,4 @@
-package io.pixel.android.utils
+package io.pixel.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -107,7 +107,7 @@ private fun calculateInSampleSize(
  */
 internal fun String.getUniqueIdentifier(): Int {
     var sum = 0
-    map {
+    forEach {
         sum += it.toInt()
     }
     return sum
