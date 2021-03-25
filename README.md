@@ -5,7 +5,7 @@
 [![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/master.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/863ea5386f204bd4807580d3ae231874)](https://www.codacy.com/manual/mmobin789/pixel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mmobin789/pixel&amp;utm_campaign=Badge_Grade)
 
-[![Kotlin Version](https://img.shields.io/badge/kotlin-1.4.21-orange.svg)](http://kotlinlang.org/)
+[![Kotlin Version](https://img.shields.io/badge/kotlin-1.4.31-orange.svg)](http://kotlinlang.org/)
 
 A lightweight image loading library for Android backed by Kotlin Coroutines.
 
@@ -38,7 +38,7 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
  
  **Gradle**
  ```
- implementation 'io.pixel.android:pixel:0.0.1-alpha'
+ implementation 'io.pixel.android:pixel:1.0.0-alpha'
  ```
  
  **Maven**
@@ -47,7 +47,7 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
  <dependency>
   <groupId>io.pixel.android</groupId>
   <artifactId>pixel</artifactId>
-  <version>0.0.1-alpha</version>
+  <version>1.0.0-alpha</version>
   <type>pom</type>
  </dependency>
 ```

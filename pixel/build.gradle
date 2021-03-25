@@ -2,39 +2,7 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'com.jfrog.bintray'
-
-apply plugin: 'com.github.dcendents.android-maven'
-
 apply plugin: 'com.vanniktech.maven.publish' // NEW
-
-
-ext {
-    PUBLISH_GROUP_ID = 'io.pixel.android'
-    PUBLISH_ARTIFACT_ID = 'pixel'
-    PUBLISH_VERSION = '0.0.1-alpha'
-
-    bintrayRepo = "pixel"
-    bintrayName = "io.pixel.android"
-    libraryName = 'pixel'
-
-
-    publishedGroupId = 'io.pixel.android'
-    artifact = 'pixel'
-    libraryVersion = '0.0.1-alpha'
-    libraryDescription = 'Image loading and Networking for Android backed by Kotlin Coroutines.'
-
-    siteUrl = 'https://github.com/mmobin789/pixel'
-    gitUrl = 'https://github.com/mmobin789/pixel.git'
-
-    developerId = 'mmobin789'
-    developerName = 'Mobin Munir'
-    developerEmail = 'mmobinbutt@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
 
 
 android {
@@ -86,22 +54,4 @@ dependencies {
 
 }
 
-/**
- * This task can be used to generate gradle wrapper and all relevant files in case of loss.
- */
-/*task wrapper(type: Wrapper) {
-    gradleVersion = '6.1.1'
-}*/
-/*
-  Vital for releasing update for pixel library.
- */
-//apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
-//apply from: 'android-release-aar.gradle'
-
-//Add these lines to publish library to bintray. This is the ready made scripts made to make uploading to bintray easy.
-//Place it at the end of the file made by wajahat karim forked by me.
-if (project.rootProject.file('local.properties').exists()) {
-    apply from: 'https://raw.githubusercontent.com/mmobin789/JCenter-Gradle-Scripts/master/install.gradle'
-    apply from: 'https://raw.githubusercontent.com/mmobin789/JCenter-Gradle-Scripts/master/bintray.gradle'
-}
 
