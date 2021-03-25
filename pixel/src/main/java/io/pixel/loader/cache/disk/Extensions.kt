@@ -1,4 +1,4 @@
-package io.pixel.android.loader.cache.disk
+package io.pixel.loader.cache.disk
 
 import java.io.Closeable
 import java.io.File

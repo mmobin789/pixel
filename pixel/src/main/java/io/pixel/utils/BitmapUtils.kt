@@ -1,4 +1,4 @@
-package io.pixel.android.utils
+package io.pixel.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

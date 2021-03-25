@@ -1,10 +1,10 @@
-package io.pixel.android.config
+package io.pixel.config
 
 import android.content.Context
-import io.pixel.android.Pixel
-import io.pixel.android.loader.cache.disk.BitmapDiskCache
-import io.pixel.android.loader.cache.memory.BitmapMemoryCache
-import io.pixel.android.loader.download.Downloader
+import io.pixel.Pixel
+import io.pixel.loader.cache.disk.BitmapDiskCache
+import io.pixel.loader.cache.memory.BitmapMemoryCache
+import io.pixel.loader.download.Downloader
 import okhttp3.OkHttpClient
 
 /**

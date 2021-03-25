@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kc.unsplash.models.Collection
-import io.pixel.android.Pixel
-import io.pixel.android.config.PixelOptions
+import io.pixel.Pixel
+import io.pixel.config.PixelOptions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_center_cropped.*
 

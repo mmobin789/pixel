@@ -1,13 +1,13 @@
-package io.pixel.android.loader.load
+package io.pixel.loader.load
 
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
-import io.pixel.android.config.PixelLog
-import io.pixel.android.config.PixelOptions
-import io.pixel.android.loader.cache.disk.BitmapDiskCache
-import io.pixel.android.loader.download.ImageDownload
+import io.pixel.config.PixelLog
+import io.pixel.config.PixelOptions
+import io.pixel.loader.cache.disk.BitmapDiskCache
+import io.pixel.loader.download.ImageDownload
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

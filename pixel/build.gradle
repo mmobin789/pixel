@@ -6,56 +6,13 @@ apply plugin: 'com.jfrog.bintray'
 
 apply plugin: 'com.github.dcendents.android-maven'
 
-//apply plugin: 'maven-publish'
+apply plugin: 'com.vanniktech.maven.publish' // NEW
 
-/*def libraryGroupId = 'io.pixel.android'
-def libraryArtifactId = 'pixel'
-def libraryVersion = '0.0.3-alpha'*/
-
-/*afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.release
-                groupId = libraryGroupId
-                artifactId = libraryArtifactId
-                version = libraryVersion
-            }
-        }
-    }
-}
-
-bintray {
-    user = project.property('bintray.user')
-    key = project.property('bintray.password')
-    publications = ['release']
-    publish = true
-    override = true
-
-    pkg {
-        repo = 'demo-repo'
-        name = libraryArtifactId
-        // desc = 'Here is my library description'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/mmobin789/pixel.git'
-        publicDownloadNumbers = true
-        version {
-            name = libraryVersion
-            released = new Date()
-        }
-    }
-
-    publications = ['release']
-    release(MavenPublication)
-}*/
 
 ext {
-
-
     PUBLISH_GROUP_ID = 'io.pixel.android'
     PUBLISH_ARTIFACT_ID = 'pixel'
-    PUBLISH_VERSION = '0.0.3-alpha'
+    PUBLISH_VERSION = '0.0.1-alpha'
 
     bintrayRepo = "pixel"
     bintrayName = "io.pixel.android"
@@ -64,7 +21,7 @@ ext {
 
     publishedGroupId = 'io.pixel.android'
     artifact = 'pixel'
-    libraryVersion = '0.0.3-alpha'
+    libraryVersion = '0.0.1-alpha'
     libraryDescription = 'Image loading and Networking for Android backed by Kotlin Coroutines.'
 
     siteUrl = 'https://github.com/mmobin789/pixel'
@@ -114,9 +71,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     //  implementation "androidx.appcompat:appcompat:1.1.0"
     // implementation "androidx.core:core-ktx:$core"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
     // Standard HTTP client for Android for modern I/O support by Okio.
-    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
 
     // test libs below
     // testImplementation "com.google.truth:truth:1.0.1"

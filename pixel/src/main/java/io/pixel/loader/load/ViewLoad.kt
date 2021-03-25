@@ -1,6 +1,6 @@
-package io.pixel.android.loader.load
+package io.pixel.loader.load
 
-import io.pixel.android.utils.getUniqueIdentifier
+import io.pixel.utils.getUniqueIdentifier
 
 internal class ViewLoad(var width: Int, var height: Int, val path: String) {
 

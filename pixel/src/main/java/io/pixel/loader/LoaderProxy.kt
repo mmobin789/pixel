@@ -1,9 +1,9 @@
-package io.pixel.android.loader
+package io.pixel.loader
 
 import android.widget.ImageView
-import io.pixel.android.config.PixelOptions
-import io.pixel.android.loader.load.ImageLoad
-import io.pixel.android.loader.load.ViewLoad
+import io.pixel.config.PixelOptions
+import io.pixel.loader.load.ImageLoad
+import io.pixel.loader.load.ViewLoad
 import kotlinx.coroutines.CoroutineScope
 
 /**

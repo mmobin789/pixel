@@ -2,8 +2,8 @@ package io.pixel.sample;
 
 import android.widget.ImageView;
 
-import io.pixel.android.Pixel;
-import io.pixel.android.config.PixelOptions;
+import io.pixel.Pixel;
+import io.pixel.config.PixelOptions;
 
 public final class SampleJavaLoad {
 

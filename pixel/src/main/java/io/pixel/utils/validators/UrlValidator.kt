@@ -1,7 +1,7 @@
-package io.pixel.android.utils.validators
+package io.pixel.utils.validators
 
 import android.util.Patterns
-import io.pixel.android.config.PixelLog
+import io.pixel.config.PixelLog
 
 internal object UrlValidator {
     fun validateURL(url: String?): String? {

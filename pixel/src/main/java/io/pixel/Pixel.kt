@@ -1,10 +1,10 @@
-package io.pixel.android
+package io.pixel
 
 import android.widget.ImageView
-import io.pixel.android.config.PixelOptions
-import io.pixel.android.loader.LoaderProxy
-import io.pixel.android.utils.validators.FileValidator
-import io.pixel.android.utils.validators.UrlValidator
+import io.pixel.config.PixelOptions
+import io.pixel.loader.LoaderProxy
+import io.pixel.utils.validators.FileValidator
+import io.pixel.utils.validators.UrlValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

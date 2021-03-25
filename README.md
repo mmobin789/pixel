@@ -38,7 +38,7 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
  
  **Gradle**
  ```
- implementation 'io.pixel.android:pixel:0.0.3-alpha'
+ implementation 'io.pixel.android:pixel:0.0.1-alpha'
  ```
  
  **Maven**
@@ -47,7 +47,7 @@ A lightweight image loading library for Android backed by Kotlin Coroutines.
  <dependency>
   <groupId>io.pixel.android</groupId>
   <artifactId>pixel</artifactId>
-  <version>0.0.3-alpha</version>
+  <version>0.0.1-alpha</version>
   <type>pom</type>
  </dependency>
 ```

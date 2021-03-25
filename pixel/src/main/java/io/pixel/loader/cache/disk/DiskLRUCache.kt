@@ -19,9 +19,9 @@
  * (Using this to not reinvent the wheel)
  */
 
-package io.pixel.android.loader.cache.disk
+package io.pixel.loader.cache.disk
 
-import io.pixel.android.loader.cache.disk.DiskLRUCache.Editor
+import io.pixel.loader.cache.disk.DiskLRUCache.Editor
 import okio.*
 import java.io.*
 import java.io.EOFException

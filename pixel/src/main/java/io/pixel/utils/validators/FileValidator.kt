@@ -1,6 +1,6 @@
-package io.pixel.android.utils.validators
+package io.pixel.utils.validators
 
-import io.pixel.android.config.PixelLog
+import io.pixel.config.PixelLog
 import java.io.File
 
 object FileValidator {

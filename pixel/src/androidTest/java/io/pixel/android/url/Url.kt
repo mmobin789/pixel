@@ -2,7 +2,7 @@ package io.pixel.android.url
 
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import io.pixel.android.utils.validators.UrlValidator
+import io.pixel.utils.validators.UrlValidator
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,4 +1,4 @@
-package io.pixel.android.config
+package io.pixel.config
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
