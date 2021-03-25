@@ -12,9 +12,10 @@ import java.io.File
 
 /**
  * Pixel is a coroutine library to load and cache images.
+ * Ideally, you shouldn't need multiple instances of this artifact but just in case you do.
  * @author Mobin Munir
  */
-class Pixel private constructor() {
+class Pixel  {
     private val mainThreadScope = CoroutineScope(Dispatchers.Main.immediate)
 
     companion object {
