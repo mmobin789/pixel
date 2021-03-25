@@ -3,12 +3,10 @@ package io.pixel
 import android.widget.ImageView
 import io.pixel.config.PixelOptions
 import io.pixel.loader.LoaderProxy
-import io.pixel.utils.validators.FileValidator
 import io.pixel.utils.validators.UrlValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
 
 /**
  * Pixel is a coroutine library to load and cache images.
@@ -70,7 +68,7 @@ class Pixel  {
          * @param pixelOptions Custom image load options.
          * Default are null.
          */
-        @JvmStatic
+       /* @JvmStatic
         fun load(
             file: File?,
             pixelOptions: PixelOptions? = null,
@@ -93,7 +91,7 @@ class Pixel  {
 
 
             }
-        }
+        }*/
     }
 
 
