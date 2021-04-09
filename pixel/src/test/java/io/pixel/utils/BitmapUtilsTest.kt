@@ -1,6 +1,5 @@
-package io.pixel.android.utils
+package io.pixel.utils
 
-import io.pixel.utils.getUniqueIdentifier
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
