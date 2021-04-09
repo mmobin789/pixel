@@ -54,4 +54,17 @@ dependencies {
 
 }
 
+publishing {
+    repositories {   // by default upload tasks points to the legacy URl which will be down on sunset and all new repos should use the one similar to below.
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
+           credentials {
+               username = ossrhUsername  // jira-username
+               password = ossrhPassword  //jira-password
+           }
+        }
+    }
+}
+
 
