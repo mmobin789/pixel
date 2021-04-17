@@ -39,7 +39,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     //  implementation "androidx.appcompat:appcompat:1.1.0"
     // implementation "androidx.core:core-ktx:$core"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
     // Standard HTTP client for Android for modern I/O support by Okio.
     implementation "com.squareup.okhttp3:okhttp:4.9.1"
 
@@ -59,9 +59,9 @@ publishing {
         maven {
             // change to point to your repo, e.g. http://my.org/repo
             url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
-           credentials {
-               username = ossrhUsername  // jira-username
-               password = ossrhPassword  //jira-password
+           credentials {   // using tokenized username and password per maven for security.
+               username = ossrhUsername  // jira-username or nexus UI username
+               password = ossrhPassword  //jira-password or nexus UI password
            }
         }
     }
