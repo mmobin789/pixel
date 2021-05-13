@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kc.unsplash.models.Collection
+import com.keenencharles.unsplash.models.Photo
 import io.pixel.Pixel
 import io.pixel.config.PixelOptions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_center_cropped.*
 
-class RVUnsplashAdapter(private val list: MutableList<Collection>) :
+class RVUnsplashAdapter(private val list: MutableList<Photo>) :
     RecyclerView.Adapter<RVUnsplashAdapter.VH>() {
 
     private lateinit var recyclerView: RecyclerView
@@ -26,7 +26,7 @@ class RVUnsplashAdapter(private val list: MutableList<Collection>) :
         )
     }
 
-    fun addAll(list: MutableList<Collection>) {
+    fun addAll(list: MutableList<Photo>) {
         this.list.addAll(list)
         notifyItemRangeInserted(itemCount, list.size)
         //   recyclerView.setItemViewCacheSize(itemCount)
@@ -35,9 +35,9 @@ class RVUnsplashAdapter(private val list: MutableList<Collection>) :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val collection = list[position]
-        val url = collection.coverPhoto.urls.small
+        val url = collection.urls?.small
 
-        Log.d("Url position: $position", url)
+        Log.d("Url position: $position", "$url")
 
         Pixel.load(
             url = url,
@@ -72,8 +72,8 @@ class RVUnsplashAdapter(private val list: MutableList<Collection>) :
         LayoutContainer {
         init {
             itemView.setOnClickListener {
-                val url = list[adapterPosition].coverPhoto.urls.small
-                Log.d("Image URL", url)
+                val url = list[absoluteAdapterPosition].urls?.small
+                Log.d("Image URL", "$url")
             }
         }
     }

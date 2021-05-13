@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kc.unsplash.models.Collection
+import com.keenencharles.unsplash.models.Photo
 import io.pixel.config.PixelConfiguration
 import io.pixel.sample.viewmodel.UnsplashViewModel
 import kotlinx.android.synthetic.main.activity_sample.*
@@ -78,7 +78,7 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
 
     }
 
-    override fun onPhotoCollectionReady(collection: MutableList<Collection>) {
+    override fun onPhotoCollectionReady(collection: MutableList<Photo>) {
         tvLoading.visibility = View.GONE
         rvUnsplashAdapter.addAll(collection)
 
