@@ -1,4 +1,4 @@
-package io.pixel.loader.download
+package io.pixel.loader.load.request.download
 
 import android.graphics.Bitmap
 import io.pixel.config.PixelLog

@@ -4,17 +4,17 @@ import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
 import io.pixel.loader.cache.disk.BitmapDiskCache
 import io.pixel.loader.cache.memory.BitmapMemoryCache
-import io.pixel.loader.download.Downloader.getBitmapFromURL
-import io.pixel.loader.download.ImageDownload
+import io.pixel.loader.load.request.LoadRequest
+import io.pixel.loader.load.request.download.Downloader.getBitmapFromURL
 
 internal object LoadAdapter {
-    private val imageDownloads = HashMap<Int, ImageDownload>(100)
+    private val imageLoads = HashMap<Int, LoadRequest>(100)
 
     @Synchronized
-    fun addDownload(imageDownload: ImageDownload) {
-        val id = imageDownload.id
-        if (!imageDownloads.containsKey(id))
-            imageDownloads[id] = imageDownload
+    fun addLoad(loadRequest: LoadRequest) {
+        val id = loadRequest.id
+        if (!imageLoads.containsKey(id))
+            imageLoads[id] = loadRequest
         else cancelImageDownload(id)
     }
 
@@ -24,7 +24,7 @@ internal object LoadAdapter {
         removeFromCache: Boolean = false
     ) {
 
-        imageDownloads[id]?.apply {
+        imageLoads[id]?.apply {
             cancel()
             removeImageDownload(
                 this.id,
@@ -65,8 +65,18 @@ internal object LoadAdapter {
             }
         }
 
+    fun loadImageFromFile(
+        url: String,
+        reqWidth: Int,
+        reqHeight: Int,
+        viewLoadCode: Int,
+        pixelOptions: PixelOptions?
+    ) {
+     //todo
+    }
+
     private fun removeImageDownload(id: Int, removeFromCache: Boolean) {
-        imageDownloads.remove(id)?.also {
+        imageLoads.remove(id)?.also {
             if (removeFromCache) {
                 BitmapMemoryCache.clear(id)
                 BitmapDiskCache.clear(id.toString())

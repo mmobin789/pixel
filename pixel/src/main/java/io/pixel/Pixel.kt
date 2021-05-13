@@ -51,7 +51,7 @@ class Pixel  {
                 UrlValidator.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
                     ?.apply url@{
                         mainThreadScope.launch {
-                            LoaderProxy.loadUrl(imageView, this@url, pixelOptions, mainThreadScope)
+                            LoaderProxy.loadUrl(imageView, this@url, pixelOptions, mainThreadScope).start()
                         }
                     }
 
@@ -80,14 +80,13 @@ class Pixel  {
             return init().apply {
                 FileValidator.validateFile(file)
                     ?.apply path@{
-                        //todo working here.
                         mainThreadScope.launch {
                             LoaderProxy.loadFile(
                                 imageView,
                                 this@path,
                                 pixelOptions,
                                 mainThreadScope
-                            )
+                            ).start()
                         }
                     }
 
