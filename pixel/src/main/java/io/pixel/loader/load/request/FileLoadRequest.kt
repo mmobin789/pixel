@@ -1,5 +1,6 @@
 package io.pixel.loader.load.request
 
+import android.content.Context
 import android.graphics.Bitmap
 import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 internal class FileLoadRequest(
+    private val context:Context,
     private val viewLoad: ViewLoad,
     private val coroutineScope: CoroutineScope,
     private val pixelOptions: PixelOptions?,
@@ -29,12 +31,10 @@ internal class FileLoadRequest(
             )
 
             LoadAdapter.loadImageFromFile(
-                path,
-                width,
-                height,
-                hashCode(),
+                context,
+                this,
                 pixelOptions
-            )
+            )?.also(callback)
         }
     }
 

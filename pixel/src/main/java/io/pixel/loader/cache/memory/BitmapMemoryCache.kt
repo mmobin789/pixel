@@ -26,7 +26,7 @@ internal object BitmapMemoryCache {
 
 
     fun setCacheSize(cacheSizeInMegaBytes: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             cache.resize(cacheSizeInMegaBytes * 1024)
             PixelLog.debug(javaClass.simpleName, "New Cache Size = $cacheSizeInMegaBytes MegaBytes")
         }

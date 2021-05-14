@@ -7,6 +7,7 @@ import io.pixel.loader.load.type.ImageLoad
 import io.pixel.loader.load.type.InternetImageLoad
 import io.pixel.loader.load.ViewLoad
 import kotlinx.coroutines.CoroutineScope
+import java.io.File
 
 /**
  * A proxy class representing a link to load process and it's states.
@@ -28,7 +29,7 @@ internal object LoaderProxy {
         ), imageView, pixelOptions, coroutineScope
     )
 
-    //todo working here
+
     fun loadFile(
         imageView: ImageView,
         path: String,

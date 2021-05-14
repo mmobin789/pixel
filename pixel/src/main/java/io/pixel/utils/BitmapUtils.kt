@@ -10,7 +10,7 @@ import java.nio.ByteBuffer
 internal fun ByteArray.getDecodedBitmapFromByteArray(
     reqWidth: Int,
     reqHeight: Int
-): Bitmap? {
+): Bitmap {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 
@@ -26,7 +26,7 @@ internal fun ByteArray.getDecodedBitmapFromByteArray(
 }
 
 internal fun ByteArray.getDecodedBitmapFromByteArray(
-): Bitmap? {
+): Bitmap {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 

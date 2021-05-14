@@ -78,12 +78,12 @@ class Pixel  {
         ): Pixel {
 
             return init().apply {
-                FileValidator.validateFile(file)
+                FileValidator.validatePath(file)
                     ?.apply path@{
                         mainThreadScope.launch {
                             LoaderProxy.loadFile(
                                 imageView,
-                                this@path,
+                               this@path,
                                 pixelOptions,
                                 mainThreadScope
                             ).start()

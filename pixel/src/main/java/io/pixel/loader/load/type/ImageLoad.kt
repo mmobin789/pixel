@@ -108,20 +108,14 @@ internal abstract class ImageLoad(
             val tag = "FileImageLoad"
             setImageSize()
 
-            LoadAdapter.loadImageFromMemory(id)?.run {
-                PixelLog.debug(
-                    tag,
-                    "Returned Memory Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
-                )
-                setImage(this)
-            } ?: run {
-                val fileLoadRequest = FileLoadRequest(viewLoad, coroutineScope, pixelOptions){
+
+                val fileLoadRequest = FileLoadRequest(imageView.context,viewLoad, coroutineScope, pixelOptions){
                     setImage(it)
                 }
                 fileLoadRequest.start()
                 LoadAdapter.addLoad(fileLoadRequest)
 
-            }
+
 
         }
     }

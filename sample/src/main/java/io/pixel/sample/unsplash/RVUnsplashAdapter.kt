@@ -1,4 +1,4 @@
-package io.pixel.sample
+package io.pixel.sample.unsplash
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.keenencharles.unsplash.models.Photo
 import io.pixel.Pixel
 import io.pixel.config.PixelOptions
+import io.pixel.sample.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_center_cropped.*
 

@@ -30,9 +30,12 @@ internal object Downloader {
             val body = response.body
             return body?.run {
                 val bytes = bytes()
-                val bitmap = if (reqWidth > 0 && reqHeight > 0)
+                val bitmap = if (reqWidth > 0 && reqHeight > 0) {
                     bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight)
-                else bytes.getDecodedBitmapFromByteArray()
+                }
+                else {
+                    bytes.getDecodedBitmapFromByteArray()
+                }
                 bitmap
 
             }

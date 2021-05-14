@@ -39,7 +39,7 @@ class FileValidatorTest {
             fos.close()
             testFile
         }
-        val path = validator.validateFile(file)
+        val path = validator.validatePath(file)
         println(path)
         file.deleteIfExists()
         assertNotNull(path)
@@ -56,7 +56,7 @@ class FileValidatorTest {
             fos.close()
             testFile
         }
-        val path = validator.validateFile(File("/data/user/0/io.pixel.android.test/files/hello_fil"))
+        val path = validator.validatePath(File("/data/user/0/io.pixel.android.test/files/hello_fil"))
         file.deleteIfExists()
         assertNull(path)
     }
@@ -64,7 +64,7 @@ class FileValidatorTest {
 
     @Test
     fun nullFile() {
-        val path = validator.validateFile(null)
+        val path = validator.validatePath(null)
         assertNull(path)
     }
 

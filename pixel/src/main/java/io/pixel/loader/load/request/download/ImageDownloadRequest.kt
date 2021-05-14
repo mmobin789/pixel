@@ -30,15 +30,9 @@ internal class ImageDownloadRequest(
             )
 
             LoadAdapter.downloadImage(
-                path,
-                width,
-                height,
-                hashCode(),
+               this,
                 pixelOptions
-            )?.also {
-                callback(it)
-
-            }
+            )?.also(callback)
         }
     }
 

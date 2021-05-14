@@ -1,4 +1,4 @@
-package io.pixel.sample.viewmodel
+package io.pixel.sample.unsplash.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

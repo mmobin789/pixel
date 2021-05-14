@@ -1,4 +1,4 @@
-package io.pixel.sample
+package io.pixel.sample.unsplash
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.keenencharles.unsplash.models.Photo
 import io.pixel.config.PixelConfiguration
-import io.pixel.sample.viewmodel.UnsplashViewModel
+import io.pixel.sample.R
+import io.pixel.sample.unsplash.viewmodel.UnsplashViewModel
 import kotlinx.android.synthetic.main.activity_sample.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
