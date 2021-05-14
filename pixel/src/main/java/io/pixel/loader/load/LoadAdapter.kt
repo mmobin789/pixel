@@ -76,6 +76,7 @@ internal object LoadAdapter {
         pixelOptions: PixelOptions?
     ): Bitmap? {
         var fileIS: InputStream? = null
+        //todo working here.
         return try {
             fileIS = context.contentResolver.openInputStream(Uri.parse(viewLoad.path))
             fileIS?.run {
