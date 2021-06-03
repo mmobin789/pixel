@@ -70,7 +70,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
 
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     // memory leak detection in debug only.
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
