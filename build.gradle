@@ -11,7 +11,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.13.0' // NEW  // updated version required gradle version 6.6.0 or above.
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.17.0' // NEW  // updated version required gradle version 6.6.0 or above.
         classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.4.30' // NEW
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
