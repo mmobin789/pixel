@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.kc.unsplash.Unsplash
-import com.kc.unsplash.models.Collection
+import com.keenencharles.unsplash.Unsplash
+import com.keenencharles.unsplash.models.Collection
 
 class UnsplashViewModel : ViewModel() {
 
-    private val unsplash = Unsplash("LKKIM-pzVTHV1XabCIik1V4LHf-Zn0x7t7lzv8-Q9J4")
+     val unsplash = Unsplash("LKKIM-pzVTHV1XabCIik1V4LHf-Zn0x7t7lzv8-Q9J4","x3edkPc07EhbjAKYKEJJ7L4iU09x0Dao7WVIVNmrZBM")
 
     private val collectionsLiveData = MutableLiveData<MutableList<Collection>>()
     private val errorLiveData = MutableLiveData<String?>()

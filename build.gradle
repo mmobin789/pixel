@@ -5,7 +5,7 @@ buildscript {
     ext.espressoVersion = "3.4.0"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
     }
     dependencies {
@@ -22,8 +22,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
-
+        mavenCentral()
     }
 }
 

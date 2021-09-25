@@ -6,7 +6,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kc.unsplash.models.Collection
+import com.keenencharles.unsplash.api.Scope
+import com.keenencharles.unsplash.models.Collection
 import io.pixel.config.PixelConfiguration
 import io.pixel.sample.viewmodel.UnsplashViewModel
 import kotlinx.android.synthetic.main.activity_sample.*
@@ -43,7 +44,12 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
     }
 
     private fun loadImages() {
-        unsplashViewModel.apply {
+        unsplashViewModel.run {
+            unsplash.run {
+                authorize(this@UnsplashActivity, "urn:ietf:wg:oauth:2.0:oob", listOf(Scope.PUBLIC))
+                //todo working here.
+
+            }
             attachView(this@UnsplashActivity)
             getCollectionsLiveData().observe(this@UnsplashActivity, collectionObserver)
             getErrorLiveData().observe(this@UnsplashActivity, errorObserver)
@@ -85,7 +91,7 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
     }
 
     override fun onPhotoCollectionError(error: String?) {
-        tvLoading.apply {
+        tvLoading.run {
             text = error
             visibility = View.VISIBLE
         }
