@@ -9,7 +9,7 @@ import com.keenencharles.unsplash.models.Collection
 
 class UnsplashViewModel : ViewModel() {
 
-     val unsplash = Unsplash("LKKIM-pzVTHV1XabCIik1V4LHf-Zn0x7t7lzv8-Q9J4","x3edkPc07EhbjAKYKEJJ7L4iU09x0Dao7WVIVNmrZBM")
+    private val unsplash = Unsplash("LKKIM-pzVTHV1XabCIik1V4LHf-Zn0x7t7lzv8-Q9J4")
 
     private val collectionsLiveData = MutableLiveData<MutableList<Collection>>()
     private val errorLiveData = MutableLiveData<String?>()
@@ -60,11 +60,10 @@ class UnsplashViewModel : ViewModel() {
             })
 
 
+    }
 
-}
-
-interface SampleView {
-    fun onPhotoCollectionReady(collection: MutableList<Collection>)
-    fun onPhotoCollectionError(error: String?)
-}
+    interface SampleView {
+        fun onPhotoCollectionReady(collection: MutableList<Collection>)
+        fun onPhotoCollectionError(error: String?)
+    }
 }
