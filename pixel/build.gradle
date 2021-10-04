@@ -41,7 +41,7 @@ dependencies {
     // implementation "androidx.core:core-ktx:$core"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
     // Standard HTTP client for Android for modern I/O support by Okio.
-    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+    implementation "com.squareup.okhttp3:okhttp:4.9.2"
 
     // test libs below
     // testImplementation "com.google.truth:truth:1.0.1"
