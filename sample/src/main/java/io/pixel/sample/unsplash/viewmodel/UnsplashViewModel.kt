@@ -13,11 +13,7 @@ class UnsplashViewModel : ViewModel() {
 
     private val unsplash = Unsplash("LKKIM-pzVTHV1XabCIik1V4LHf-Zn0x7t7lzv8-Q9J4")
 
-    init {
-
-    }
-
-    private val collectionsLiveData = MutableLiveData<MutableList<Photo>>()
+    private val collectionsLiveData = MutableLiveData<MutableList<Collection>>()
     private val errorLiveData = MutableLiveData<String?>()
     private var loading = false
     private var collectionsPageNo = 1

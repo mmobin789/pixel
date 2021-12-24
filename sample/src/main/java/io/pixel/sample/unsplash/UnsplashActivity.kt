@@ -44,7 +44,8 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
     }
 
     private fun loadImages() {
-        unsplashViewModel.apply {
+        unsplashViewModel.run {
+           // unsplash.authorize(this@UnsplashActivity, "redirectURI", listOf(Scope.PUBLIC))
             attachView(this@UnsplashActivity)
             getCollectionsLiveData().observe(this@UnsplashActivity, collectionObserver)
             getErrorLiveData().observe(this@UnsplashActivity, errorObserver)
@@ -86,7 +87,7 @@ class UnsplashActivity : AppCompatActivity(), UnsplashViewModel.SampleView {
     }
 
     override fun onPhotoCollectionError(error: String?) {
-        tvLoading.apply {
+        tvLoading.run {
             text = error
             visibility = View.VISIBLE
         }

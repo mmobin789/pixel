@@ -3,13 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
 
     defaultConfig {
         applicationId "io.pixel.sample"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -45,47 +45,47 @@ androidExtensions {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
     //testing
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     // For activity rules
-    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
 
-    def lifecycle_version = "2.3.1"
+    def lifecycle_version = "2.4.0"
 
     //images from unsplash for testing.
-    implementation 'com.keenencharles:androidunsplash:3.0.0'
+    implementation 'com.keenencharles:androidunsplash:3.1.2'
 
     // ViewModel - ktx
-    implementation "androidx.fragment:fragment-ktx:1.3.2"
+    implementation "androidx.fragment:fragment-ktx:1.4.0"
 
     // LiveData support
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
 
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     // memory leak detection in debug only.
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
 
     // Standard HTTP client for Android for modern I/O support by Okio.
-    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+    implementation "com.squareup.okhttp3:okhttp:4.9.3"
 
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
 
-    //pixel
+    //uncomment this line to test and deploy your local changes to pixel.
     implementation project(path: ':pixel')
 
-    //pixel
+    //optional to comment this line when testing with above else you can publish to maven locally as well.
   //  implementation 'io.github.mmobin789.pixel:pixel:1.0.0-alpha'
 
     // glide for comparison
