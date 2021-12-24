@@ -1,12 +1,8 @@
 package io.pixel.loader.load
 
 import android.content.Context
-import android.content.UriMatcher
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Log
-import android.util.Patterns
 import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
 import io.pixel.loader.cache.disk.BitmapDiskCache
@@ -15,7 +11,6 @@ import io.pixel.loader.load.request.LoadRequest
 import io.pixel.loader.load.request.download.Downloader.getBitmapFromURL
 import io.pixel.utils.getDecodedBitmapFromByteArray
 import java.io.*
-import java.net.URI
 
 internal object LoadAdapter {
     private val imageLoads = HashMap<Int, LoadRequest>(100)
@@ -27,7 +22,6 @@ internal object LoadAdapter {
             imageLoads[id] = loadRequest
         else cancelImageDownload(id)
     }
-
 
     private fun cancelImageDownload(
         id: Int,
@@ -41,14 +35,11 @@ internal object LoadAdapter {
                 removeFromCache
             )
         }
-
     }
-
 
     fun loadImageFromMemory(viewLoadCode: Int) = BitmapMemoryCache.get(viewLoadCode)
 
     fun loadImageFromDisk(viewLoadCode: Int) = BitmapDiskCache.get(viewLoadCode)
-
 
     fun downloadImage(
         viewLoad: ViewLoad,
@@ -76,7 +67,7 @@ internal object LoadAdapter {
         pixelOptions: PixelOptions?
     ): Bitmap? {
         var fileIS: InputStream? = null
-        //todo working here.
+        // todo working here.
         return try {
             fileIS = context.contentResolver.openInputStream(Uri.parse(viewLoad.path))
             fileIS?.run {
@@ -91,19 +82,15 @@ internal object LoadAdapter {
                 updateCaches(bitmap, viewLoad, pixelOptions, true)
                 bitmap
             }
-
-        }
-        catch (e:FileNotFoundException) {
+        } catch (e: FileNotFoundException) {
             PixelLog.error(tag = "LoadAdapter", e.stackTraceToString())
             null
-        }
-        catch (e: IOException) {
+        } catch (e: IOException) {
             PixelLog.error(tag = "LoadAdapter", e.stackTraceToString())
             null
         } finally {
             fileIS?.close()
         }
-
     }
 
     private fun updateCaches(

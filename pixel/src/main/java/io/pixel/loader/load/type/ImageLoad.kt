@@ -48,12 +48,11 @@ internal abstract class ImageLoad(
 
             PixelLog.debug(
                 this@ImageLoad.javaClass.simpleName,
-                "Sample Bitmap load from ${viewLoad.width}x${viewLoad.height} to ${sampleWidth}x${sampleHeight}"
+                "Sample Bitmap load from ${viewLoad.width}x${viewLoad.height} to ${sampleWidth}x$sampleHeight"
             )
 
             viewLoad.width = sampleWidth
             viewLoad.height = sampleHeight
-
         }
     }
 
@@ -67,7 +66,6 @@ internal abstract class ImageLoad(
                 PixelLog.debug("ImageViewReused", "Yes")
             }
         }
-
     }
 
     protected fun loadFromInternet() {
@@ -78,14 +76,12 @@ internal abstract class ImageLoad(
 
             setImageSize()
 
-
             LoadAdapter.loadImageFromMemory(id)?.apply {
                 PixelLog.debug(
                     tag,
                     "Returned Memory Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
                 )
                 setImage(this)
-
             } ?: LoadAdapter.loadImageFromDisk(id)?.run {
                 PixelLog.debug(
                     tag,
@@ -96,9 +92,7 @@ internal abstract class ImageLoad(
                 val imageDownloadRequest = ImageDownloadRequest(viewLoad, coroutineScope, pixelOptions) { setImage(it) }
                 imageDownloadRequest.start()
                 LoadAdapter.addLoad(imageDownloadRequest)
-
             }
-
         }
     }
 
@@ -108,15 +102,11 @@ internal abstract class ImageLoad(
             val tag = "FileImageLoad"
             setImageSize()
 
-
-                val fileLoadRequest = FileLoadRequest(imageView.context,viewLoad, coroutineScope, pixelOptions){
-                    setImage(it)
-                }
-                fileLoadRequest.start()
-                LoadAdapter.addLoad(fileLoadRequest)
-
-
-
+            val fileLoadRequest = FileLoadRequest(imageView.context, viewLoad, coroutineScope, pixelOptions) {
+                setImage(it)
+            }
+            fileLoadRequest.start()
+            LoadAdapter.addLoad(fileLoadRequest)
         }
     }
 
@@ -128,6 +118,5 @@ internal abstract class ImageLoad(
         val imageViewsMap: MutableMap<ImageView, Int> =
             Collections.synchronizedMap(WeakHashMap(100))
         val transparentColorDrawable = ColorDrawable(Color.TRANSPARENT)
-
     }
 }
