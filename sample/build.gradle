@@ -78,7 +78,7 @@ dependencies {
 
 
     // Standard HTTP client for Android for modern I/O support by Okio.
-    implementation "com.squareup.okhttp3:okhttp:4.9.2"
+    implementation "com.squareup.okhttp3:okhttp:4.9.3"
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
