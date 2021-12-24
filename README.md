@@ -1,6 +1,7 @@
 # Pixel
 ![pixel](https://miro.medium.com/max/875/0*iAMn0EvUMF__xp3F)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6d19fd6f99224327af09c2b3e81b15f4)](https://app.codacy.com/gh/mmobin789/pixel?utm_source=github.com&utm_medium=referral&utm_content=mmobin789/pixel&utm_campaign=Badge_Grade_Settings)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.mmobin789.pixel/pixel.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.mmobin789.pixel%22%20AND%20a:%22pixel%22)
 [![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/master.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/863ea5386f204bd4807580d3ae231874)](https://www.codacy.com/manual/mmobin789/pixel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mmobin789/pixel&amp;utm_campaign=Badge_Grade)
