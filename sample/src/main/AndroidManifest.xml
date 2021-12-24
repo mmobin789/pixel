@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
-        <activity android:name="io.pixel.sample.UnsplashActivity"
+        <activity android:name="io.pixel.sample.unsplash.UnsplashActivity"
             android:exported="true"
             >
 
