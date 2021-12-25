@@ -1,4 +1,4 @@
-package io.pixel.sample;
+package io.pixel.sample.unsplash;
 
 import android.widget.ImageView;
 

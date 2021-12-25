@@ -1,5 +1,6 @@
 package io.pixel.loader.load.type
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,7 +15,10 @@ import io.pixel.loader.load.request.download.ImageDownloadRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
+import kotlinx.coroutines.withContext
+import java.util.LinkedHashMap
+import java.util.Collections
+import io.pixel.loader.load.LoadAdapter.addLoad
 
 internal abstract class ImageLoad(
     private val viewLoad: ViewLoad,
@@ -23,7 +27,7 @@ internal abstract class ImageLoad(
     private val coroutineScope: CoroutineScope
 ) {
 
-    abstract fun start()
+    abstract suspend fun start()
 
     private val id = viewLoad.hashCode()
 
@@ -68,11 +72,13 @@ internal abstract class ImageLoad(
         }
     }
 
-    protected fun loadFromInternet() {
-        setPlaceholder()
-        coroutineScope.launch(Dispatchers.IO) {
+    protected suspend fun loadFromInternet() {
+
+            setPlaceholder()
+
+        withContext(Dispatchers.IO) {
             val tag = "InternetImageLoad"
-            BitmapDiskCache.prepare(imageView.context)
+            prepareBitmapCache(context = imageView.context)
 
             setImageSize()
 
@@ -91,14 +97,16 @@ internal abstract class ImageLoad(
             } ?: apply {
                 val imageDownloadRequest = ImageDownloadRequest(viewLoad, coroutineScope, pixelOptions) { setImage(it) }
                 imageDownloadRequest.start()
-                LoadAdapter.addLoad(imageDownloadRequest)
+               addLoad(imageDownloadRequest)
             }
         }
     }
 
-    protected fun loadFromFile() {
-        setPlaceholder()
-        coroutineScope.launch(Dispatchers.IO) {
+    protected suspend fun loadFromFile() {
+
+            setPlaceholder()
+
+        withContext(Dispatchers.IO) {
             val tag = "FileImageLoad"
             setImageSize()
 
@@ -106,17 +114,18 @@ internal abstract class ImageLoad(
                 setImage(it)
             }
             fileLoadRequest.start()
-            LoadAdapter.addLoad(fileLoadRequest)
+            addLoad(fileLoadRequest)
         }
     }
 
-    companion object {
+   private companion object {
         /** Weak Ref Map
          * Key - Image view
          * Values - id for image.
          */
-        val imageViewsMap: MutableMap<ImageView, Int> =
-            Collections.synchronizedMap(WeakHashMap(100))
+        val imageViewsMap = Collections.synchronizedMap(LinkedHashMap<ImageView,Int>(0,0.75f))
         val transparentColorDrawable = ColorDrawable(Color.TRANSPARENT)
+
+        private fun prepareBitmapCache(context: Context) = BitmapDiskCache.prepare(context)
     }
 }

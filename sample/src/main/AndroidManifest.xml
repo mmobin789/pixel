@@ -12,9 +12,20 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
-        <activity android:name="io.pixel.sample.unsplash.UnsplashActivity"
-            android:exported="true"
-            >
+        <activity
+            android:name="io.pixel.sample.unsplash.UnsplashActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".gallery.MultiCustomGalleryUI"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

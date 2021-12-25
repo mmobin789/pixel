@@ -12,7 +12,7 @@ internal class FileImageLoad(
     coroutineScope: CoroutineScope
 ) : ImageLoad(viewLoad, imageView, pixelOptions, coroutineScope) {
 
-    override fun start() {
+    override suspend fun start() {
         loadFromFile()
     }
 
