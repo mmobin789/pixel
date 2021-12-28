@@ -19,11 +19,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Make Gradle executable
-        run: chmod +x ./gradlew
-        
+          
       - name: Build with Gradle
         run: ./gradlew build
+        
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
       
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
