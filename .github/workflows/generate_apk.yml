@@ -3,7 +3,7 @@ name: Generate Apk
 on:
   push:
     branches:
-      - 'generate_apk_pipeline'
+      - 'feature/generate_apk_pipeline'
 
 jobs:
 
