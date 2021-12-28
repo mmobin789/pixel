@@ -10,7 +10,9 @@ jobs:
   apk:
     name: Generate Apk
     runs-on: ubuntu-18.04
-
+    defaults:
+      run:
+        working-directory: ./sample
     steps:
       - uses: actions/checkout@v1
       - name: set up JDK 11
@@ -23,3 +25,9 @@ jobs:
         
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
+        
+      - name: Upload APK to Github Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: app/build/outputs/apk/debug/app-debug.apk
