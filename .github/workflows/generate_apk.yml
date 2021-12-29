@@ -20,14 +20,11 @@ jobs:
         with:
           java-version: 11
         
-      - name: Build with Gradle
-        run: ./gradlew build
-        
-      - name: Grant Permissions to gradlew
-        run: chmod +x gradlew
-        
       - name: Make Gradle executable
         run: chmod +x ./gradlew
+        
+      - name: Build with Gradle
+        run: ./gradlew build
       
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
