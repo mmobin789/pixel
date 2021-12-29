@@ -10,9 +10,6 @@ jobs:
   apk:
     name: Generate Apk
     runs-on: ubuntu-18.04
-    defaults:
-      run:
-        working-directory: ./sample
     steps:
       - uses: actions/checkout@v1
       - name: set up JDK 11
@@ -20,8 +17,8 @@ jobs:
         with:
           java-version: 11
         
-      - name: Make Gradle executable
-        run: chmod +x ./gradlew
+      - name: Grant Permission to Execute
+        run: chmod +x gradlew
         
       - name: Build with Gradle
         run: ./gradlew build
