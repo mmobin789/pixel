@@ -22,11 +22,11 @@ internal class ImageDownloadRequest(
 
     private var downloadJob: Job? = null
 
-    override fun getLoadJob() = coroutineScope.launch(Dispatchers.IO) {
+    override fun getRequest() = coroutineScope.launch(Dispatchers.IO) {
         viewLoad.run {
             PixelLog.debug(
                 TAG,
-                "Download no = ${hashCode()} started for $path for ${width}x${height}"
+                "Image download request no = ${hashCode()} started for $path for ${width}x${height}"
             )
 
             LoadAdapter.downloadImage(
@@ -62,6 +62,6 @@ internal class ImageDownloadRequest(
 
 
    override fun start() {
-        downloadJob = getLoadJob()
+        downloadJob = getRequest()
     }
 }

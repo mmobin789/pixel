@@ -10,10 +10,13 @@ import io.pixel.loader.cache.memory.BitmapMemoryCache
 import io.pixel.loader.load.request.LoadRequest
 import io.pixel.loader.load.request.download.Downloader.getBitmapFromURL
 import io.pixel.utils.getDecodedBitmapFromByteArray
-import java.io.*
+import java.io.File
+import java.io.InputStream
+import java.io.FileNotFoundException
+import java.io.IOException
 
 internal object LoadAdapter {
-    private val imageLoads = HashMap<Int, LoadRequest>(100)
+    private val imageLoads = HashMap<Int, LoadRequest>()
 
     @Synchronized
     fun addLoad(loadRequest: LoadRequest) {
@@ -57,7 +60,7 @@ internal object LoadAdapter {
                 "Downloaded no = ${viewLoad.hashCode()} Bitmap for ${it.width}x${it.height} size in Kilobytes: ${it.byteCount / 1024}"
             )
 
-            updateCaches(it, viewLoad, pixelOptions)
+            updateCaches(it, viewLoad, pixelOptions,inMemoryOnly = false)
         }
     }
 
@@ -67,7 +70,6 @@ internal object LoadAdapter {
         pixelOptions: PixelOptions?
     ): Bitmap? {
         var fileIS: InputStream? = null
-        // todo working here.
         return try {
             fileIS = context.contentResolver.openInputStream(Uri.parse(viewLoad.path))
             fileIS?.run {
@@ -79,7 +81,7 @@ internal object LoadAdapter {
                 } else {
                     bytes.getDecodedBitmapFromByteArray()
                 }
-                updateCaches(bitmap, viewLoad, pixelOptions, true)
+                updateCaches(bitmap, viewLoad, pixelOptions,inMemoryOnly = false)
                 bitmap
             }
         } catch (e: FileNotFoundException) {
@@ -97,13 +99,13 @@ internal object LoadAdapter {
         bitmap: Bitmap,
         viewLoad: ViewLoad,
         pixelOptions: PixelOptions?,
-        inMemoryOnly: Boolean = false
+        inMemoryOnly: Boolean
     ) = viewLoad.run {
         BitmapMemoryCache.put(
             hashCode(), bitmap
         )
 
-        if (!inMemoryOnly) {
+        if (inMemoryOnly.not()) {
             BitmapDiskCache.put(
                 this, bitmap,
                 pixelOptions?.getImageFormat() ?: PixelOptions.ImageFormat.PNG

@@ -19,6 +19,7 @@ import io.pixel.sample.gallery.adapter.SpaceItemDecoration
 import io.pixel.sample.gallery.model.GalleryPicture
 import io.pixel.sample.gallery.viewmodel.GalleryViewModel
 import io.pixel.sample.R
+import io.pixel.config.PixelConfiguration
 
 class MultiCustomGalleryUI : AppCompatActivity() {
 
@@ -36,6 +37,7 @@ class MultiCustomGalleryUI : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multi_gallery_ui)
         requestReadStoragePermission()
+        PixelConfiguration.setLoggingEnabled(true)
     }
 
     private fun requestReadStoragePermission() {

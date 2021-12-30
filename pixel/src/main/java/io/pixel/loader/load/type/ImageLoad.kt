@@ -88,13 +88,13 @@ internal abstract class ImageLoad(
                     "Returned Memory Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
                 )
                 setImage(this)
-            } ?: LoadAdapter.loadImageFromDisk(id)?.run {
+            } ?: LoadAdapter.loadImageFromDisk(id)?.apply {
                 PixelLog.debug(
                     tag,
                     "Returned Disk Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
                 )
                 setImage(this)
-            } ?: apply {
+            } ?: run {
                 val imageDownloadRequest = ImageDownloadRequest(viewLoad, coroutineScope, pixelOptions) { setImage(it) }
                 imageDownloadRequest.start()
                addLoad(imageDownloadRequest)
@@ -110,11 +110,27 @@ internal abstract class ImageLoad(
             val tag = "FileImageLoad"
             setImageSize()
 
-            val fileLoadRequest = FileLoadRequest(imageView.context, viewLoad, coroutineScope, pixelOptions) {
-                setImage(it)
+            LoadAdapter.loadImageFromMemory(id)?.apply {
+                PixelLog.debug(
+                    tag,
+                    "Returned Memory Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
+                )
+                setImage(this)
+            } ?: LoadAdapter.loadImageFromDisk(id)?.apply {
+                PixelLog.debug(
+                    tag,
+                    "Returned Disk Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
+                )
+                setImage(this)
+            } ?: run {
+
+                val fileLoadRequest =
+                    FileLoadRequest(imageView.context, viewLoad, coroutineScope, pixelOptions) {
+                        setImage(it)
+                    }
+                fileLoadRequest.start()
+                addLoad(fileLoadRequest)
             }
-            fileLoadRequest.start()
-            addLoad(fileLoadRequest)
         }
     }
 

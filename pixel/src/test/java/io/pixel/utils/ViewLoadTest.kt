@@ -2,7 +2,9 @@ package io.pixel.utils
 
 import io.pixel.loader.load.ViewLoad
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.random.Random
 
 /**
  * Local unit tests for view load.
@@ -12,16 +14,18 @@ import org.junit.Test
 class ViewLoadTest {
 
     private val path = "https://www.facebook.com/"
-    private val viewLoad = ViewLoad(200, 100, path)
+    private val randomWidth = Random.nextInt()
+    private val randomHeight = Random.nextInt()
+    private val viewLoad = ViewLoad(randomWidth, randomHeight, path)
 
     @Test
     fun validateViewLoadId() {
-        assertEquals(2656, viewLoad.hashCode())
+        assertEquals(randomWidth +randomHeight + viewLoad.path.getUniqueIdentifier() , viewLoad.hashCode())
     }
 
     @Test
     fun validateViewLoadEqual() {
-        assertEquals(true, viewLoad == ViewLoad(200, 100, path))
+        assertTrue(viewLoad == ViewLoad(randomWidth, randomHeight, path))
     }
 
     @Test
@@ -31,11 +35,11 @@ class ViewLoadTest {
 
     @Test
     fun validateViewWidth() {
-        assertEquals(200, viewLoad.width)
+        assertEquals(randomWidth, viewLoad.width)
     }
 
     @Test
     fun validateViewHeight() {
-        assertEquals(100, viewLoad.height)
+        assertEquals(randomHeight, viewLoad.height)
     }
 }
