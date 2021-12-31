@@ -2,8 +2,9 @@ package io.pixel.loader
 
 import android.widget.ImageView
 import io.pixel.config.PixelOptions
-import io.pixel.loader.load.ImageLoad
 import io.pixel.loader.load.ViewLoad
+import io.pixel.loader.load.type.FileImageLoad
+import io.pixel.loader.load.type.InternetImageLoad
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -12,32 +13,33 @@ import kotlinx.coroutines.CoroutineScope
 
 internal object LoaderProxy {
 
-    fun loadUrl(
+    suspend fun loadUrl(
         imageView: ImageView,
         url: String,
         pixelOptions: PixelOptions?,
         coroutineScope: CoroutineScope
 
-    ) = ImageLoad(
+    ) = InternetImageLoad(
         ViewLoad(
             imageView.width,
             imageView.height,
             url
-        ), imageView, pixelOptions, coroutineScope
-    ).also { it.start() }
+        ),
+        imageView, pixelOptions, coroutineScope
+    ).invoke()
 
-    //todo working here
-    fun loadFile(
+    suspend fun loadFile(
         imageView: ImageView,
         path: String,
         pixelOptions: PixelOptions?,
         coroutineScope: CoroutineScope
 
-    ) = ImageLoad(
+    ) = FileImageLoad(
         ViewLoad(
             imageView.width,
             imageView.height,
             path
-        ), imageView, pixelOptions, coroutineScope
-    ).also { it.start() }
+        ),
+        imageView, pixelOptions, coroutineScope
+    ).invoke()
 }

@@ -3,17 +3,19 @@ package io.pixel
 import android.widget.ImageView
 import io.pixel.config.PixelOptions
 import io.pixel.loader.LoaderProxy
+import io.pixel.utils.validators.FileValidator
 import io.pixel.utils.validators.UrlValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 
 /**
  * Pixel is a coroutine library to load and cache images.
  * Ideally, you shouldn't need multiple instances of this artifact but just in case you do.
  * @author Mobin Munir
  */
-class Pixel  {
+class Pixel {
     private val mainThreadScope = CoroutineScope(Dispatchers.Main.immediate)
 
     companion object {
@@ -52,8 +54,6 @@ class Pixel  {
                             LoaderProxy.loadUrl(imageView, this@url, pixelOptions, mainThreadScope)
                         }
                     }
-
-
             }
         }
 
@@ -68,7 +68,7 @@ class Pixel  {
          * @param pixelOptions Custom image load options.
          * Default are null.
          */
-       /* @JvmStatic
+        @JvmStatic
         fun load(
             file: File?,
             pixelOptions: PixelOptions? = null,
@@ -76,9 +76,8 @@ class Pixel  {
         ): Pixel {
 
             return init().apply {
-                FileValidator.validateFile(file)
+                FileValidator.validatePath(file)
                     ?.apply path@{
-                        //todo working here.
                         mainThreadScope.launch {
                             LoaderProxy.loadFile(
                                 imageView,
@@ -88,20 +87,7 @@ class Pixel  {
                             )
                         }
                     }
-
-
             }
-        }*/
+        }
     }
-
-
-    /**
-     * A method to cancel image load request.
-     * Invoking this method immediately cancels the load.
-     */
-    /*fun cancel() {
-        imageLoad.cancel()
-    }*/
 }
-
-

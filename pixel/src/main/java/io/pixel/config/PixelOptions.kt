@@ -3,7 +3,6 @@ package io.pixel.config
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-
 /**
  * PixelOptions allow to customize each load.
  * @author Mobin Munir
@@ -40,13 +39,11 @@ class PixelOptions private constructor() {
      */
     fun getImageFormat() = imageFormat
 
-
     /**
      * @return the custom request null if not provided.
      * Uses default GET request on null.
      */
     fun getRequest() = request
-
 
     class Builder {
         private val pixelOptions = PixelOptions()

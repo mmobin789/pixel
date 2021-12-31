@@ -6,11 +6,10 @@ import android.graphics.ImageDecoder
 import android.os.Build
 import java.nio.ByteBuffer
 
-
 internal fun ByteArray.getDecodedBitmapFromByteArray(
     reqWidth: Int,
     reqHeight: Int
-): Bitmap? {
+): Bitmap {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 
@@ -25,8 +24,7 @@ internal fun ByteArray.getDecodedBitmapFromByteArray(
     return decodeBitmapFromByteArray(this, reqWidth, reqHeight)
 }
 
-internal fun ByteArray.getDecodedBitmapFromByteArray(
-): Bitmap? {
+internal fun ByteArray.getDecodedBitmapFromByteArray(): Bitmap {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 
@@ -38,7 +36,6 @@ internal fun ByteArray.getDecodedBitmapFromByteArray(
 private fun decodeBitmapFromByteArray(
     byteArray: ByteArray
 ) = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-
 
 private fun decodeBitmapFromByteArray(
     byteArray: ByteArray,
@@ -55,7 +52,6 @@ private fun decodeBitmapFromByteArray(
 
         BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
     }
-
 
 private fun calculateInSampleSize(
     options: BitmapFactory.Options,
@@ -81,8 +77,10 @@ private fun calculateInSampleSize(
 }
 
 private fun calculateInSampleSize(
-    width: Int, height: Int,
-    reqWidth: Int, reqHeight: Int
+    width: Int,
+    height: Int,
+    reqWidth: Int,
+    reqHeight: Int
 ): Int {
 
     // Raw height and width of image in method params.
@@ -92,8 +90,8 @@ private fun calculateInSampleSize(
         val halfWidth = width / 2
         // Calculate the largest inSampleSize value that is a power of 2 and keeps both
 // height and width larger than the requested height and width.
-        while (halfHeight / inSampleSize >= reqHeight
-            && halfWidth / inSampleSize >= reqWidth
+        while (halfHeight / inSampleSize >= reqHeight &&
+            halfWidth / inSampleSize >= reqWidth
         ) {
             inSampleSize *= 2
         }
@@ -108,7 +106,7 @@ private fun calculateInSampleSize(
 internal fun String.getUniqueIdentifier(): Int {
     var sum = 0
     forEach {
-        sum += it.toInt()
+        sum += it.code
     }
     return sum
 }

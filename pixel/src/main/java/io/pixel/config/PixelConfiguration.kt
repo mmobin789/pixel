@@ -4,7 +4,7 @@ import android.content.Context
 import io.pixel.Pixel
 import io.pixel.loader.cache.disk.BitmapDiskCache
 import io.pixel.loader.cache.memory.BitmapMemoryCache
-import io.pixel.loader.download.Downloader
+import io.pixel.loader.load.request.download.Downloader
 import okhttp3.OkHttpClient
 
 /**
