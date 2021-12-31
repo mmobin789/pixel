@@ -34,7 +34,6 @@ android {
 dependencies {
     //  def core = "1.2.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     //  implementation "androidx.appcompat:appcompat:1.1.0"
@@ -58,6 +57,7 @@ publishing {
     repositories {   // by default upload tasks points to the legacy URl which will be down on sunset and all new repos should use the one similar to below.
         maven {
             // change to point to your repo, e.g. http://my.org/repo
+            // link to jira ticket for maven central migration https://issues.sonatype.org/browse/OSSRH-65130
             url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
            credentials {   // using tokenized username and password per maven for security.
                username = ossrhUsername  // jira-username or nexus UI username

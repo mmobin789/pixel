@@ -1,4 +1,4 @@
-package io.pixel.android.url
+package io.pixel.url
 
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
