@@ -1,5 +1,5 @@
 
-name: Generate Apk
+name: Github Actions Pixel
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
 jobs:
 
   apk:
-    name: Generate Apk
+    name: Generate Apk for Internet Module
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
