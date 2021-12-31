@@ -6,4 +6,5 @@ internal interface ImageLoadRequest {
     val id: Int
     fun cancel(message: String = "Load Cancelled for $id")
     fun bitmap(): Bitmap?
+    fun isRunning(): Boolean
 }

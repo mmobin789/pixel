@@ -5,6 +5,7 @@ import io.pixel.config.PixelOptions
 import io.pixel.loader.load.LoadAdapter
 import io.pixel.loader.load.ViewLoad
 import io.pixel.loader.load.request.ImageLoadRequest
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.job
 
@@ -32,13 +33,15 @@ internal class ImageDownloadRequest(
     }
 
     override fun cancel(message: String) {
-        if (downloadJob.isActive) {
-            PixelLog.error(
-                TAG,
-                message
-            )
-            downloadJob.cancel()
-        }
+        PixelLog.error(
+            TAG,
+            message
+        )
+        downloadJob.cancel(CancellationException(message))
+    }
+
+    override fun isRunning(): Boolean {
+        return downloadJob.isActive
     }
 
     override fun bitmap() = viewLoad.run {

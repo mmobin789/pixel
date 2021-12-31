@@ -119,6 +119,6 @@ internal abstract class ImageLoad(
 
     private companion object {
         val transparentColorDrawable = ColorDrawable(Color.TRANSPARENT)
-        private fun prepareBitmapCache(context: Context) = BitmapDiskCache.prepare(context)
+        fun prepareBitmapCache(context: Context) = BitmapDiskCache.prepare(context)
     }
 }

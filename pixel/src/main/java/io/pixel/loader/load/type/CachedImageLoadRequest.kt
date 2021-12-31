@@ -17,6 +17,10 @@ class CachedImageLoadRequest(
 
     override fun cancel(message: String) = loadJob.cancel(CancellationException(message))
 
+    override fun isRunning(): Boolean {
+        return loadJob.isActive
+    }
+
     override fun bitmap(): Bitmap {
         return bitmap
     }

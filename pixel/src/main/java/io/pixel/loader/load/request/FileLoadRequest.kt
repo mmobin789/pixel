@@ -5,6 +5,7 @@ import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
 import io.pixel.loader.load.LoadAdapter
 import io.pixel.loader.load.ViewLoad
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.job
 
@@ -33,13 +34,15 @@ internal class FileLoadRequest(
     }
 
     override fun cancel(message: String) {
-        if (loadJob.isActive) {
-            PixelLog.error(
-                TAG,
-                message
-            )
-            loadJob.cancel()
-        }
+        PixelLog.error(
+            TAG,
+            message
+        )
+        loadJob.cancel(CancellationException(message))
+    }
+
+    override fun isRunning(): Boolean {
+        return loadJob.isActive
     }
 
     override fun bitmap() = viewLoad.run {

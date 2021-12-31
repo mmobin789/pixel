@@ -33,10 +33,12 @@ internal object LoadAdapter {
         val loadRequest = imageLoads[id]
 
         return loadRequest?.let {
-            it.cancel()
-            BitmapMemoryCache.clear(it.id)
-            BitmapDiskCache.clear(it.id.toString())
-            true
+            if (it.isRunning().not()) {
+                BitmapMemoryCache.clear(it.id)
+                BitmapDiskCache.clear(it.id.toString())
+                it.cancel()
+                true
+            } else false
         } ?: false
     }
 
@@ -84,7 +86,7 @@ internal object LoadAdapter {
                 updateCaches(bitmap, viewLoad, pixelOptions)
                 PixelLog.debug(
                     this@LoadAdapter.javaClass.simpleName,
-                    "File downloaded no = ${viewLoad.hashCode()} Bitmap for ${reqWidth}x${reqHeight} size in Kilobytes: ${bitmap.byteCount / 1024}"
+                    "File downloaded no = ${viewLoad.hashCode()} Bitmap for ${reqWidth}x$reqHeight size in Kilobytes: ${bitmap.byteCount / 1024}"
                 )
                 bitmap
             }
