@@ -12,9 +12,7 @@ internal class InternetImageLoad(
     coroutineScope: CoroutineScope
 ) : ImageLoad(viewLoad, imageView, pixelOptions, coroutineScope) {
 
-    override suspend fun start() {
+    suspend operator fun invoke() {
         loadFromInternet()
     }
-
-
 }

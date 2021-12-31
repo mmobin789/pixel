@@ -4,7 +4,6 @@ import io.pixel.utils.getUniqueIdentifier
 
 internal class ViewLoad(var width: Int, var height: Int, val path: String) {
 
-
     private val id = path.getUniqueIdentifier()
 
     override fun equals(other: Any?): Boolean {
@@ -28,6 +27,4 @@ internal class ViewLoad(var width: Int, var height: Int, val path: String) {
      * @return returns the string version of id.
      */
     override fun toString() = hashCode().toString()
-
-
 }

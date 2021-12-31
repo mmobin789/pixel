@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Pixel Gallery Sample</string>
+    <string name="txt_gallery">Gallery</string>
+    <string name="txt_done">Done</string>
+</resources>

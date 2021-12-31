@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">Pixel Sample</string>
-    <string name="loading">Loading…</string>
-    <string name="open_unplash_sample_activity">Open Unplash Sample Paginated Activity</string>
-    <string name="txt_gallery">Gallery</string>
-    <string name="txt_done">Done</string>
-</resources>

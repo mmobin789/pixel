@@ -9,7 +9,6 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-
 internal object Downloader {
 
     var okHttpClient: OkHttpClient? = null
@@ -29,17 +28,14 @@ internal object Downloader {
             response = okHttpClient.newCall(request).execute()
             val body = response.body
             return body?.run {
-                val bytes = bytes()
+                val bytes = byteStream().readBytes()
                 val bitmap = if (reqWidth > 0 && reqHeight > 0) {
                     bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight)
-                }
-                else {
+                } else {
                     bytes.getDecodedBitmapFromByteArray()
                 }
                 bitmap
-
             }
-
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {
