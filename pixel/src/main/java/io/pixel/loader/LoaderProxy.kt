@@ -2,12 +2,10 @@ package io.pixel.loader
 
 import android.widget.ImageView
 import io.pixel.config.PixelOptions
-import io.pixel.loader.load.type.FileImageLoad
-import io.pixel.loader.load.type.ImageLoad
-import io.pixel.loader.load.type.InternetImageLoad
 import io.pixel.loader.load.ViewLoad
+import io.pixel.loader.load.type.FileImageLoad
+import io.pixel.loader.load.type.InternetImageLoad
 import kotlinx.coroutines.CoroutineScope
-import java.io.File
 
 /**
  * A proxy class representing a link to load process and it's states.
@@ -15,32 +13,33 @@ import java.io.File
 
 internal object LoaderProxy {
 
-    fun loadUrl(
+    suspend fun loadUrl(
         imageView: ImageView,
         url: String,
         pixelOptions: PixelOptions?,
         coroutineScope: CoroutineScope
 
-    ): ImageLoad = InternetImageLoad(
+    ) = InternetImageLoad(
         ViewLoad(
             imageView.width,
             imageView.height,
             url
-        ), imageView, pixelOptions, coroutineScope
-    )
+        ),
+        imageView, pixelOptions, coroutineScope
+    ).invoke()
 
-
-    fun loadFile(
+    suspend fun loadFile(
         imageView: ImageView,
         path: String,
         pixelOptions: PixelOptions?,
         coroutineScope: CoroutineScope
 
-    ): ImageLoad = FileImageLoad(
+    ) = FileImageLoad(
         ViewLoad(
             imageView.width,
             imageView.height,
             path
-        ), imageView, pixelOptions, coroutineScope
-    )
+        ),
+        imageView, pixelOptions, coroutineScope
+    ).invoke()
 }

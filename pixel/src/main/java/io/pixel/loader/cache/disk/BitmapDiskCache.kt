@@ -18,7 +18,6 @@ import java.io.IOException
  */
 internal object BitmapDiskCache {
 
-
     private var mDiskLRUCache: DiskLRUCache? = null
 
     private val TAG = javaClass.simpleName
@@ -43,25 +42,18 @@ internal object BitmapDiskCache {
                 PixelLog.debug(TAG, "Disk Cache initialized successfully.")
                 PixelLog.debug(TAG, "Cache Size = $cacheSizeInMB MegaBytes")
                 PixelLog.debug(TAG, "App Version = $appVersion")
-
             } catch (e: IOException) {
                 e.printStackTrace()
-
-
             }
-
     }
-
 
     fun setCacheSize(cacheSizeInMB: Long) {
         BitmapDiskCache.cacheSizeInMB = cacheSizeInMB
     }
 
-
     fun setAppVersion(appVersion: Int) {
         BitmapDiskCache.appVersion = appVersion
     }
-
 
     fun put(viewLoad: ViewLoad, bitmap: Bitmap, imageFormat: PixelOptions.ImageFormat) {
         val key = viewLoad.toString()
@@ -82,20 +74,13 @@ internal object BitmapDiskCache {
                     editor?.commit()
                     buffer.close()
                     PixelLog.debug(TAG, "$key disk cached.")
-
                 } else editor?.abort()
-
-
             }
-
         } catch (e: IOException) {
             e.printStackTrace()
             editor?.abort()
         }
-
-
     }
-
 
     fun get(viewLoadCode: Int): Bitmap? {
         val snapshot = mDiskLRUCache?.get(viewLoadCode.toString())
@@ -108,7 +93,6 @@ internal object BitmapDiskCache {
 
     fun clear(key: String) = mDiskLRUCache?.remove(key)
 
-
     fun delete(context: Context) {
         try {
             prepare(context)
@@ -118,7 +102,6 @@ internal object BitmapDiskCache {
             e.printStackTrace()
         }
     }
-
 
     // Creates a unique subdirectory of the designated app cache directory. Tries to use external
 // but if not mounted, falls back on internal storage.
@@ -136,10 +119,7 @@ internal object BitmapDiskCache {
                     PixelLog.warn(TAG, "External Cache directory not available.")
                     context.cacheDir.path
                 }
-
             } else context.cacheDir.path
         return File(cachePath + File.separator + "${context.packageName} Image Cache")
     }
-
-
 }

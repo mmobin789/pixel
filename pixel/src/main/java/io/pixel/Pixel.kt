@@ -15,7 +15,7 @@ import java.io.File
  * Ideally, you shouldn't need multiple instances of this artifact but just in case you do.
  * @author Mobin Munir
  */
-class Pixel  {
+class Pixel {
     private val mainThreadScope = CoroutineScope(Dispatchers.Main.immediate)
 
     companion object {
@@ -51,11 +51,9 @@ class Pixel  {
                 UrlValidator.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
                     ?.apply url@{
                         mainThreadScope.launch {
-                            LoaderProxy.loadUrl(imageView, this@url, pixelOptions, mainThreadScope).start()
+                            LoaderProxy.loadUrl(imageView, this@url, pixelOptions, mainThreadScope)
                         }
                     }
-
-
             }
         }
 
@@ -83,26 +81,13 @@ class Pixel  {
                         mainThreadScope.launch {
                             LoaderProxy.loadFile(
                                 imageView,
-                               this@path,
+                                this@path,
                                 pixelOptions,
                                 mainThreadScope
-                            ).start()
+                            )
                         }
                     }
-
-
             }
         }
     }
-
-
-    /**
-     * A method to cancel image load request.
-     * Invoking this method immediately cancels the load.
-     */
-    /*fun cancel() {
-        imageLoad.cancel()
-    }*/
 }
-
-

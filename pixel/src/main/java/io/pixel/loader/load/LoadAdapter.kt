@@ -7,37 +7,39 @@ import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
 import io.pixel.loader.cache.disk.BitmapDiskCache
 import io.pixel.loader.cache.memory.BitmapMemoryCache
-import io.pixel.loader.load.request.LoadRequest
+import io.pixel.loader.load.request.ImageLoadRequest
 import io.pixel.loader.load.request.download.Downloader.getBitmapFromURL
 import io.pixel.utils.getDecodedBitmapFromByteArray
-import java.io.File
-import java.io.InputStream
 import java.io.FileNotFoundException
 import java.io.IOException
+import java.io.InputStream
 
 internal object LoadAdapter {
-    private val imageLoads = HashMap<Int, LoadRequest>()
+    private val imageLoads = hashMapOf<Int, ImageLoadRequest>()
 
     @Synchronized
-    fun addLoad(loadRequest: LoadRequest) {
-        val id = loadRequest.id
-        if (!imageLoads.containsKey(id))
-            imageLoads[id] = loadRequest
-        else cancelImageDownload(id)
+    fun addLoad(imageLoadRequest: ImageLoadRequest): Boolean {
+        val id = imageLoadRequest.id
+        if (cancelImageDownload(id)) {
+            imageLoads[id] = imageLoadRequest
+            return false
+        }
+        return true
     }
 
     private fun cancelImageDownload(
-        id: Int,
-        removeFromCache: Boolean = false
-    ) {
+        id: Int
+    ): Boolean {
+        val loadRequest = imageLoads[id]
 
-        imageLoads[id]?.apply {
-            cancel()
-            removeImageDownload(
-                this.id,
-                removeFromCache
-            )
-        }
+        return loadRequest?.let {
+            if (it.isRunning().not()) {
+                BitmapMemoryCache.clear(it.id)
+                BitmapDiskCache.clear(it.id.toString())
+                it.cancel()
+                true
+            } else false
+        } ?: false
     }
 
     fun loadImageFromMemory(viewLoadCode: Int) = BitmapMemoryCache.get(viewLoadCode)
@@ -57,10 +59,10 @@ internal object LoadAdapter {
         )?.also {
             PixelLog.debug(
                 this@LoadAdapter.javaClass.simpleName,
-                "Downloaded no = ${viewLoad.hashCode()} Bitmap for ${it.width}x${it.height} size in Kilobytes: ${it.byteCount / 1024}"
+                "Internet downloaded no = ${viewLoad.hashCode()} Bitmap for ${it.width}x${it.height} size in Kilobytes: ${it.byteCount / 1024}"
             )
 
-            updateCaches(it, viewLoad, pixelOptions,inMemoryOnly = false)
+            updateCaches(it, viewLoad, pixelOptions)
         }
     }
 
@@ -81,7 +83,11 @@ internal object LoadAdapter {
                 } else {
                     bytes.getDecodedBitmapFromByteArray()
                 }
-                updateCaches(bitmap, viewLoad, pixelOptions,inMemoryOnly = false)
+                updateCaches(bitmap, viewLoad, pixelOptions)
+                PixelLog.debug(
+                    this@LoadAdapter.javaClass.simpleName,
+                    "File downloaded no = ${viewLoad.hashCode()} Bitmap for ${reqWidth}x$reqHeight size in Kilobytes: ${bitmap.byteCount / 1024}"
+                )
                 bitmap
             }
         } catch (e: FileNotFoundException) {
@@ -98,27 +104,14 @@ internal object LoadAdapter {
     private fun updateCaches(
         bitmap: Bitmap,
         viewLoad: ViewLoad,
-        pixelOptions: PixelOptions?,
-        inMemoryOnly: Boolean
+        pixelOptions: PixelOptions?
     ) = viewLoad.run {
         BitmapMemoryCache.put(
             hashCode(), bitmap
         )
-
-        if (inMemoryOnly.not()) {
-            BitmapDiskCache.put(
-                this, bitmap,
-                pixelOptions?.getImageFormat() ?: PixelOptions.ImageFormat.PNG
-            )
-        }
-    }
-
-    private fun removeImageDownload(id: Int, removeFromCache: Boolean) {
-        imageLoads.remove(id)?.also {
-            if (removeFromCache) {
-                BitmapMemoryCache.clear(id)
-                BitmapDiskCache.clear(id.toString())
-            }
-        }
+        BitmapDiskCache.put(
+            this, bitmap,
+            pixelOptions?.getImageFormat() ?: PixelOptions.ImageFormat.PNG
+        )
     }
 }

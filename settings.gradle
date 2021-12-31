@@ -1,1 +1,1 @@
-include ':pixel', ':sample'
+include ':pixel', ':internet',':gallery'
