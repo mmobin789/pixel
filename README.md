@@ -2,7 +2,7 @@
 ![pixel](https://miro.medium.com/max/875/0*iAMn0EvUMF__xp3F)
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.mmobin789.pixel/pixel.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.mmobin789.pixel%22%20AND%20a:%22pixel%22)
-[![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/master.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/master)
+[![CircleCI](https://circleci.com/gh/mmobin789/pixel/tree/develop.svg?style=svg)](https://circleci.com/gh/mmobin789/pixel/tree/develop)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/99e37f923d05499e9554019ebb4ac291)](https://www.codacy.com/gh/mmobin789/pixel/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mmobin789/pixel&amp;utm_campaign=Badge_Grade)
 
 [![Kotlin Version](https://img.shields.io/badge/kotlin-1.4.31-orange.svg)](http://kotlinlang.org/)
