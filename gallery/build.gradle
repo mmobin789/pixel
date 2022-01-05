@@ -47,7 +47,7 @@ dependencies {
     // ViewModel - ktx
     implementation "androidx.fragment:fragment-ktx:1.4.0"
     // memory leak detection in debug only.
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8'
 
     //uncomment this line to test and deploy your local changes to pixel.
     implementation project(path: ':pixel')
