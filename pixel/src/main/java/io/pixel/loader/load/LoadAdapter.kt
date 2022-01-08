@@ -7,6 +7,7 @@ import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
 import io.pixel.loader.cache.disk.BitmapDiskCache
 import io.pixel.loader.cache.memory.BitmapMemoryCache
+import io.pixel.loader.cache.memory.BitmapWeakMemoryCache
 import io.pixel.loader.load.request.ImageLoadRequest
 import io.pixel.loader.load.request.download.Downloader.getBitmapFromURL
 import io.pixel.utils.getDecodedBitmapFromByteArray
@@ -42,7 +43,10 @@ internal object LoadAdapter {
         } ?: false
     }
 
-    fun loadImageFromMemory(viewLoadCode: Int) = BitmapMemoryCache.get(viewLoadCode)
+    fun loadImageFromMemory(viewLoadCode: Int): Bitmap? {
+        val weakReferenceBitmap = BitmapWeakMemoryCache.get(viewLoadCode)
+        return weakReferenceBitmap ?: BitmapMemoryCache.get(viewLoadCode)
+    }
 
     fun loadImageFromDisk(viewLoadCode: Int) = BitmapDiskCache.get(viewLoadCode)
 
@@ -92,7 +96,7 @@ internal object LoadAdapter {
         } catch (e: IOException) {
             PixelLog.error(tag = "LoadAdapter", e.stackTraceToString())
             null
-        } catch (e: OutOfMemoryError) { // this will be only thrown if image view size is dynamic and no image has been set to it.
+        } catch (e: OutOfMemoryError) { // this will be only thrown if image view size is dynamic and no image has been set to it forcing library to download original images pure of any scaling.
             PixelLog.error(tag = "LoadAdapter", e.stackTraceToString())
             null
         } finally {
@@ -105,6 +109,9 @@ internal object LoadAdapter {
         viewLoad: ViewLoad,
         pixelOptions: PixelOptions?
     ) = viewLoad.run {
+
+        BitmapWeakMemoryCache.put(hashCode(), bitmap)
+
         BitmapMemoryCache.put(
             hashCode(), bitmap
         )

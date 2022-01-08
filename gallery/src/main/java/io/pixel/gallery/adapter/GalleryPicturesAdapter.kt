@@ -128,7 +128,7 @@ class GalleryPicturesAdapter(private val list: List<GalleryPicture>) : RecyclerV
 
     override fun onBindViewHolder(p0: GVH, p1: Int) {
         val picture = list[p1]
-        // p0.ivImg.load(picture.path)
+        //  p0.ivImg.load(picture.path)
 
         //     Glide.with(p0.containerView).load(picture.path).into(p0.ivImg)
         Pixel.load(

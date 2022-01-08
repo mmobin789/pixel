@@ -33,6 +33,7 @@ internal object BitmapMemoryCache {
         }
     }
 
+    @Synchronized
     fun get(key: Int): Bitmap? = cache[key]
 
     fun put(key: Int, bitmap: Bitmap) {
@@ -44,5 +45,5 @@ internal object BitmapMemoryCache {
 
     fun clear(key: Int): Bitmap? = cache.remove(key)
 
-    fun clear() = cache.evictAll()
+    fun clear() = cache.evictAll().also { BitmapWeakMemoryCache.clear() }
 }

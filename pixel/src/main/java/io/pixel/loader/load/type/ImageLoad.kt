@@ -32,6 +32,10 @@ internal abstract class ImageLoad(
         imageView.setImageDrawable(transparentColorDrawable)
     }
 
+    init {
+        setPlaceholder()
+    }
+
     private fun setImageSize() = pixelOptions?.run {
         val sampleWidth = getRequestedImageWidth()
         val sampleHeight = getRequestedImageHeight()
@@ -52,13 +56,10 @@ internal abstract class ImageLoad(
         val bitmap = imageLoadRequest.bitmap()
         val correctBitmap = imageLoadRequest.id == viewLoad.hashCode() &&
             addLoad(imageLoadRequest) && bitmap != null
-
-        withContext(Dispatchers.Main.immediate) {
-
-            if (correctBitmap)
+        if (correctBitmap)
+            withContext(Dispatchers.Main.immediate) {
                 imageView.setImageBitmap(bitmap)
-            else setPlaceholder()
-        }
+            }
     }
 
     protected suspend fun loadFromInternet() {
@@ -82,7 +83,6 @@ internal abstract class ImageLoad(
                 )
                 setImage(CachedImageLoadRequest(this, coroutineScope, id))
             } ?: run {
-                imageView.tag = viewLoad
                 val imageDownloadRequest =
                     ImageDownloadRequest(viewLoad, coroutineScope, pixelOptions)
                 setImage(imageDownloadRequest)
@@ -99,12 +99,6 @@ internal abstract class ImageLoad(
                 PixelLog.debug(
                     tag,
                     "Returned Memory Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
-                )
-                setImage(CachedImageLoadRequest(this, coroutineScope, id))
-            } ?: LoadAdapter.loadImageFromDisk(id)?.apply {
-                PixelLog.debug(
-                    tag,
-                    "Returned Disk Cached Bitmap whose size is ${byteCount / 1024} Kilobytes"
                 )
                 setImage(CachedImageLoadRequest(this, coroutineScope, id))
             } ?: run {

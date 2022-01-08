@@ -6,7 +6,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.job
 
-class CachedImageLoadRequest(
+internal class CachedImageLoadRequest(
     private val bitmap: Bitmap,
     coroutineScope: CoroutineScope,
     override val id: Int
