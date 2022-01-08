@@ -11,38 +11,23 @@ internal fun ByteArray.getDecodedBitmapFromByteArray(
     reqHeight: Int
 ): Bitmap {
 
+    if (reqWidth <= 0 || reqHeight <= 0) {
+
+        return getDecodedBitmapFromByteArray()
+    }
+
+    val byteArray = this
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 
         return ImageDecoder.decodeBitmap(
-            ImageDecoder.createSource(ByteBuffer.wrap(this))
-        ) { decoder, info, _ ->
-            decoder.setTargetSampleSize(
-                calculateInSampleSize(info.size.width, info.size.height, reqWidth, reqHeight)
-            )
+            ImageDecoder.createSource(ByteBuffer.wrap(byteArray))
+        ) { decoder, _, _ ->
+            decoder.setTargetSize(reqWidth, reqHeight)
         }
     }
-    return decodeBitmapFromByteArray(this, reqWidth, reqHeight)
-}
 
-internal fun ByteArray.getDecodedBitmapFromByteArray(): Bitmap {
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-
-        return ImageDecoder.decodeBitmap(ImageDecoder.createSource(ByteBuffer.wrap(this)))
-    }
-    return decodeBitmapFromByteArray(this)
-}
-
-private fun decodeBitmapFromByteArray(
-    byteArray: ByteArray
-) = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-
-private fun decodeBitmapFromByteArray(
-    byteArray: ByteArray,
-    reqWidth: Int,
-    reqHeight: Int
-) =
-    BitmapFactory.Options().run {
+    return BitmapFactory.Options().run {
         inJustDecodeBounds = true
         BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
         // Calculate inSampleSize
@@ -52,6 +37,33 @@ private fun decodeBitmapFromByteArray(
 
         BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
     }
+}
+
+private fun ByteArray.getDecodedBitmapFromByteArray(): Bitmap {
+
+    val byteArray = this
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+
+        return ImageDecoder.decodeBitmap(
+            ImageDecoder.createSource(ByteBuffer.wrap(this))
+        ) { decoder, info, _ ->
+
+            decoder.setTargetSize(info.size.width, info.size.height)
+        }
+    }
+    return BitmapFactory.Options().run {
+        inJustDecodeBounds = true
+
+        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
+        // Calculate inSampleSize
+        inSampleSize = calculateInSampleSize(this, outWidth, outHeight)
+        // Decode bitmap with inSampleSize set
+        inJustDecodeBounds = false
+
+        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
+    }
+}
 
 private fun calculateInSampleSize(
     options: BitmapFactory.Options,
@@ -73,29 +85,6 @@ private fun calculateInSampleSize(
         }
     }
 
-    return inSampleSize
-}
-
-private fun calculateInSampleSize(
-    width: Int,
-    height: Int,
-    reqWidth: Int,
-    reqHeight: Int
-): Int {
-
-    // Raw height and width of image in method params.
-    var inSampleSize = 1
-    if (height > reqHeight || width > reqWidth) {
-        val halfHeight = height / 2
-        val halfWidth = width / 2
-        // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-// height and width larger than the requested height and width.
-        while (halfHeight / inSampleSize >= reqHeight &&
-            halfWidth / inSampleSize >= reqWidth
-        ) {
-            inSampleSize *= 2
-        }
-    }
     return inSampleSize
 }
 

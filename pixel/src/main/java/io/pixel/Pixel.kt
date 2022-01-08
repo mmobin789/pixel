@@ -42,16 +42,32 @@ class Pixel {
          */
         @JvmStatic
         fun load(
-            url: String? = null,
-            pixelOptions: PixelOptions? = null,
+            url: String?,
+            builder: (PixelOptions.Builder.() -> Unit)? = null,
             imageView: ImageView
         ): Pixel {
 
+            val request = PixelOptions.Builder()
+
+            if (builder != null)
+                request.apply(builder)
+
+            val pixelOptions = request.build()
+
             return init().apply {
-                UrlValidator.validateURL(pixelOptions?.getRequest()?.url?.toString() ?: url)
+                UrlValidator.validateURL(
+                    pixelOptions.getRequest()?.url?.toString() ?: url
+                )
                     ?.apply url@{
-                        mainThreadScope.launch {
-                            LoaderProxy.loadUrl(imageView, this@url, pixelOptions, mainThreadScope)
+                        imageView.post {
+                            mainThreadScope.launch {
+                                LoaderProxy.loadUrl(
+                                    imageView,
+                                    this@url,
+                                    pixelOptions,
+                                    mainThreadScope
+                                )
+                            }
                         }
                     }
             }
@@ -71,20 +87,29 @@ class Pixel {
         @JvmStatic
         fun load(
             file: File?,
-            pixelOptions: PixelOptions? = null,
+            builder: (PixelOptions.Builder.() -> Unit)? = null,
             imageView: ImageView
         ): Pixel {
 
+            val request = PixelOptions.Builder()
+
+            if (builder != null)
+                request.apply(builder)
+
+            val pixelOptions = request.build()
+
             return init().apply {
                 FileValidator.validatePath(file)
-                    ?.apply path@{
-                        mainThreadScope.launch {
-                            LoaderProxy.loadFile(
-                                imageView,
-                                this@path,
-                                pixelOptions,
-                                mainThreadScope
-                            )
+                    ?.run path@{
+                        imageView.post {
+                            mainThreadScope.launch {
+                                LoaderProxy.loadFile(
+                                    imageView,
+                                    this@path,
+                                    pixelOptions,
+                                    mainThreadScope
+                                )
+                            }
                         }
                     }
             }

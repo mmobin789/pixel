@@ -3,7 +3,7 @@ package io.pixel.loader.load.request
 import android.content.Context
 import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
-import io.pixel.loader.load.LoadAdapter
+import io.pixel.loader.load.LoadAdapter.loadImageFromFile
 import io.pixel.loader.load.ViewLoad
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -51,7 +51,7 @@ internal class FileLoadRequest(
             "File load request no = ${hashCode()} started for $path for ${width}x$height"
         )
 
-        LoadAdapter.loadImageFromFile(
+        loadImageFromFile(
             context,
             this,
             pixelOptions

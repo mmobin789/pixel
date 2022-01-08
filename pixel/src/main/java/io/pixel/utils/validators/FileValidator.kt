@@ -13,7 +13,5 @@ object FileValidator {
         path.replaceFirst("/", "//")
     }
 
-
     private fun logError(message: String) = PixelLog.error(message = message)
-
 }

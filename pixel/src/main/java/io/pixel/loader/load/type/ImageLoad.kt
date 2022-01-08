@@ -50,18 +50,18 @@ internal abstract class ImageLoad(
 
     private suspend fun setImage(imageLoadRequest: ImageLoadRequest) {
         val bitmap = imageLoadRequest.bitmap()
+        val correctBitmap = imageLoadRequest.id == viewLoad.hashCode() &&
+            addLoad(imageLoadRequest) && bitmap != null
+
         withContext(Dispatchers.Main.immediate) {
-            if (addLoad(imageLoadRequest) && bitmap != null) {
+
+            if (correctBitmap)
                 imageView.setImageBitmap(bitmap)
-            } else {
-                setPlaceholder()
-            }
+            else setPlaceholder()
         }
     }
 
     protected suspend fun loadFromInternet() {
-
-        setPlaceholder()
 
         withContext(Dispatchers.IO) {
             val tag = "InternetImageLoad"
@@ -82,6 +82,7 @@ internal abstract class ImageLoad(
                 )
                 setImage(CachedImageLoadRequest(this, coroutineScope, id))
             } ?: run {
+                imageView.tag = viewLoad
                 val imageDownloadRequest =
                     ImageDownloadRequest(viewLoad, coroutineScope, pixelOptions)
                 setImage(imageDownloadRequest)
@@ -90,9 +91,6 @@ internal abstract class ImageLoad(
     }
 
     protected suspend fun loadFromFile() {
-
-        setPlaceholder()
-
         withContext(Dispatchers.IO) {
             val tag = "FileImageLoad"
             setImageSize()
@@ -111,7 +109,12 @@ internal abstract class ImageLoad(
                 setImage(CachedImageLoadRequest(this, coroutineScope, id))
             } ?: run {
                 val fileLoadRequest =
-                    FileLoadRequest(imageView.context, viewLoad, coroutineScope, pixelOptions)
+                    FileLoadRequest(
+                        imageView.context,
+                        viewLoad,
+                        coroutineScope,
+                        pixelOptions
+                    )
                 setImage(fileLoadRequest)
             }
         }

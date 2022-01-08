@@ -78,11 +78,7 @@ internal object LoadAdapter {
                 val bytes = readBytes()
                 val reqWidth = viewLoad.width
                 val reqHeight = viewLoad.height
-                val bitmap = if (reqWidth > 0 && reqHeight > 0) {
-                    bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight)
-                } else {
-                    bytes.getDecodedBitmapFromByteArray()
-                }
+                val bitmap = bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight)
                 updateCaches(bitmap, viewLoad, pixelOptions)
                 PixelLog.debug(
                     this@LoadAdapter.javaClass.simpleName,
@@ -94,6 +90,9 @@ internal object LoadAdapter {
             PixelLog.error(tag = "LoadAdapter", e.stackTraceToString())
             null
         } catch (e: IOException) {
+            PixelLog.error(tag = "LoadAdapter", e.stackTraceToString())
+            null
+        } catch (e: OutOfMemoryError) { // this will be only thrown if image view size is dynamic and no image has been set to it.
             PixelLog.error(tag = "LoadAdapter", e.stackTraceToString())
             null
         } finally {

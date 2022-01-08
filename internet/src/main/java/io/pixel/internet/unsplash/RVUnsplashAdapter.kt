@@ -31,7 +31,6 @@ class RVUnsplashAdapter(private val list: MutableList<Photo>) :
         this.list.addAll(list)
         notifyItemRangeInserted(itemCount, list.size)
         //   recyclerView.setItemViewCacheSize(itemCount)
-
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
@@ -43,10 +42,11 @@ class RVUnsplashAdapter(private val list: MutableList<Photo>) :
         Pixel.load(
             url = url,
             imageView = holder.iv,
-            pixelOptions = PixelOptions.Builder()
-                .setPlaceholderResource(R.drawable.ic_loading_android)
-                // .setRequest(Request.Builder().url(url).tag("Test Image Load at $position").build())
-                .setImageFormat(PixelOptions.ImageFormat.JPEG).build()
+            builder = {
+                setPlaceholderResource(R.drawable.ic_loading_android)
+                // setRequest(Request.Builder().url(url).tag("Test Image Load at $position").build())
+                setImageFormat(PixelOptions.ImageFormat.JPEG)
+            }
         )
 
 // coil
@@ -55,8 +55,6 @@ class RVUnsplashAdapter(private val list: MutableList<Photo>) :
               d.dispose()*/
 
         //    Glide.with(holder.itemView).load(url).into(holder.iv)
-
-
     }
 
     override fun getItemCount(): Int {
@@ -69,7 +67,8 @@ class RVUnsplashAdapter(private val list: MutableList<Photo>) :
         recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 3)
     }
 
-    inner class VH(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+    inner class VH(override val containerView: View) :
+        RecyclerView.ViewHolder(containerView),
         LayoutContainer {
         init {
             itemView.setOnClickListener {

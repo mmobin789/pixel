@@ -15,7 +15,6 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream
 
-
 @RunWith(AndroidJUnit4::class)
 class FileValidatorTest {
 
@@ -56,16 +55,15 @@ class FileValidatorTest {
             fos.close()
             testFile
         }
-        val path = validator.validatePath(File("/data/user/0/io.pixel.android.test/files/hello_fil"))
+        val path =
+            validator.validatePath(File("/data/user/0/io.pixel.android.test/files/hello_fil"))
         file.deleteIfExists()
         assertNull(path)
     }
-
 
     @Test
     fun nullFile() {
         val path = validator.validatePath(null)
         assertNull(path)
     }
-
 }

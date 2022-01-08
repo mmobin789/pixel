@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import io.pixel.Pixel
-import io.pixel.config.PixelOptions
 import io.pixel.gallery.R
 import io.pixel.gallery.model.GalleryPicture
 import kotlinx.android.synthetic.main.multi_gallery_listitem.*
@@ -129,14 +128,16 @@ class GalleryPicturesAdapter(private val list: List<GalleryPicture>) : RecyclerV
 
     override fun onBindViewHolder(p0: GVH, p1: Int) {
         val picture = list[p1]
-        //  Glide.with(p0.containerView).load(picture.path).into(p0.ivImg)
+        // p0.ivImg.load(picture.path)
+
+        //     Glide.with(p0.containerView).load(picture.path).into(p0.ivImg)
         Pixel.load(
             file = File(picture.path),
             imageView = p0.ivImg,
-            pixelOptions = PixelOptions.Builder()
-                .setPlaceholderResource(R.drawable.ic_loading_android)
+            builder = {
+                setPlaceholderResource(R.drawable.ic_loading_android)
                 // .setRequest(Request.Builder().url(url).tag("Test Image Load at $position").build())
-                .setImageFormat(PixelOptions.ImageFormat.JPEG).build()
+            }
         )
 
         if (picture.isSelected) {

@@ -2,7 +2,7 @@ package io.pixel.loader.load.request.download
 
 import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
-import io.pixel.loader.load.LoadAdapter
+import io.pixel.loader.load.LoadAdapter.downloadImage
 import io.pixel.loader.load.ViewLoad
 import io.pixel.loader.load.request.ImageLoadRequest
 import kotlinx.coroutines.CancellationException
@@ -50,7 +50,7 @@ internal class ImageDownloadRequest(
             "Image download request no = ${hashCode()} started for $path for ${width}x$height"
         )
 
-        LoadAdapter.downloadImage(
+        downloadImage(
             this,
             pixelOptions
         )
