@@ -3,6 +3,7 @@ package io.pixel.loader.load.request.download
 import android.graphics.Bitmap
 import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
+import io.pixel.utils.BitmapSrc
 import io.pixel.utils.getDecodedBitmapFromByteArray
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -29,7 +30,7 @@ internal object Downloader {
             val body = response.body
             return body?.run {
                 val bytes = byteStream().readBytes()
-                bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight)
+                bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight, BitmapSrc.Internet)
             }
         } catch (e: IOException) {
             e.printStackTrace()

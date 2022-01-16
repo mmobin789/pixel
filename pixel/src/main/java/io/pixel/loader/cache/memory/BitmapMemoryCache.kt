@@ -3,8 +3,13 @@ package io.pixel.loader.cache.memory
 import android.graphics.Bitmap
 import android.util.LruCache
 import io.pixel.config.PixelLog
+import java.lang.ref.SoftReference
+import java.util.Collections
 
 internal object BitmapMemoryCache {
+
+    val reusableBitmaps: MutableSet<SoftReference<Bitmap>> =
+        Collections.synchronizedSet(hashSetOf<SoftReference<Bitmap>>())
 
     /*   Get max available VM memory, exceeding this amount will throw an
        OutOfMemory exception. Stored in kilobytes as LruCache takes an
@@ -31,6 +36,16 @@ internal object BitmapMemoryCache {
             // number of items.
             return value!!.byteCount / 1024
         }
+
+        override fun entryRemoved(
+            evicted: Boolean,
+            key: Int?,
+            oldValue: Bitmap?,
+            newValue: Bitmap?
+        ) {
+            if (oldValue != null)
+                reusableBitmaps.add(SoftReference(oldValue))
+        }
     }
 
     @Synchronized
@@ -45,5 +60,5 @@ internal object BitmapMemoryCache {
 
     fun clear(key: Int): Bitmap? = cache.remove(key)
 
-    fun clear() = cache.evictAll().also { BitmapWeakMemoryCache.clear() }
+    fun clear() = cache.evictAll()
 }

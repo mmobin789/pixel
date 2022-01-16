@@ -35,7 +35,7 @@ class RVUnsplashAdapter(private val list: MutableList<Photo>) :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val collection = list[position]
-        val url = collection.urls?.small
+        val url = collection.urls?.regular
 
         Log.d("Url position: $position", "$url")
 

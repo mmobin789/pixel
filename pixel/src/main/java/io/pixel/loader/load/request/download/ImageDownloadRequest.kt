@@ -7,17 +7,16 @@ import io.pixel.loader.load.ViewLoad
 import io.pixel.loader.load.request.ImageLoadRequest
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
 
 internal class ImageDownloadRequest(
     private val viewLoad: ViewLoad,
-    coroutineScope: CoroutineScope,
+    private val coroutineScope: CoroutineScope,
     private val pixelOptions: PixelOptions?
 ) : ImageLoadRequest {
 
     override val id = viewLoad.hashCode()
-
-    private val downloadJob = coroutineScope.coroutineContext.job
 
     private val TAG = javaClass.simpleName
 
@@ -37,11 +36,11 @@ internal class ImageDownloadRequest(
             TAG,
             message
         )
-        downloadJob.cancel(CancellationException(message))
+        coroutineScope.cancel(message)
     }
 
     override fun isRunning(): Boolean {
-        return downloadJob.isActive
+        return coroutineScope.isActive
     }
 
     override fun bitmap() = viewLoad.run {

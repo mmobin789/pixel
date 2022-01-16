@@ -65,7 +65,7 @@ class Pixel {
                                     imageView,
                                     this@url,
                                     pixelOptions,
-                                    mainThreadScope
+                                    this
                                 )
                             }
                         }
@@ -107,7 +107,7 @@ class Pixel {
                                     imageView,
                                     this@path,
                                     pixelOptions,
-                                    mainThreadScope
+                                    this
                                 )
                             }
                         }

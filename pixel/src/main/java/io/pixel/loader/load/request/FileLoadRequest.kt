@@ -5,20 +5,18 @@ import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
 import io.pixel.loader.load.LoadAdapter.loadImageFromFile
 import io.pixel.loader.load.ViewLoad
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
 
 internal class FileLoadRequest(
     private val context: Context,
     private val viewLoad: ViewLoad,
-    coroutineScope: CoroutineScope,
+    private val coroutineScope: CoroutineScope,
     private val pixelOptions: PixelOptions?
 ) : ImageLoadRequest {
 
     override val id = viewLoad.hashCode()
-
-    private val loadJob = coroutineScope.coroutineContext.job
 
     private val TAG = javaClass.simpleName
 
@@ -38,11 +36,11 @@ internal class FileLoadRequest(
             TAG,
             message
         )
-        loadJob.cancel(CancellationException(message))
+        coroutineScope.cancel(message)
     }
 
     override fun isRunning(): Boolean {
-        return loadJob.isActive
+        return coroutineScope.isActive
     }
 
     override fun bitmap() = viewLoad.run {

@@ -7,25 +7,24 @@ import io.pixel.config.PixelLog
 import io.pixel.config.PixelOptions
 import io.pixel.loader.cache.disk.BitmapDiskCache
 import io.pixel.loader.cache.memory.BitmapMemoryCache
-import io.pixel.loader.cache.memory.BitmapWeakMemoryCache
 import io.pixel.loader.load.request.ImageLoadRequest
 import io.pixel.loader.load.request.download.Downloader.getBitmapFromURL
+import io.pixel.utils.BitmapSrc
 import io.pixel.utils.getDecodedBitmapFromByteArray
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
+import java.util.Collections
 
 internal object LoadAdapter {
-    private val imageLoads = hashMapOf<Int, ImageLoadRequest>()
+    private val imageLoads = Collections.synchronizedMap(hashMapOf<Int, ImageLoadRequest>())
 
-    @Synchronized
-    fun addLoad(imageLoadRequest: ImageLoadRequest): Boolean {
+    fun addLoad(imageLoadRequest: ImageLoadRequest) {
         val id = imageLoadRequest.id
-        if (cancelImageDownload(id)) {
+
+        if (cancelImageDownload(id) || imageLoads[id] == null) {
             imageLoads[id] = imageLoadRequest
-            return false
         }
-        return true
     }
 
     private fun cancelImageDownload(
@@ -34,19 +33,16 @@ internal object LoadAdapter {
         val loadRequest = imageLoads[id]
 
         return loadRequest?.let {
-            if (it.isRunning().not()) {
+            if (it.isRunning()) {
                 BitmapMemoryCache.clear(it.id)
                 BitmapDiskCache.clear(it.id.toString())
-                it.cancel()
+                imageLoads.remove(id)?.cancel()
                 true
             } else false
         } ?: false
     }
 
-    fun loadImageFromMemory(viewLoadCode: Int): Bitmap? {
-        val weakReferenceBitmap = BitmapWeakMemoryCache.get(viewLoadCode)
-        return weakReferenceBitmap ?: BitmapMemoryCache.get(viewLoadCode)
-    }
+    fun loadImageFromMemory(viewLoadCode: Int) = BitmapMemoryCache.get(viewLoadCode)
 
     fun loadImageFromDisk(viewLoadCode: Int) = BitmapDiskCache.get(viewLoadCode)
 
@@ -82,7 +78,7 @@ internal object LoadAdapter {
                 val bytes = readBytes()
                 val reqWidth = viewLoad.width
                 val reqHeight = viewLoad.height
-                val bitmap = bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight)
+                val bitmap = bytes.getDecodedBitmapFromByteArray(reqWidth, reqHeight, BitmapSrc.File)
                 updateCaches(bitmap, viewLoad, pixelOptions)
                 PixelLog.debug(
                     this@LoadAdapter.javaClass.simpleName,
@@ -109,8 +105,6 @@ internal object LoadAdapter {
         viewLoad: ViewLoad,
         pixelOptions: PixelOptions?
     ) = viewLoad.run {
-
-        BitmapWeakMemoryCache.put(hashCode(), bitmap)
 
         BitmapMemoryCache.put(
             hashCode(), bitmap
