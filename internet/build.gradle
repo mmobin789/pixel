@@ -57,7 +57,7 @@ dependencies {
     // For activity rules
     androidTestImplementation 'androidx.test:rules:1.4.0'
 
-    def lifecycle_version = "2.4.0"
+    def lifecycle_version = "2.4.1"
 
     //images from unsplash for testing.
     implementation 'com.keenencharles:androidunsplash:3.1.2'
