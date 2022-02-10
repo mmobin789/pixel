@@ -129,11 +129,15 @@ For complete usage in Kotlin and Java clone the project in Android Studio and ru
 ## Issues
 Issues can be reported [here](https://github.com/mmobin789/pixel/issues).
 
+## Known Issues
+Due to an issue do not use this inside recyclerview or listview, it will not work as expected we are working on it to fix this issue soon.
+
 ## Inspiration
 The idea of employing Kotlin Coroutines that drive the working of this library partly came from [Coil](https://github.com/coil-kt).
 
 ## Co-Creator
   [Malik Dawar](https://github.com/malikdawar)
+  [Muhammad Danish](https://github.com/DaaniDev)
 
 ## License
 Copyright 2020 Pixel Contributors
