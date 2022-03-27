@@ -126,8 +126,10 @@ For complete usage in Kotlin and Java clone the project in Android Studio and ru
  This library is maintained and under development as new features are periodically added.
 
 
-## Issues
+## Known Issues
 Issues can be reported [here](https://github.com/mmobin789/pixel/issues).
+
+Currently, This library isn't fully prepared to handle images in listing containers like recycler view or list view hence causes the images to load at random positions,duplications or not load an entire collection of images fully as well we are trying to find solution to create a proper bitmap memory pool which is a hard task and ofcourse any help is welcome in the matter.
 
 ## Inspiration
 The idea of employing Kotlin Coroutines that drive the working of this library partly came from [Coil](https://github.com/coil-kt).
